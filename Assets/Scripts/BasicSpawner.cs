@@ -54,13 +54,13 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
                 _playerPrefab, spawnPosition,
                 Quaternion.identity, player,
                 (runner, o) => {
-                    if (player == runner.LocalPlayer)
-                    {
-                        PlayerCamera.Instance.Target = o.transform;
-                    } else
-                    {
-                        //TODO: tell other player to get his camera attached to this object
-                    }
+                    //if (player == runner.LocalPlayer)
+                    //{
+                    //    PlayerCamera.Instance.Target = o.transform;
+                    //} else
+                    //{
+                    //    // tell other player to get his camera attached to this object - done in PlayerTankController
+                    //}
                 }
             );
             // Keep track of the player avatars so we can remove it when they disconnect
@@ -78,7 +78,21 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         }
     }
 
-    public void OnInput(NetworkRunner runner, NetworkInput input) { }
+    public void OnInput(NetworkRunner runner, NetworkInput input) 
+    {
+        var data = new NetworkInputData();
+
+        if (Input.GetKey(KeyCode.W))
+            data.SetButton(NetworkInputData.FORWARD_BUTTON);
+        if (Input.GetKey(KeyCode.S))
+            data.SetButton(NetworkInputData.BACK_BUTTON);
+        if (Input.GetKey(KeyCode.A))
+            data.SetButton(NetworkInputData.LEFT_BUTTON);
+        if (Input.GetKey(KeyCode.D))
+            data.SetButton(NetworkInputData.RIGHT_BUTTON);
+
+        input.Set(data);
+    }
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
     public void OnConnectedToServer(NetworkRunner runner) { }

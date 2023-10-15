@@ -21,14 +21,14 @@ public class PlayerCamera : MonoBehaviour
     public float MinYRotation = 5f;
     public float MaxYRotation = 89f;
 
-    public float RotationSpeed = 60f;
+    public float Sensitivity = 0.4f;
     public float ZoomSpeed = 20f;
 
-    public float SmoothTimePosition = 0.25f;
     public float SmoothTimeRotation = 0.25f;
 
     static PlayerCamera instance;
 
+    float old;
     public static PlayerCamera Instance => instance;
 
     private void Awake()
@@ -47,17 +47,16 @@ public class PlayerCamera : MonoBehaviour
         if (!Target)
             return;
 
-        mx += Input.GetAxis("Mouse X");
-        my = Mathf.Clamp(my - Input.GetAxis("Mouse Y"), MinYRotation, MaxYRotation);
+        mx += Input.GetAxis("Mouse X") * Sensitivity;
+        my = Mathf.Clamp(my - Input.GetAxis("Mouse Y") * Sensitivity, MinYRotation, MaxYRotation);
         Distance = Mathf.Clamp(Distance - Input.mouseScrollDelta.y * Time.deltaTime * ZoomSpeed, MinDistance, MaxDistance);
 
         //positionTracks[piti] = transform.position;
         //piti = (piti + 1) % positionTracks.Length;
-        
     }
 
 
-    Vector3 velocity = default;
+    Vector3 velocity = Vector3.zero;
     Quaternion deriv = Quaternion.identity;
     // Update is called once per frame
     void LateUpdate()
@@ -70,16 +69,14 @@ public class PlayerCamera : MonoBehaviour
 
         Vector3 toDir = ((Target.position + lookRotation * TargetLookAtOffset) - transform.position);
 
-        Vector3 targetPos = lookRotation * (PositioningOffset + -Vector3.forward * Distance) + Target.position;
+        Vector3 targetPos = lookRotation * (PositioningOffset + Vector3.back * Distance) + Target.position;
         
         Quaternion targetRot = Quaternion.LookRotation(toDir, Vector3.up);
 
-        Quaternion smoothedRot = Utils.SmoothDampQuaternion(transform.rotation, targetRot, ref deriv, SmoothTimeRotation); ;
+        Quaternion smoothedRot = Utils.SmoothDampQuaternion(transform.rotation, targetRot, ref deriv, SmoothTimeRotation);
         transform.rotation = smoothedRot;
 
-        //transform.position = targetPos;
-        Vector3 smoothedPos = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, SmoothTimePosition);
-        transform.position = smoothedPos;
+        transform.position = targetPos;
 
         //positionTracks[piti] = transform.position;
         //piti = (piti + 1) % positionTracks.Length;
