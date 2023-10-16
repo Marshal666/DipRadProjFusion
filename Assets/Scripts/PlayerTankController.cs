@@ -1,6 +1,7 @@
 using Fusion;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -40,7 +41,10 @@ public class PlayerTankController : NetworkBehaviour
 
     public float TraverseRotationSpeedMax = 720f;
     public float TraverseRotationAcceleration = 360f;
+    public float TraverseRotationAccelerationMoving = 360f;
     public float TraverseRotationDecceleration = 720f;
+    [Range(0f, 1f)]
+    public float TraverseMovingCoef = 0.5f;
     [Networked]
     public float CurrentTraverseSpeed { get; set; }
 
@@ -141,26 +145,26 @@ public class PlayerTankController : NetworkBehaviour
 
     void SteerWhileMovingSetBrakes(WheelSide direction)
     {
-        //SetBrake(0);
-        //SetBrake(SteerTorque, (WheelSide)(1 - (int)direction));
         SetRotation(0, 1 - direction);
     }
 
-    void SteerWhileMoving(bool left, bool right)
+    void SteerWhileMoving(bool left, bool right, bool moving = false)
     {
         if(left)
         {
             SteerWhileMovingSetBrakes(WheelSide.Right);
+            CurrentTraverseSpeed = Mathf.Clamp(CurrentTraverseSpeed + (moving ? TraverseRotationAccelerationMoving : TraverseRotationAcceleration) * Runner.DeltaTime, -TraverseRotationSpeedMax, TraverseRotationSpeedMax);
         }
         else if(right)
         {
             SteerWhileMovingSetBrakes(WheelSide.Left);
+            CurrentTraverseSpeed = Mathf.Clamp(CurrentTraverseSpeed - (moving ? TraverseRotationAccelerationMoving : TraverseRotationAcceleration) * Runner.DeltaTime, -TraverseRotationSpeedMax, TraverseRotationSpeedMax);
         }
     }
 
-    void TraverseLeft()
+    void TraverseLeft(bool moving = false)
     {
-        CurrentTraverseSpeed = Mathf.Clamp(CurrentTraverseSpeed + TraverseRotationAcceleration * Runner.DeltaTime, -TraverseRotationSpeedMax, TraverseRotationSpeedMax);
+        CurrentTraverseSpeed = Mathf.Clamp(CurrentTraverseSpeed + (moving ? TraverseRotationAccelerationMoving : TraverseRotationAcceleration) * Runner.DeltaTime, -TraverseRotationSpeedMax, TraverseRotationSpeedMax);
         if (CurrentTraverseSpeed > 0)
         {
             SetBrake(0);
@@ -169,14 +173,40 @@ public class PlayerTankController : NetworkBehaviour
         }
     }
 
-    void TraverseRight()
+    void TraverseRight(bool moving = false)
     {
-        CurrentTraverseSpeed = Mathf.Clamp(CurrentTraverseSpeed - TraverseRotationAcceleration * Runner.DeltaTime, -TraverseRotationSpeedMax, TraverseRotationSpeedMax);
+        CurrentTraverseSpeed = Mathf.Clamp(CurrentTraverseSpeed - (moving ? TraverseRotationAccelerationMoving : TraverseRotationAcceleration) * Runner.DeltaTime, -TraverseRotationSpeedMax, TraverseRotationSpeedMax);
         if (CurrentTraverseSpeed < 0)
         {
             SetBrake(0);
             SetRotation(CurrentTraverseSpeed, WheelSide.Right);
             SetRotation(-CurrentTraverseSpeed, WheelSide.Left);
+        }
+    }
+
+    void TraverseLeftMoving()
+    {
+        CurrentRotationSpeed = Mathf.MoveTowards(CurrentRotationSpeed, 0f, BrakeAccelerationRot * Runner.DeltaTime);
+        if (CurrentTraverseSpeed >= TraverseRotationSpeedMax * TraverseMovingCoef)
+        {
+            TraverseLeft(true);
+        }
+        else
+        {
+            SteerWhileMoving(true, false, true);
+        }
+    }
+
+    void TraverseRightMoving()
+    {
+        CurrentRotationSpeed = Mathf.MoveTowards(CurrentRotationSpeed, 0f, BrakeAccelerationRot * Runner.DeltaTime);
+        if (CurrentTraverseSpeed <= -TraverseRotationSpeedMax * TraverseMovingCoef)
+        {
+            TraverseRight(true);
+        }
+        else
+        {
+            SteerWhileMoving(false, true, true);
         }
     }
 
@@ -202,6 +232,10 @@ public class PlayerTankController : NetworkBehaviour
             //print($"data: {data.ArrowsInput} back: {data.ArrowsInput & NetworkInputData.BACK_BUTTON}");
             Vector3 velocity = rig.ReadVelocity();
             float cspeed = velocity.magnitude;
+            Vector3 tvel = transform.worldToLocalMatrix * (velocity);
+            //0 - forward, 1 - back
+            int dir = Vector3.Dot(tvel, Vector3.forward) >= 0 ? 0 : 1;
+            //print($"Dir: {(dir == 0 ? "Forward" : "Back")}");
             
             if(data.ForwardPressed)
             {
@@ -262,8 +296,6 @@ public class PlayerTankController : NetworkBehaviour
             } else
             //Moving states
             {
-                
-
                 if(data.ForwardPressed)
                 {
                     if (CurrentRotationSpeed >= 0)
@@ -274,6 +306,7 @@ public class PlayerTankController : NetworkBehaviour
                         Brake();
                     }
                     CurrentTraverseSpeed = Mathf.MoveTowards(CurrentTraverseSpeed, 0f, TraverseRotationDecceleration * Runner.DeltaTime);
+                    SteerWhileMoving(data.LeftPressed, data.RightPressed);
                 } else if(data.BackPressed)
                 {
                     if (CurrentRotationSpeed <= 0)
@@ -284,26 +317,33 @@ public class PlayerTankController : NetworkBehaviour
                         Brake();
                     }
                     CurrentTraverseSpeed = Mathf.MoveTowards(CurrentTraverseSpeed, 0f, TraverseRotationDecceleration * Runner.DeltaTime);
+                    SteerWhileMoving(data.LeftPressed, data.RightPressed);
                 } else
                 {
                     CurrentRotationSpeed = Mathf.MoveTowards(CurrentRotationSpeed, 0f, BackRotationAcceleration * Runner.DeltaTime);
 
-                    if (data.LeftPressed)
+                    if (dir == 0)
                     {
-                        TraverseLeft();
-                    }
-                    //Right Rotation
-                    else if (data.RightPressed)
-                    {
-                        TraverseRight();
+                        if (data.LeftPressed)
+                        {
+                            TraverseLeftMoving();
+                        }
+                        //Right Rotation
+                        else if (data.RightPressed)
+                        {
+                            TraverseRightMoving();
+                        }
                     }
                     //Post rotation
                     else
                     {
-                        PostTraverse();
+                        if (CurrentTraverseSpeed > 0)
+                        {
+                            PostTraverse();
+                        }
                     }
                 }
-                SteerWhileMoving(data.LeftPressed, data.RightPressed);
+                
             }
 
         }

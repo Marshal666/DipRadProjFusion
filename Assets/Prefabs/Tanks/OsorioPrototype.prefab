@@ -716,6 +716,7 @@ MonoBehaviour:
   - {fileID: 4297084472508147429}
   - {fileID: 5600456400405818600}
   - {fileID: 5325244067097688594}
+  ExtraWheels: []
   ForwardRotationSpeedMax: 2160
   BackRotationSpeedMax: -1440
   ForwardRotationAcceleration: 540
@@ -725,8 +726,10 @@ MonoBehaviour:
   BrakeTorque: 3000
   SteerTorque: 1200
   TraverseRotationSpeedMax: 720
-  TraverseRotationAcceleration: 720
+  TraverseRotationAcceleration: 1080
+  TraverseRotationAccelerationMoving: 720
   TraverseRotationDecceleration: 1080
+  TraverseMovingCoef: 0.98
   _CurrentTraverseSpeed: 0
   SleepVelocity: 0.02
 --- !u!1 &819447427006226631
