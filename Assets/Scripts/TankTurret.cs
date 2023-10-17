@@ -122,13 +122,16 @@ public class TankTurret : NetworkBehaviour
                 return;
             }
 
+            float currentHorizontal = Utils.NormalizeAngle360(AxisValueFromQuaternion(HorizontalRotationAxis, HorizontalRotatePart.localRotation));
+            float currentVertical = Utils.NormalizeAngle360(AxisValueFromQuaternion(VerticalRotationAxis, VerticalRotatePart.transform.rotation) - VerticalRotationOffset);
+
             //Vertical rotation part - TODO: fix them
             float my = data.MY;
-            int constraintIndex = VerticalConstraintAngleIndex(my);
+            //TODO: map "my" variable so that it's properly aligned with view for shooting
+            int constraintIndex = VerticalConstraintAngleIndex(currentHorizontal);
             float vmin = VerticalConstraints[constraintIndex].VerticalMin;
             float vmax = VerticalConstraints[constraintIndex].VerticalMax;
             my = Utils.NormalizeAngle360(Utils.ClampAngleLPositive(my, vmin, vmax));
-            float currentVertical = Utils.NormalizeAngle360(AxisValueFromQuaternion(VerticalRotationAxis, VerticalRotatePart.transform.rotation) - VerticalRotationOffset);
             print($"my: {my}, ci: {constraintIndex}, currentV: {currentVertical}");
             if (currentVertical != my)
             {
@@ -161,7 +164,6 @@ public class TankTurret : NetworkBehaviour
             float mx = Utils.NormalizeAngle360(data.MX - baseRotation);
             if (HasHorizontalConstraints)
                 mx = Utils.ClampAngleLPositive(mx, HorizontalConstraintMin, HorizontalConstraintMax);
-            float currentHorizontal = Utils.NormalizeAngle360(AxisValueFromQuaternion(HorizontalRotationAxis, HorizontalRotatePart.localRotation));
             //print($"my: {mx}, cy: {cy}");
             //float localCurrent = Utils.NormalizeAngle360(currentHorizontal + baseRotation);
             //float localMX = Utils.NormalizeAngle360(mx + baseRotation);

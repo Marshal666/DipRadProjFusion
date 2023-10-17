@@ -9,6 +9,8 @@ public class TestScr : MonoBehaviour
     public float HMin = 270;
     public float HMax = 90;
 
+    public TankTurret.VerticalConstraint[] Constraints;
+
     public float[] ValsTest;
 
     public bool Run = false;
@@ -23,13 +25,13 @@ public class TestScr : MonoBehaviour
     {
         if(Run)
         {
-            if (ValsTest == null)
-                return;
-            foreach (var val in ValsTest)
-            {
-                print($"val: {val}, clamp: {Utils.ClampAngleLPositive(val, HMin, HMax)}");
-            }
-            Run = false;
+            //if (ValsTest == null)
+            //    return;
+            //foreach (var val in ValsTest)
+            //{
+            //    print($"val: {val}, clamp: {Utils.ClampAngleLPositive(val, HMin, HMax)}");
+            //}
+            //Run = false;
         }
     }
 
