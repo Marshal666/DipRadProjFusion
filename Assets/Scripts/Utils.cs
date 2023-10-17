@@ -61,6 +61,8 @@ public static class Utils
         //    return Mathf.Clamp(a + 360f, min, max);
         min = NormalizeAngle360(min);
         max = NormalizeAngle360(max);
+        if (min == max)
+            return a;
         float ret;
         if (a < 0)
             a += 360f;
@@ -81,6 +83,9 @@ public static class Utils
         {
             max += 360f;
             if(a == Mathf.Clamp(a, min, max))
+            {
+                ret = a;
+            } else if(a <= max - 360f)
             {
                 ret = a;
             } else

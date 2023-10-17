@@ -2063,12 +2063,31 @@ MonoBehaviour:
   AboveTurrets: []
   Base: {fileID: 0}
   Tank: {fileID: -7148630000186440188}
+  HasHorizontalConstraints: 0
   HorizontalConstraintMin: 0
-  HorizontalConstraintMax: 180
+  HorizontalConstraintMax: 360
+  HasVerticalConstraints: 1
+  VerticalConstraints:
+  - HorizontalStart: 0
+    HorizontalEnd: 158
+    VerticalMin: -10
+    VerticalMax: 20
+  - HorizontalStart: 158
+    HorizontalEnd: 202
+    VerticalMin: 10
+    VerticalMax: 20
+  - HorizontalStart: 202
+    HorizontalEnd: 360
+    VerticalMin: 10
+    VerticalMax: 20
   HorizontalRotationSpeedMax: 180
   HorizontalRotationAcceleration: 120
   CurrentHorizontalRotationSpeed: 0
   HorizontalRotationAxis: 1
+  VerticalRotationSpeedMax: 90
+  VerticalRotationAcceleration: 90
+  CurrentVerticalRotationSpeed: 0
+  VerticalRotationAxis: 0
 --- !u!1 &3194525045296243248
 GameObject:
   m_ObjectHideFlags: 0
