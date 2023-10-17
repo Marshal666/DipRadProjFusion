@@ -634,6 +634,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: -8720378359915669696}
   - {fileID: -7148630000186440188}
+  - {fileID: 216008822412824302}
   SimulationBehaviours: []
 --- !u!54 &24240301683542001
 Rigidbody:
@@ -717,6 +718,8 @@ MonoBehaviour:
   - {fileID: 5600456400405818600}
   - {fileID: 5325244067097688594}
   ExtraWheels: []
+  Turrets:
+  - {fileID: 216008822412824302}
   ForwardRotationSpeedMax: 2160
   BackRotationSpeedMax: -1440
   ForwardRotationAcceleration: 540
@@ -2010,6 +2013,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3284031805268350812}
+  - component: {fileID: 216008822412824302}
   m_Layer: 0
   m_Name: Turret
   m_TagString: Untagged
@@ -2024,7 +2028,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3149176005995589377}
-  m_LocalRotation: {x: 5.5297832e-27, y: 0.00014628471, z: -1.3042237e-15, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0.0044115875, z: 7.105427e-17}
   m_LocalScale: {x: 0.99999994, y: 1, z: 0.99999994}
   m_ConstrainProportionsScale: 0
@@ -2041,6 +2045,30 @@ Transform:
   m_Father: {fileID: 1332133269643751278}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &216008822412824302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3149176005995589377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28d82819b46951d4fa7e1b60a6b461c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  HorizontalRotatePart: {fileID: 3284031805268350812}
+  VerticalRotatePart: {fileID: 7156812515675970496}
+  AboveTurrets: []
+  Base: {fileID: 0}
+  Tank: {fileID: -7148630000186440188}
+  HorizontalConstraintMin: 0
+  HorizontalConstraintMax: 180
+  HorizontalRotationSpeedMax: 180
+  HorizontalRotationAcceleration: 120
+  CurrentHorizontalRotationSpeed: 0
+  HorizontalRotationAxis: 1
 --- !u!1 &3194525045296243248
 GameObject:
   m_ObjectHideFlags: 0

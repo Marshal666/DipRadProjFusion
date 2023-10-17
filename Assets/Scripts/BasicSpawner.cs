@@ -91,6 +91,15 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         if (Input.GetKey(KeyCode.D))
             data.SetButton(NetworkInputData.RIGHT_BUTTON);
 
+        if (!Input.GetKey(KeyCode.C))
+        {
+            data.MX = PlayerCamera.Instance.mx;
+            data.MY = PlayerCamera.Instance.my;
+        } else
+        {
+            data.MX = data.MY = float.NaN;
+        }
+
         input.Set(data);
     }
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }

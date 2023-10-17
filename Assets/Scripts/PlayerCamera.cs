@@ -47,7 +47,7 @@ public class PlayerCamera : MonoBehaviour
         if (!Target)
             return;
 
-        mx += Input.GetAxis("Mouse X") * Sensitivity;
+        mx = Utils.NormalizeAngle360(mx + Input.GetAxis("Mouse X") * Sensitivity);
         my = Mathf.Clamp(my - Input.GetAxis("Mouse Y") * Sensitivity, MinYRotation, MaxYRotation);
         Distance = Mathf.Clamp(Distance - Input.mouseScrollDelta.y * Time.deltaTime * ZoomSpeed, MinDistance, MaxDistance);
 

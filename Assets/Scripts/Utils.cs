@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public static class Utils 
@@ -32,6 +33,68 @@ public static class Utils
         deriv.w -= derivError.w;
 
         return new Quaternion(Result.x, Result.y, Result.z, Result.w);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static float NormalizeAngle360(float a)
+    {
+        a %= 360f;
+        if (a < 0f)
+            a += 360f;
+        return a;
+    }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="a">Angle to be clamped from [0 .. 360></param>
+    /// <param name="min">Number from [0 .. 360></param>
+    /// <param name="max">Number from [0 .. 360></param>
+    /// <returns></returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static float ClampAngleLPositive(float a, float min, float max)
+    {
+        //if (a >= 0)
+        //    return Mathf.Clamp(a, min, max);
+        //else
+        //    return Mathf.Clamp(a + 360f, min, max);
+        min = NormalizeAngle360(min);
+        max = NormalizeAngle360(max);
+        float ret;
+        if (a < 0)
+            a += 360f;
+        if(max >= min)
+        {
+            if (a == Mathf.Clamp(a, min, max))
+                ret = a;
+            else
+            {
+                //Debug.Log($"d(min, a) = {Mathf.DeltaAngle(a, min)}, d(a, max) = {Mathf.DeltaAngle(a, max)}");
+                if (Mathf.Abs(Mathf.DeltaAngle(a, min)) < Mathf.Abs(Mathf.DeltaAngle(a, max)))
+                    ret = min;
+                else
+                    ret = max;
+            }
+        }
+        else
+        {
+            max += 360f;
+            if(a == Mathf.Clamp(a, min, max))
+            {
+                ret = a;
+            } else
+            {
+                //Debug.Log($"d(min, a) = {Mathf.DeltaAngle(a, min)}, d(a, max) = {Mathf.DeltaAngle(a, max)}");
+                if (Mathf.Abs(Mathf.DeltaAngle(a, min)) < Mathf.Abs(Mathf.DeltaAngle(a, max)))
+                    ret = min;
+                else
+                    ret = max;
+            }
+
+        }
+        //Debug.Log($"a: {a}, min: {min}, max: {max}, ret: {NormalizeAngle360(ret)}");
+        return NormalizeAngle360(ret);
     }
 
 }

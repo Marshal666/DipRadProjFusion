@@ -11,6 +11,9 @@ public struct NetworkInputData : INetworkInput
 
     public byte ArrowsInput;
 
+    public float MX;
+    public float MY;
+
     public bool ForwardPressed => (ArrowsInput & FORWARD_BUTTON) == FORWARD_BUTTON;
     public bool BackPressed => (ArrowsInput & BACK_BUTTON) == BACK_BUTTON;
     public bool LeftPressed => (ArrowsInput & LEFT_BUTTON) == LEFT_BUTTON;

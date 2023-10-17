@@ -22,6 +22,8 @@ public class PlayerTankController : NetworkBehaviour
     [Tooltip("Even indexes - left wheels, Odd indexes - right wheels")]
     public Transform[] ExtraWheels;
 
+    public TankTurret[] Turrets;
+
     public enum WheelSide
     {
         Left = 0,
