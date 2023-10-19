@@ -2069,16 +2069,16 @@ MonoBehaviour:
   HasVerticalConstraints: 1
   VerticalConstraints:
   - HorizontalStart: 0
-    HorizontalEnd: 158
+    HorizontalEnd: 140
     VerticalMin: -10
     VerticalMax: 20
-  - HorizontalStart: 158
-    HorizontalEnd: 202
-    VerticalMin: 10
+  - HorizontalStart: 140
+    HorizontalEnd: 220
+    VerticalMin: 12
     VerticalMax: 20
-  - HorizontalStart: 202
+  - HorizontalStart: 220
     HorizontalEnd: 360
-    VerticalMin: 10
+    VerticalMin: -10
     VerticalMax: 20
   HorizontalRotationSpeedMax: 180
   HorizontalRotationAcceleration: 120
@@ -2087,6 +2087,8 @@ MonoBehaviour:
   VerticalRotationSpeedMax: 90
   VerticalRotationAcceleration: 90
   CurrentVerticalRotationSpeed: 0
+  VerticalRotationOffset: 90
+  VerticalPlacementOffset: 25
   VerticalRotationAxis: 0
 --- !u!1 &3194525045296243248
 GameObject:

@@ -712,8 +712,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Target: {fileID: 0}
-  TargetLookAtOffset: {x: 0, y: 2.5, z: 5}
-  PositioningOffset: {x: 0, y: 0, z: 0}
+  TargetLookAtOffset: {x: 0, y: 5, z: 10}
+  PositioningOffset: {x: 0, y: 1.25, z: 0}
   Distance: 8
   MinDistance: 5
   MaxDistance: 9

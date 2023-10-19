@@ -56,6 +56,7 @@ public class TankTurret : NetworkBehaviour
     public float VerticalRotationAcceleration = 90f;
     public float CurrentVerticalRotationSpeed = 0f;
     public float VerticalRotationOffset = 90f;
+    public float VerticalPlacementOffset = 30f;
     public Axis VerticalRotationAxis = Axis.X;
 
     public Vector3 Axis2Vector3(Axis axis)
@@ -125,33 +126,38 @@ public class TankTurret : NetworkBehaviour
             float currentHorizontal = Utils.NormalizeAngle360(AxisValueFromQuaternion(HorizontalRotationAxis, HorizontalRotatePart.localRotation));
             float currentVertical = Utils.NormalizeAngle360(AxisValueFromQuaternion(VerticalRotationAxis, VerticalRotatePart.transform.rotation) - VerticalRotationOffset);
 
-            //Vertical rotation part - TODO: fix them
-            float my = data.MY;
+            //Vertical rotation part
+            float my = Utils.NormalizeAngle360(VerticalPlacementOffset - data.MY);
             //TODO: map "my" variable so that it's properly aligned with view for shooting
             int constraintIndex = VerticalConstraintAngleIndex(currentHorizontal);
             float vmin = VerticalConstraints[constraintIndex].VerticalMin;
             float vmax = VerticalConstraints[constraintIndex].VerticalMax;
             my = Utils.NormalizeAngle360(Utils.ClampAngleLPositive(my, vmin, vmax));
-            print($"my: {my}, ci: {constraintIndex}, currentV: {currentVertical}");
+            
             if (currentVertical != my)
             {
+                //TODO: fix smooth gun lifting..
                 CurrentVerticalRotationSpeed = Mathf.Clamp(CurrentVerticalRotationSpeed + VerticalRotationAcceleration * Runner.DeltaTime, 0, VerticalRotationSpeedMax);
                 float angleMovement = Utils.NormalizeAngle360(Mathf.MoveTowardsAngle(currentVertical, my, CurrentVerticalRotationSpeed * Runner.DeltaTime));
-                if (HasVerticalConstraints)
-                {
-                    float delta = Utils.NormalizeAngle360(angleMovement - currentVertical);
-                    float nearEndStep = Utils.NormalizeAngle360(Mathf.LerpAngle(currentVertical, my, 0.99f));
-                    if (nearEndStep != Utils.ClampAngleLPositive(nearEndStep, vmin, vmax))
-                    {
-                        angleMovement = Utils.NormalizeAngle360(angleMovement - 2 * delta);
-                        //fv = false;
-                    }
-                }
-                if (!HasVerticalConstraints || angleMovement == Utils.ClampAngleLPositive(angleMovement, vmin, vmax))
-                {
+                float am1 = angleMovement;
+                float delta = Utils.NormalizeAngle360(angleMovement - currentVertical);
+                //print($"my0: {Utils.NormalizeAngle360(VerticalPlacementOffset - data.MY)}, my: {my}, currentV: {currentVertical}, GunRot: {AxisValueFromQuaternion(VerticalRotationAxis, VerticalRotatePart.transform.rotation)}");
+                //if (HasVerticalConstraints)
+                //{
+                    
+                //    float nearEndStep = Utils.NormalizeAngle360(Mathf.LerpAngle(currentVertical, my, 0.99f));
+                //    if (nearEndStep != Utils.ClampAngleLPositive(nearEndStep, vmin, vmax))
+                //    {
+                //        angleMovement = Utils.NormalizeAngle360(angleMovement - 2 * delta);
+                //    }
+                //}
+                //if (!HasVerticalConstraints || angleMovement == Utils.ClampAngleLPositive(angleMovement, vmin, vmax))
+                //{
                     currentVertical = angleMovement;
-                }
-                SetRotation(VerticalRotatePart, VerticalRotationAxis, currentVertical + VerticalRotationOffset);
+                //}
+                //currentVertical = my; //works fine
+                print($"Target: {my}, current: {currentVertical}, am1: {am1}, am2: {angleMovement}, delta: {delta}, cv: {CurrentHorizontalRotationSpeed}");
+                SetRotation(VerticalRotatePart, VerticalRotationAxis, -currentVertical + VerticalRotationOffset);
             } else
             {
                 CurrentVerticalRotationSpeed = 0f;
