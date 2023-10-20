@@ -1238,6 +1238,8 @@ MonoBehaviour:
   Constraints: []
   ValsTest: []
   Run: 0
+  current: 30
+  target: 30
 --- !u!1 &2123586696
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,6 +21,9 @@ public class TestScr : MonoBehaviour
         
     }
 
+    public float current = 350f;
+    public float target = 20f;
+
     private void Update()
     {
         if(Run)
@@ -31,7 +34,11 @@ public class TestScr : MonoBehaviour
             //{
             //    print($"val: {val}, clamp: {Utils.ClampAngleLPositive(val, HMin, HMax)}");
             //}
-            //Run = false;
+
+            current = Utils.NormalizeAngle360(Mathf.MoveTowardsAngle(current, target, 20f));
+            print(current);
+
+            Run = false;
         }
     }
 

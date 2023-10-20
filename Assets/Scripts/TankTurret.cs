@@ -125,6 +125,7 @@ public class TankTurret : NetworkBehaviour
 
             float currentHorizontal = Utils.NormalizeAngle360(AxisValueFromQuaternion(HorizontalRotationAxis, HorizontalRotatePart.localRotation));
             float currentVertical = Utils.NormalizeAngle360(AxisValueFromQuaternion(VerticalRotationAxis, VerticalRotatePart.transform.rotation) - VerticalRotationOffset);
+            float currentv0 = currentVertical;
 
             //Vertical rotation part
             float my = Utils.NormalizeAngle360(VerticalPlacementOffset - data.MY);
@@ -138,9 +139,9 @@ public class TankTurret : NetworkBehaviour
             {
                 //TODO: fix smooth gun lifting..
                 CurrentVerticalRotationSpeed = Mathf.Clamp(CurrentVerticalRotationSpeed + VerticalRotationAcceleration * Runner.DeltaTime, 0, VerticalRotationSpeedMax);
-                float angleMovement = Utils.NormalizeAngle360(Mathf.MoveTowardsAngle(currentVertical, my, CurrentVerticalRotationSpeed * Runner.DeltaTime));
-                float am1 = angleMovement;
-                float delta = Utils.NormalizeAngle360(angleMovement - currentVertical);
+                float angleMovement;
+                angleMovement = Utils.NormalizeAngle360(Mathf.MoveTowardsAngle(currentVertical, my, CurrentVerticalRotationSpeed * Runner.DeltaTime));
+                float delta = Utils.NormalizeAngle360(Mathf.DeltaAngle(angleMovement, currentVertical));
                 //print($"my0: {Utils.NormalizeAngle360(VerticalPlacementOffset - data.MY)}, my: {my}, currentV: {currentVertical}, GunRot: {AxisValueFromQuaternion(VerticalRotationAxis, VerticalRotatePart.transform.rotation)}");
                 //if (HasVerticalConstraints)
                 //{
@@ -155,8 +156,9 @@ public class TankTurret : NetworkBehaviour
                 //{
                     currentVertical = angleMovement;
                 //}
+                currentVertical = Mathf.LerpAngle(currentVertical, my, 0.5f);
                 //currentVertical = my; //works fine
-                print($"Target: {my}, current: {currentVertical}, am1: {am1}, am2: {angleMovement}, delta: {delta}, cv: {CurrentHorizontalRotationSpeed}");
+                print($"Target: {my}, current: {currentVertical}, current0: {currentv0}, am: {angleMovement}, delta: {delta}, cv: {CurrentVerticalRotationSpeed}, acRot: {Utils.NormalizeAngle360(AxisValueFromQuaternion(VerticalRotationAxis, VerticalRotatePart.transform.rotation) - VerticalRotationOffset)}");
                 SetRotation(VerticalRotatePart, VerticalRotationAxis, -currentVertical + VerticalRotationOffset);
             } else
             {
