@@ -721,7 +721,9 @@ MonoBehaviour:
   my: 25
   MinYRotation: 5
   MaxYRotation: 89
-  Sensitivity: 0.85
+  Sensitivity: 0.4
+  RegularSensitivity: 0.4
+  SniperModeSensitivity: 0.05
   ZoomSpeed: 90
   SmoothTimeRotation: 0.075
 --- !u!114 &963194230

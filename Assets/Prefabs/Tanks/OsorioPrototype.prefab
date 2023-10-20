@@ -105,8 +105,9 @@ GameObject:
   - component: {fileID: 5327451658071478042}
   - component: {fileID: 4001113915671494552}
   - component: {fileID: 8822911075276350453}
+  - component: {fileID: 5989186861328037308}
   m_Layer: 0
-  m_Name: AimingCamera
+  m_Name: SniperCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -145,7 +146,7 @@ Camera:
   m_ShutterSpeed: 0.005
   m_Aperture: 16
   m_FocusDistance: 100
-  m_FocalLength: 30
+  m_FocalLength: 40
   m_BladeCount: 5
   m_Curvature: {x: 2, y: 11}
   m_BarrelClipping: 0.25
@@ -160,7 +161,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 43.60282
+  field of view: 33.39849
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -209,7 +210,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -230,6 +231,24 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!114 &5989186861328037308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148049702319956645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a25d440f20976b448d894eab2eff5a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ZoomOutFocalLength: 40
+  ZoomInFocalLength: 200
+  TargetZoom: 40
+  ZoomInSpeed: 800
+  CurrentZoomType: 1
+  cam: {fileID: 0}
 --- !u!1 &189189746351773283
 GameObject:
   m_ObjectHideFlags: 0
@@ -720,6 +739,11 @@ MonoBehaviour:
   ExtraWheels: []
   Turrets:
   - {fileID: 216008822412824302}
+  MainTurret: {fileID: 216008822412824302}
+  Renderers:
+  - {fileID: 4336416237326687981}
+  - {fileID: 1825596944293381988}
+  - {fileID: 2277233221863913229}
   ForwardRotationSpeedMax: 2160
   BackRotationSpeedMax: -1440
   ForwardRotationAcceleration: 540
@@ -2063,6 +2087,7 @@ MonoBehaviour:
   AboveTurrets: []
   Base: {fileID: 0}
   Tank: {fileID: -7148630000186440188}
+  SniperModeCamera: {fileID: 5327451658071478042}
   HasHorizontalConstraints: 0
   HorizontalConstraintMin: 0
   HorizontalConstraintMax: 360
@@ -2090,7 +2115,8 @@ MonoBehaviour:
   VerticalRotationOffset: 90
   VerticalPlacementOffset: 25
   VerticalRotationAxis: 0
-  crotT: 0
+  _TurretMx: 0
+  _TurretMy: 0
 --- !u!1 &3194525045296243248
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,15 @@ using UnityEngine;
 public class PlayerCamera : MonoBehaviour
 {
 
+    public enum SensitivityType
+    {
+        Regular,
+        Sniper
+    }
+
+    Camera Camera;
+    AudioListener Listener;
+
     public Transform Target;
 
     public Vector3 TargetLookAtOffset = new Vector3(0, 3f, 5f);
@@ -22,6 +31,8 @@ public class PlayerCamera : MonoBehaviour
     public float MaxYRotation = 89f;
 
     public float Sensitivity = 0.4f;
+    public float RegularSensitivity = 0.4f;
+    public float SniperModeSensitivity = 0.1f;
     public float ZoomSpeed = 20f;
 
     public float SmoothTimeRotation = 0.25f;
@@ -31,9 +42,39 @@ public class PlayerCamera : MonoBehaviour
     float old;
     public static PlayerCamera Instance => instance;
 
+    public void SetMainCameraEnabled(bool val)
+    {
+        Camera.enabled = val;
+        Listener.enabled = val;
+    }
+
+    public void SetSniperModeParams(bool val)
+    {
+        SensitivityType type = val ? SensitivityType.Sniper : SensitivityType.Regular;
+        SetSensitvity(type);
+        SetMainCameraEnabled(val);
+    }
+
+    public void SetSensitvity(SensitivityType type)
+    {
+        switch (type)
+        {
+            case SensitivityType.Regular:
+                Sensitivity = RegularSensitivity;
+                break;
+            case SensitivityType.Sniper:
+                Sensitivity = SniperModeSensitivity;
+                break;
+            default:
+                throw new System.ArgumentException("type");
+        }
+    }
+
     private void Awake()
     {
         instance = this;
+        Camera = GetComponent<Camera>();
+        Listener = GetComponent<AudioListener>();
     }
 
     // Start is called before the first frame update

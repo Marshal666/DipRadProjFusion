@@ -23,6 +23,10 @@ public class PlayerTankController : NetworkBehaviour
 
     public TankTurret[] Turrets;
 
+    public TankTurret MainTurret;
+
+    public Renderer[] Renderers;
+
     public enum WheelSide
     {
         Left = 0,
@@ -120,6 +124,8 @@ public class PlayerTankController : NetworkBehaviour
     }
 
     #endregion
+
+    #region CONTROL_METHODS
 
     void MoveForward()
     {
@@ -225,6 +231,24 @@ public class PlayerTankController : NetworkBehaviour
             SetRotation(-CurrentTraverseSpeed, WheelSide.Left);
         }
     }
+
+    #endregion
+
+    #region CONTROL_UTILS
+
+    public void SetRenderersEnabled(bool state)
+    {
+        if(Renderers != null)
+        {
+            for(int i = 0; i < Renderers.Length; i++)
+            {
+                if (Renderers[i] != null)
+                    Renderers[i].enabled = state;
+            }
+        }
+    }
+
+    #endregion
 
     public override void FixedUpdateNetwork()
     {
