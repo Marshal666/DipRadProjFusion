@@ -156,7 +156,6 @@ public class TankTurret : NetworkBehaviour
                 //{
                     currentVertical = angleMovement;
                 //}
-                currentVertical = Mathf.LerpAngle(currentVertical, my, 0.5f);
                 //currentVertical = my; //works fine
                 print($"Target: {my}, current: {currentVertical}, current0: {currentv0}, am: {angleMovement}, delta: {delta}, cv: {CurrentVerticalRotationSpeed}, acRot: {Utils.NormalizeAngle360(AxisValueFromQuaternion(VerticalRotationAxis, VerticalRotatePart.transform.rotation) - VerticalRotationOffset)}");
                 SetRotation(VerticalRotatePart, VerticalRotationAxis, -currentVertical + VerticalRotationOffset);
