@@ -1303,14 +1303,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1686806105897054744}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.000000004619538, y: 0.0040609743, z: 0.0128562385}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.70710677}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6617646202306670466}
   - {fileID: 4469231086618560074}
-  m_Father: {fileID: 3284031805268350812}
+  m_Father: {fileID: 8914286234701281423}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1846635077957850775
@@ -2038,10 +2038,10 @@ Transform:
   - {fileID: 4945610613138652302}
   - {fileID: 3902962864034624888}
   - {fileID: 2058630821886198447}
-  - {fileID: 7156812515675970496}
   - {fileID: 7037534291016526265}
   - {fileID: 2964231244786599315}
   - {fileID: 7643650172330999042}
+  - {fileID: 8914286234701281423}
   m_Father: {fileID: 1332133269643751278}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2059,7 +2059,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   HorizontalRotatePart: {fileID: 3284031805268350812}
-  VerticalRotatePart: {fileID: 7156812515675970496}
+  VerticalRotatePart: {fileID: 8914286234701281423}
   AboveTurrets: []
   Base: {fileID: 0}
   Tank: {fileID: -7148630000186440188}
@@ -2090,6 +2090,7 @@ MonoBehaviour:
   VerticalRotationOffset: 90
   VerticalPlacementOffset: 25
   VerticalRotationAxis: 0
+  crotT: 0
 --- !u!1 &3194525045296243248
 GameObject:
   m_ObjectHideFlags: 0
@@ -3170,6 +3171,38 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 256830269690957461}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4692518977806027438
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8914286234701281423}
+  m_Layer: 0
+  m_Name: GunCarriage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8914286234701281423
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4692518977806027438}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.000000004619538, y: 0.0040609743, z: 0.0128562385}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7156812515675970496}
+  m_Father: {fileID: 3284031805268350812}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4695605340982690595

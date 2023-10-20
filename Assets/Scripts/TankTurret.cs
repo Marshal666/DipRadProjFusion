@@ -59,6 +59,13 @@ public class TankTurret : NetworkBehaviour
     public float VerticalPlacementOffset = 30f;
     public Axis VerticalRotationAxis = Axis.X;
 
+    public bool MainTurret = true;
+
+    [Networked]
+    public float TurretMx { get; set; }
+    [Networked]
+    public float TurretMy { get; set; }
+
     public Vector3 Axis2Vector3(Axis axis)
     {
         switch (axis)
@@ -94,10 +101,13 @@ public class TankTurret : NetworkBehaviour
         return AxisValueFromVector3(axis, q.eulerAngles);
     }
 
-    public void SetRotation(Transform rot, Axis axis, float angle)
+    public void SetRotation(Transform rot, Axis axis, float angle, bool local = true)
     {
         Vector3 v = Axis2Vector3(axis);
-        rot.localRotation = Quaternion.Euler(v * angle);
+        if (local)
+            rot.localRotation = Quaternion.Euler(v * angle);
+        else
+            rot.rotation = Quaternion.Euler(v * angle);
     }
 
     public int VerticalConstraintAngleIndex(float a)
@@ -114,6 +124,8 @@ public class TankTurret : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
+        SetRotation(VerticalRotatePart, VerticalRotationAxis, TurretMx);
+        SetRotation(HorizontalRotatePart, HorizontalRotationAxis, TurretMy);
         if (GetInput(out NetworkInputData data))
         {
             if (float.IsNaN(data.MX) || float.IsNaN(data.MY))
@@ -124,12 +136,10 @@ public class TankTurret : NetworkBehaviour
             }
 
             float currentHorizontal = Utils.NormalizeAngle360(AxisValueFromQuaternion(HorizontalRotationAxis, HorizontalRotatePart.localRotation));
-            float currentVertical = Utils.NormalizeAngle360(AxisValueFromQuaternion(VerticalRotationAxis, VerticalRotatePart.transform.rotation) - VerticalRotationOffset);
-            float currentv0 = currentVertical;
+            float currentVertical = Utils.NormalizeAngle360(-AxisValueFromQuaternion(VerticalRotationAxis, VerticalRotatePart.transform.localRotation)/* - VerticalRotationOffset*/);
 
             //Vertical rotation part
             float my = Utils.NormalizeAngle360(VerticalPlacementOffset - data.MY);
-            //TODO: map "my" variable so that it's properly aligned with view for shooting
             int constraintIndex = VerticalConstraintAngleIndex(currentHorizontal);
             float vmin = VerticalConstraints[constraintIndex].VerticalMin;
             float vmax = VerticalConstraints[constraintIndex].VerticalMax;
@@ -137,28 +147,10 @@ public class TankTurret : NetworkBehaviour
             
             if (currentVertical != my)
             {
-                //TODO: fix smooth gun lifting..
                 CurrentVerticalRotationSpeed = Mathf.Clamp(CurrentVerticalRotationSpeed + VerticalRotationAcceleration * Runner.DeltaTime, 0, VerticalRotationSpeedMax);
-                float angleMovement;
-                angleMovement = Utils.NormalizeAngle360(Mathf.MoveTowardsAngle(currentVertical, my, CurrentVerticalRotationSpeed * Runner.DeltaTime));
-                float delta = Utils.NormalizeAngle360(Mathf.DeltaAngle(angleMovement, currentVertical));
-                //print($"my0: {Utils.NormalizeAngle360(VerticalPlacementOffset - data.MY)}, my: {my}, currentV: {currentVertical}, GunRot: {AxisValueFromQuaternion(VerticalRotationAxis, VerticalRotatePart.transform.rotation)}");
-                //if (HasVerticalConstraints)
-                //{
-                    
-                //    float nearEndStep = Utils.NormalizeAngle360(Mathf.LerpAngle(currentVertical, my, 0.99f));
-                //    if (nearEndStep != Utils.ClampAngleLPositive(nearEndStep, vmin, vmax))
-                //    {
-                //        angleMovement = Utils.NormalizeAngle360(angleMovement - 2 * delta);
-                //    }
-                //}
-                //if (!HasVerticalConstraints || angleMovement == Utils.ClampAngleLPositive(angleMovement, vmin, vmax))
-                //{
-                    currentVertical = angleMovement;
-                //}
-                //currentVertical = my; //works fine
-                print($"Target: {my}, current: {currentVertical}, current0: {currentv0}, am: {angleMovement}, delta: {delta}, cv: {CurrentVerticalRotationSpeed}, acRot: {Utils.NormalizeAngle360(AxisValueFromQuaternion(VerticalRotationAxis, VerticalRotatePart.transform.rotation) - VerticalRotationOffset)}");
-                SetRotation(VerticalRotatePart, VerticalRotationAxis, -currentVertical + VerticalRotationOffset);
+                currentVertical = Mathf.MoveTowardsAngle(currentVertical, my, CurrentVerticalRotationSpeed * Runner.DeltaTime);
+                SetRotation(VerticalRotatePart, VerticalRotationAxis, -currentVertical);
+                TurretMx = -currentVertical;
             } else
             {
                 CurrentVerticalRotationSpeed = 0f;
@@ -197,6 +189,7 @@ public class TankTurret : NetworkBehaviour
                     currentHorizontal = angleMovement;
                 }
                 SetRotation(HorizontalRotatePart, HorizontalRotationAxis, currentHorizontal);
+                TurretMy = currentHorizontal;
             } else
             {
                 CurrentHorizontalRotationSpeed = 0f;
