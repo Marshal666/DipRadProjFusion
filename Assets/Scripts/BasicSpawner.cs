@@ -11,6 +11,9 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
     private NetworkRunner _runner;
 
     [SerializeField] private NetworkPrefabRef _playerPrefab;
+
+    public Vector3 SpawnOffset = default;
+
     private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
 
     private void OnGUI()
@@ -49,7 +52,7 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         if (runner.IsServer)
         {
             // Create a unique position for the player
-            Vector3 spawnPosition = new Vector3((player.RawEncoded % runner.Config.Simulation.DefaultPlayers) * 3, 0, 0);
+            Vector3 spawnPosition = new Vector3((player.RawEncoded % runner.Config.Simulation.DefaultPlayers) * 3, 0, 0) + SpawnOffset;
             NetworkObject networkPlayerObject = runner.Spawn(
                 _playerPrefab, spawnPosition,
                 Quaternion.identity, player,

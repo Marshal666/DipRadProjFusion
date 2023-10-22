@@ -779,7 +779,7 @@ MonoBehaviour:
   Offset: {x: 0, y: 0, z: 0}
   GizmosColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   Hitboxes:
-  - {fileID: 0}
+  - {fileID: 8696332507589408762}
 --- !u!1 &819447427006226631
 GameObject:
   m_ObjectHideFlags: 0
@@ -2128,10 +2128,12 @@ MonoBehaviour:
     VerticalMin: -10
     VerticalMax: 20
   HorizontalRotationSpeedMax: 180
+  HorizontalRotationSpeedInit: 5
   HorizontalRotationAcceleration: 120
   CurrentHorizontalRotationSpeed: 0
   HorizontalRotationAxis: 1
   VerticalRotationSpeedMax: 90
+  VerticalRotationSpeedInit: 5
   VerticalRotationAcceleration: 90
   CurrentVerticalRotationSpeed: 0
   VerticalRotationOffset: 90
@@ -2156,8 +2158,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 1
   SphereRadius: 0
-  BoxExtents: {x: 0.85, y: 0.3, z: 1.37}
-  Offset: {x: 0, y: 0.5, z: 0}
+  BoxExtents: {x: 0.96, y: 0.39, z: 1.49}
+  Offset: {x: 0, y: 0.58, z: 0}
   Root: {fileID: 0}
   GizmosColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &3194525045296243248
