@@ -65,7 +65,7 @@ public class TankTurret : NetworkBehaviour
 
     public bool HasSniperMode = true;
 
-    public float RotationSmoothingTime = 0.034f;
+    public float RotationSmoothingSpeed = 720f;
 
     public float RotationkEps = 0.00001f;
 
@@ -172,6 +172,7 @@ public class TankTurret : NetworkBehaviour
             } else
             {
                 CurrentVerticalRotationSpeed = 0f;
+                lmxv = 0f;
             }
 
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -207,6 +208,7 @@ public class TankTurret : NetworkBehaviour
             } else
             {
                 CurrentHorizontalRotationSpeed = 0f;
+                lmyv = 0f;
             }
         }
     }
@@ -241,8 +243,16 @@ public class TankTurret : NetworkBehaviour
             }
         }
 
-        lmx = Mathf.SmoothDampAngle(lmx, TurretMx, ref lmxv, RotationSmoothingTime);
-        lmy = Mathf.SmoothDampAngle(lmy, TurretMy, ref lmyv, RotationSmoothingTime);
+        //Causes jittering when doing hull rotation
+        //lmx = Mathf.SmoothDampAngle(lmx, TurretMx, ref lmxv, RotationSmoothingTime);
+        //lmy = Mathf.SmoothDampAngle(lmy, TurretMy, ref lmyv, RotationSmoothingTime);
+
+        //Works fine, but it's not super smooth
+        lmx = TurretMx;
+        lmy = TurretMy;
+
+        //lmx = Mathf.MoveTowardsAngle(lmx, TurretMx, RotationSmoothingSpeed * Time.deltaTime);
+        //lmy = Mathf.MoveTowardsAngle(lmy, TurretMy, RotationSmoothingSpeed * Time.deltaTime);
 
         SetRotation(VerticalRotatePart, VerticalRotationAxis, lmx);
         SetRotation(HorizontalRotatePart, HorizontalRotationAxis, lmy);
