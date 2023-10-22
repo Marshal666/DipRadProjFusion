@@ -602,6 +602,7 @@ GameObject:
   - component: {fileID: 24240301683542001}
   - component: {fileID: -8720378359915669696}
   - component: {fileID: -7148630000186440188}
+  - component: {fileID: 6255696387713111865}
   m_Layer: 0
   m_Name: OsorioPrototype
   m_TagString: Untagged
@@ -653,6 +654,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: -8720378359915669696}
   - {fileID: -7148630000186440188}
+  - {fileID: 6255696387713111865}
   - {fileID: 216008822412824302}
   SimulationBehaviours: []
 --- !u!54 &24240301683542001
@@ -759,6 +761,25 @@ MonoBehaviour:
   TraverseMovingCoef: 0.98
   _CurrentTraverseSpeed: 0
   SleepVelocity: 0.02
+--- !u!114 &6255696387713111865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762814593903037979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1039544458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  Config: 1
+  BroadRadius: 0
+  Offset: {x: 0, y: 0, z: 0}
+  GizmosColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  Hitboxes:
+  - {fileID: 0}
 --- !u!1 &819447427006226631
 GameObject:
   m_ObjectHideFlags: 0
@@ -2038,6 +2059,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3284031805268350812}
   - component: {fileID: 216008822412824302}
+  - component: {fileID: 8696332507589408762}
   m_Layer: 0
   m_Name: Turret
   m_TagString: Untagged
@@ -2115,8 +2137,29 @@ MonoBehaviour:
   VerticalRotationOffset: 90
   VerticalPlacementOffset: 25
   VerticalRotationAxis: 0
+  HasSniperMode: 1
+  RotationSmoothingTime: 0.025
+  RotationkEps: 0.0005
   _TurretMx: 0
   _TurretMy: 0
+--- !u!114 &8696332507589408762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3149176005995589377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1014831617, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 1
+  SphereRadius: 0
+  BoxExtents: {x: 0.85, y: 0.3, z: 1.37}
+  Offset: {x: 0, y: 0.5, z: 0}
+  Root: {fileID: 0}
+  GizmosColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &3194525045296243248
 GameObject:
   m_ObjectHideFlags: 0

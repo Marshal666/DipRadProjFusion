@@ -51,8 +51,10 @@ public class PlayerCamera : MonoBehaviour
     public void SetSniperModeParams(bool val)
     {
         SensitivityType type = val ? SensitivityType.Sniper : SensitivityType.Regular;
-        SetSensitvity(type);
-        SetMainCameraEnabled(val);
+        //SetSensitvity(type);  //ZoomIn only used at part of sniper mode
+        SetMainCameraEnabled(!val);
+        if (val == false)
+            SetSensitvity(SensitivityType.Regular);
     }
 
     public void SetSensitvity(SensitivityType type)

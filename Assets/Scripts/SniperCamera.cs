@@ -60,9 +60,11 @@ public class SniperCamera : MonoBehaviour
         {
             case ZoomType.In:
                 TargetZoom = ZoomInFocalLength;
+                PlayerCamera.Instance.SetSensitvity(PlayerCamera.SensitivityType.Sniper);
                 break;
             case ZoomType.Out:
                 TargetZoom = ZoomOutFocalLength;
+                PlayerCamera.Instance.SetSensitvity(PlayerCamera.SensitivityType.Regular);
                 break;
             default:
                 throw new System.ArgumentException("CurrentZoomType");

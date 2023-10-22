@@ -50,16 +50,24 @@ public class TankTurret : NetworkBehaviour
     public VerticalConstraint[] VerticalConstraints;
 
     public float HorizontalRotationSpeedMax = 270f;
+    public float HorizontalRotationSpeedInit = 5f;
     public float HorizontalRotationAcceleration = 180f;
     public float CurrentHorizontalRotationSpeed = 0f;
     public Axis HorizontalRotationAxis = Axis.Y;
 
     public float VerticalRotationSpeedMax = 90f;
+    public float VerticalRotationSpeedInit = 5f;
     public float VerticalRotationAcceleration = 90f;
     public float CurrentVerticalRotationSpeed = 0f;
     public float VerticalRotationOffset = 90f;
     public float VerticalPlacementOffset = 30f;
     public Axis VerticalRotationAxis = Axis.X;
+
+    public bool HasSniperMode = true;
+
+    public float RotationSmoothingTime = 0.034f;
+
+    public float RotationkEps = 0.00001f;
 
     [Networked]
     public float TurretMx { get; set; }
@@ -122,10 +130,16 @@ public class TankTurret : NetworkBehaviour
         throw new System.Exception("No vertical constraint for current angle!");
     }
 
+    public override void Spawned()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     public override void FixedUpdateNetwork()
     {
-        SetRotation(VerticalRotatePart, VerticalRotationAxis, TurretMx);
-        SetRotation(HorizontalRotatePart, HorizontalRotationAxis, TurretMy);
+        //SetRotation(VerticalRotatePart, VerticalRotationAxis, TurretMx);
+        //SetRotation(HorizontalRotatePart, HorizontalRotationAxis, TurretMy);
         if (GetInput(out NetworkInputData data))
         {
             if (float.IsNaN(data.MX) || float.IsNaN(data.MY))
@@ -135,8 +149,8 @@ public class TankTurret : NetworkBehaviour
                 return;
             }
 
-            float currentHorizontal = Utils.NormalizeAngle360(AxisValueFromQuaternion(HorizontalRotationAxis, HorizontalRotatePart.localRotation));
-            float currentVertical = Utils.NormalizeAngle360(-AxisValueFromQuaternion(VerticalRotationAxis, VerticalRotatePart.transform.localRotation)/* - VerticalRotationOffset*/);
+            float currentHorizontal = Utils.NormalizeAngle360(TurretMy /*AxisValueFromQuaternion(HorizontalRotationAxis, HorizontalRotatePart.localRotation)*/);
+            float currentVertical = Utils.NormalizeAngle360(-TurretMx /*-AxisValueFromQuaternion(VerticalRotationAxis, VerticalRotatePart.transform.localRotation)*/ /* - VerticalRotationOffset*/);
 
             //Vertical rotation part
             float my = Utils.NormalizeAngle360(VerticalPlacementOffset - data.MY);
@@ -145,11 +159,15 @@ public class TankTurret : NetworkBehaviour
             float vmax = VerticalConstraints[constraintIndex].VerticalMax;
             my = Utils.NormalizeAngle360(Utils.ClampAngleLPositive(my, vmin, vmax));
             
-            if (currentVertical != my)
+            if (Mathf.Abs(Mathf.DeltaAngle(currentVertical, my)) > RotationkEps /*currentVertical != my*/)
             {
+                if(CurrentVerticalRotationSpeed == 0f)
+                {
+                    CurrentVerticalRotationSpeed = VerticalRotationSpeedInit;
+                }
                 CurrentVerticalRotationSpeed = Mathf.Clamp(CurrentVerticalRotationSpeed + VerticalRotationAcceleration * Runner.DeltaTime, 0, VerticalRotationSpeedMax);
                 currentVertical = Mathf.MoveTowardsAngle(currentVertical, my, CurrentVerticalRotationSpeed * Runner.DeltaTime);
-                SetRotation(VerticalRotatePart, VerticalRotationAxis, -currentVertical);
+                //SetRotation(VerticalRotatePart, VerticalRotationAxis, -currentVertical);
                 TurretMx = -currentVertical;
             } else
             {
@@ -162,8 +180,13 @@ public class TankTurret : NetworkBehaviour
             float mx = Utils.NormalizeAngle360(data.MX - baseRotation);
             if (HasHorizontalConstraints)
                 mx = Utils.ClampAngleLPositive(mx, HorizontalConstraintMin, HorizontalConstraintMax);
-            if(currentHorizontal != mx)
+            if(Mathf.Abs(Mathf.DeltaAngle(currentHorizontal, mx)) > RotationkEps/*currentHorizontal != mx*/)
             {
+                //print($"mx ({mx}) != current ({currentHorizontal})");
+                if(CurrentHorizontalRotationSpeed == 0f)
+                {
+                    CurrentHorizontalRotationSpeed = HorizontalRotationSpeedInit;
+                }
                 CurrentHorizontalRotationSpeed = Mathf.Clamp(CurrentHorizontalRotationSpeed + HorizontalRotationAcceleration * Runner.DeltaTime, 0, HorizontalRotationSpeedMax);
                 float angleMovement = Utils.NormalizeAngle360(Mathf.MoveTowardsAngle(currentHorizontal, mx, CurrentHorizontalRotationSpeed * Runner.DeltaTime));
                 if (HasHorizontalConstraints)
@@ -179,7 +202,7 @@ public class TankTurret : NetworkBehaviour
                 {
                     currentHorizontal = angleMovement;
                 }
-                SetRotation(HorizontalRotatePart, HorizontalRotationAxis, currentHorizontal);
+                //SetRotation(HorizontalRotatePart, HorizontalRotationAxis, currentHorizontal);
                 TurretMy = currentHorizontal;
             } else
             {
@@ -194,20 +217,35 @@ public class TankTurret : NetworkBehaviour
         SniperModeCamera.GetComponent<AudioListener>().enabled = val;
     }
 
+    bool InSniperMode = false;
+
+    public void ToggleSniperMode()
+    {
+        InSniperMode = !InSniperMode;
+        PlayerCamera.Instance.SetSniperModeParams(InSniperMode);
+        Tank.SetRenderersEnabled(!InSniperMode);
+        SetSniperCameraActive(InSniperMode);
+        UIManager.SetSniperModeUIEnabled(InSniperMode);
+    }
+
+    float lmx = 0f, lmy = 0f;
+    float lmxv = 0f, lmyv = 0f;
+
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.LeftShift))
+        if (Tank.HasInputAuthority && HasSniperMode)
         {
-            PlayerCamera.Instance.SetSniperModeParams(false);
-            Tank.SetRenderersEnabled(false);
-            SetSniperCameraActive(true);
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                ToggleSniperMode();
+            }
         }
-        if(Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            PlayerCamera.Instance.SetSniperModeParams(true);
-            Tank.SetRenderersEnabled(true);
-            SetSniperCameraActive(false);
-        }
+
+        lmx = Mathf.SmoothDampAngle(lmx, TurretMx, ref lmxv, RotationSmoothingTime);
+        lmy = Mathf.SmoothDampAngle(lmy, TurretMy, ref lmyv, RotationSmoothingTime);
+
+        SetRotation(VerticalRotatePart, VerticalRotationAxis, lmx);
+        SetRotation(HorizontalRotatePart, HorizontalRotationAxis, lmy);
     }
 
 }
