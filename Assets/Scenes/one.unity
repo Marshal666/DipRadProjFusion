@@ -1518,7 +1518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerPrefab:
-    RawGuidValue: 10e15f70344c99645a49682124f4c0c7
+    RawGuidValue: afef268de226d4543950d45b2baca0ab
   SpawnOffset: {x: 0, y: 1, z: 0}
 --- !u!114 &1626325269
 MonoBehaviour:
