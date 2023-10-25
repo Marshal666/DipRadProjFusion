@@ -37,6 +37,8 @@ public class PlayerCamera : MonoBehaviour
 
     public float SmoothTimeRotation = 0.25f;
 
+    public static Camera CurrentCamera;
+
     static PlayerCamera instance;
 
     float old;
@@ -45,12 +47,14 @@ public class PlayerCamera : MonoBehaviour
     public void SetMainCameraEnabled(bool val)
     {
         Camera.enabled = val;
+        CurrentCamera = Camera;
         Listener.enabled = val;
     }
 
-    public void SetSniperModeParams(bool val)
+    public void SetSniperModeParams(bool val, Camera sniperCamera)
     {
         SensitivityType type = val ? SensitivityType.Sniper : SensitivityType.Regular;
+        CurrentCamera = sniperCamera;
         //SetSensitvity(type);  //ZoomIn only used at part of sniper mode
         SetMainCameraEnabled(!val);
         if (val == false)
@@ -77,6 +81,7 @@ public class PlayerCamera : MonoBehaviour
         instance = this;
         Camera = GetComponent<Camera>();
         Listener = GetComponent<AudioListener>();
+        CurrentCamera = Camera;
     }
 
     // Start is called before the first frame update

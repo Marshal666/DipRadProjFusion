@@ -8,6 +8,11 @@ public class UIManager : MonoBehaviour
 
     public GameObject SniperModeObjects;
 
+    public GameObject AimingObjects;
+
+
+    public RectTransform AimingWhiteCircle;
+
     static UIManager instance;
     public static UIManager Instance => instance;
 
@@ -24,6 +29,16 @@ public class UIManager : MonoBehaviour
     public static void SetSniperModeUIEnabled(bool val)
     {
         instance.SetSniperModeUIObjectsEnabled(val);
+    }
+
+    public static void SetAimingObjectsActive(bool val)
+    {
+        instance.AimingObjects.SetActive(val);
+    }
+
+    public static void PositionAimingCircle(Vector3 newPos)
+    {
+        instance.AimingWhiteCircle.position = newPos;
     }
 
 }

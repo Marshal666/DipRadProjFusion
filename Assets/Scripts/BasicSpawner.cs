@@ -94,6 +94,11 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         if (Input.GetKey(KeyCode.D))
             data.SetButton(NetworkInputData.RIGHT_BUTTON);
 
+        if (Input.GetKey(KeyCode.Mouse0))
+            data.SetButton(NetworkInputData.FIRE_BUTTON);
+        if (Input.GetKey(KeyCode.Space))
+            data.SetButton(NetworkInputData.SECONDARY_FIRE_BUTTON);
+
         if (!Input.GetKey(KeyCode.C))
         {
             data.MX = PlayerCamera.Instance.mx;

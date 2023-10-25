@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6075114515377295419}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CameraFront_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7832411872935604264}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HatchPilot_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4914607571594045743}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MudStopper2.L_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 4001113915671494552}
   - component: {fileID: 8822911075276350453}
   - component: {fileID: 5989186861328037308}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SniperCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,12 +120,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 148049702319956645}
-  m_LocalRotation: {x: -0.7072543, y: -0.00011806831, z: 0.00008636517, w: 0.70695925}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.010000003, y: 0.01, z: 0.010000001}
+  m_LocalScale: {x: 0.010000003, y: 0.01, z: 0.010000002}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7156812515675970496}
+  m_Father: {fileID: 8914286234701281423}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &5327451658071478042
@@ -258,7 +258,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2029411382791076005}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MudStopper2.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -290,7 +290,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7928781479064687069}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Suspension1.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,7 +322,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5637257837175679829}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Suspension5.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -356,7 +356,7 @@ GameObject:
   - component: {fileID: 3655820588228164959}
   - component: {fileID: 5087053971704656589}
   - component: {fileID: 1664551725253292758}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WheelCollider1L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -397,11 +397,11 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
+    m_ExtremumSlip: 0.9
+    m_ExtremumValue: 1.8
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 2
   m_SidewaysFriction:
     m_ExtremumSlip: 1.5
     m_ExtremumValue: 1
@@ -440,7 +440,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5442254842781070311}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Suspension2.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -472,7 +472,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 931824797619852339}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Lights.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -504,7 +504,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6456400468044305333}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Antena2.2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -536,7 +536,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4562721973320180330}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel3.L_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -567,7 +567,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3547116829068689871}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel8.R_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -603,7 +603,7 @@ GameObject:
   - component: {fileID: -8720378359915669696}
   - component: {fileID: -7148630000186440188}
   - component: {fileID: 6255696387713111865}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OsorioPrototype
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -656,6 +656,8 @@ MonoBehaviour:
   - {fileID: -7148630000186440188}
   - {fileID: 6255696387713111865}
   - {fileID: 216008822412824302}
+  - {fileID: 8358745933018885688}
+  - {fileID: 2224479198603256406}
   SimulationBehaviours: []
 --- !u!54 &24240301683542001
 Rigidbody:
@@ -741,6 +743,7 @@ MonoBehaviour:
   ExtraWheels: []
   Turrets:
   - {fileID: 216008822412824302}
+  - {fileID: 8358745933018885688}
   MainTurret: {fileID: 216008822412824302}
   Renderers:
   - {fileID: 4336416237326687981}
@@ -789,7 +792,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8853371978969656657}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MudStopper2.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -821,7 +824,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 743791085696276050}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Lights.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -855,7 +858,7 @@ GameObject:
   - component: {fileID: 5689129239197997575}
   - component: {fileID: 5865774485227670707}
   - component: {fileID: 6344331516950004965}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WheelCollider2R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -896,11 +899,11 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
+    m_ExtremumSlip: 0.9
+    m_ExtremumValue: 1.8
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 2
   m_SidewaysFriction:
     m_ExtremumSlip: 1.5
     m_ExtremumValue: 1
@@ -941,7 +944,7 @@ GameObject:
   - component: {fileID: 181592550928586408}
   - component: {fileID: 9062687120091607303}
   - component: {fileID: 3643181780416458206}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WheelCollider3R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -982,11 +985,11 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
+    m_ExtremumSlip: 0.9
+    m_ExtremumValue: 1.8
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 2
   m_SidewaysFriction:
     m_ExtremumSlip: 1.5
     m_ExtremumValue: 1
@@ -1025,7 +1028,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9034188418391949593}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CameraBack_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1057,7 +1060,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5172562500545332496}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Suspension4.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1089,7 +1092,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6524503079560673135}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel8.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1123,7 +1126,7 @@ GameObject:
   - component: {fileID: 7021162929108683008}
   - component: {fileID: 2315733532660345805}
   - component: {fileID: 2500975915693980432}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WheelCollider3L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1164,11 +1167,11 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
+    m_ExtremumSlip: 0.9
+    m_ExtremumValue: 1.8
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 2
   m_SidewaysFriction:
     m_ExtremumSlip: 1.5
     m_ExtremumValue: 1
@@ -1207,7 +1210,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 357461182079986716}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MudStopper2.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1239,7 +1242,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 153504077976129576}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel2.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1271,7 +1274,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 416618584232130278}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Suspension2.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1303,7 +1306,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1112665268791788072}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel6.R_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1334,7 +1337,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7156812515675970496}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Canon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1354,7 +1357,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6617646202306670466}
-  - {fileID: 4469231086618560074}
   m_Father: {fileID: 8914286234701281423}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
@@ -1367,7 +1369,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 100013957096735441}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel6.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1399,7 +1401,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3402138195469844661}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel1.R_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1430,7 +1432,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 696618053122612613}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Suspension6.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1464,7 +1466,7 @@ GameObject:
   - component: {fileID: 2606893893793824615}
   - component: {fileID: 8675924807963258468}
   - component: {fileID: 7909137866218237319}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WheelCollider4R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1505,11 +1507,11 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
+    m_ExtremumSlip: 0.9
+    m_ExtremumValue: 1.8
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 2
   m_SidewaysFriction:
     m_ExtremumSlip: 1.5
     m_ExtremumValue: 1
@@ -1550,7 +1552,7 @@ GameObject:
   - component: {fileID: 6905995892527449660}
   - component: {fileID: 3615359842897012521}
   - component: {fileID: 2077026786841595692}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WheelCollider5L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1591,11 +1593,11 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
+    m_ExtremumSlip: 0.9
+    m_ExtremumValue: 1.8
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 2
   m_SidewaysFriction:
     m_ExtremumSlip: 1.5
     m_ExtremumValue: 1
@@ -1634,7 +1636,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1631465633023741783}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Suspension3.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1668,7 +1670,7 @@ GameObject:
   - component: {fileID: 391471820138294713}
   - component: {fileID: 1324335645033895153}
   - component: {fileID: 6134649347660918818}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WheelCollider1R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1709,11 +1711,11 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
+    m_ExtremumSlip: 0.9
+    m_ExtremumValue: 1.8
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 2
   m_SidewaysFriction:
     m_ExtremumSlip: 1.5
     m_ExtremumValue: 1
@@ -1752,7 +1754,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6610185493016710984}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel5.L_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1783,7 +1785,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8907679345678168505}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel6.L_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1814,7 +1816,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2650641388379180139}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hatch.R_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1845,7 +1847,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1502236855704136776}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HatchPilot_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1877,7 +1879,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2063005089234551106}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Suspension6.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1911,7 +1913,7 @@ GameObject:
   - component: {fileID: 8073121454412051447}
   - component: {fileID: 4297084472508147429}
   - component: {fileID: 5811307644255100229}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WheelCollider5R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1952,11 +1954,11 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
+    m_ExtremumSlip: 0.9
+    m_ExtremumValue: 1.8
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 2
   m_SidewaysFriction:
     m_ExtremumSlip: 1.5
     m_ExtremumValue: 1
@@ -1995,7 +1997,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4732136125148213128}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Antena1.3_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2026,7 +2028,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2964231244786599315}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hatch.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2060,7 +2062,7 @@ GameObject:
   - component: {fileID: 3284031805268350812}
   - component: {fileID: 216008822412824302}
   - component: {fileID: 8696332507589408762}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2127,7 +2129,7 @@ MonoBehaviour:
     HorizontalEnd: 360
     VerticalMin: -10
     VerticalMax: 20
-  HorizontalRotationSpeedMax: 180
+  HorizontalRotationSpeedMax: 90
   HorizontalRotationSpeedInit: 5
   HorizontalRotationAcceleration: 120
   CurrentHorizontalRotationSpeed: 0
@@ -2142,8 +2144,12 @@ MonoBehaviour:
   HasSniperMode: 1
   RotationSmoothingSpeed: 720000
   RotationkEps: 0.0005
+  Weapons:
+  - {fileID: 0}
   _TurretMx: 0
   _TurretMy: 0
+  lmx: 0
+  lmy: 0
 --- !u!114 &8696332507589408762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2171,7 +2177,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4945610613138652302}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CameraBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2203,7 +2209,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2691641569911265762}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel1.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2235,7 +2241,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4942409263463154908}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel1.L_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2266,7 +2272,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7479267420820263436}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel6.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2299,7 +2305,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6951494014887066897}
   - component: {fileID: 4336416237326687981}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2467,7 +2473,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9028786871820964609}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MudStopper.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2499,7 +2505,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5589312138484908662}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hatch.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2531,7 +2537,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1332133269643751278}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2584,7 +2590,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6088349900332190752}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel6.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2616,7 +2622,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3695317755457894366}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TurretXAxis_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2647,7 +2653,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5084057525312409083}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EET1Osorio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2679,7 +2685,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5468835664566380744}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Lights.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2711,7 +2717,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8437781655421648353}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel3.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2743,7 +2749,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 303456012392817931}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel5.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2775,7 +2781,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1015696066347693687}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel3.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2807,7 +2813,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1424460267714596458}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CameraFront_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2839,7 +2845,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7795428540504415436}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Antena1.3_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2871,7 +2877,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6759213938298132158}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Antena1.3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2903,7 +2909,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 154790585816430849}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel5.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2937,7 +2943,7 @@ GameObject:
   - component: {fileID: 4298288650245405458}
   - component: {fileID: 5600456400405818600}
   - component: {fileID: 5523644431121401999}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WheelCollider6L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2978,11 +2984,11 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
+    m_ExtremumSlip: 0.9
+    m_ExtremumValue: 1.8
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 2
   m_SidewaysFriction:
     m_ExtremumSlip: 1.5
     m_ExtremumValue: 1
@@ -3021,7 +3027,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2232326940746331339}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Antena2.1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3054,7 +3060,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3779813690393209912}
   - component: {fileID: 2277233221863913229}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3222,7 +3228,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7304938206119389016}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel4.L_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3253,7 +3259,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8914286234701281423}
-  m_Layer: 0
+  - component: {fileID: 2224479198603256406}
+  - component: {fileID: 2244038112862456850}
+  m_Layer: 6
   m_Name: GunCarriage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3273,9 +3281,138 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7156812515675970496}
+  - {fileID: 4469231086618560074}
   m_Father: {fileID: 3284031805268350812}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2224479198603256406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4692518977806027438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b083d470d17ee324fa114ba60b589383, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  Turret: {fileID: 216008822412824302}
+  ShootPointLocator: {fileID: 8914286234701281423}
+  ReloadTime: 1
+  AimerDistance: 128
+  DefaultAimerDistance: 128
+  Shells:
+  - {fileID: 11400000, guid: d0137d5dd34b7404f9222f7586d6b53f, type: 2}
+  CurrentShellIndex: 0
+  Debug: 0
+  LaserCheck: {fileID: 2244038112862456850}
+  MainWeapon: 1
+--- !u!120 &2244038112862456850
+LineRenderer:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4692518977806027438}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Positions:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  m_Parameters:
+    serializedVersion: 3
+    widthMultiplier: 0.1
+    widthCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    colorGradient:
+      serializedVersion: 2
+      key0: {r: 0.3737735, g: 0.8396226, b: 0.35248306, a: 1}
+      key1: {r: 0.38110024, g: 0.1985822, b: 0.114236206, a: 1}
+      key2: {r: 0.3773585, g: 0.18013182, b: 0.09077963, a: 0}
+      key3: {r: 0.4245283, g: 0.4127234, b: 0.38648096, a: 0}
+      key4: {r: 0.3951584, g: 0.4057919, b: 0.4528302, a: 0}
+      key5: {r: 0.3962264, g: 0.37566748, b: 0.37566748, a: 0}
+      key6: {r: 0.38679248, g: 0.24265754, b: 0.24978267, a: 0}
+      key7: {r: 0.3018868, g: 0.10086454, b: 0.086863644, a: 0}
+      ctime0: 0
+      ctime1: 11993
+      ctime2: 18131
+      ctime3: 28801
+      ctime4: 37772
+      ctime5: 45705
+      ctime6: 56186
+      ctime7: 65535
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_ColorSpace: 0
+      m_NumColorKeys: 8
+      m_NumAlphaKeys: 2
+    numCornerVertices: 3
+    numCapVertices: 3
+    alignment: 0
+    textureMode: 0
+    textureScale: {x: 1, y: 1}
+    shadowBias: 0.5
+    generateLightingData: 0
+  m_MaskInteraction: 0
+  m_UseWorldSpace: 1
+  m_Loop: 0
+  m_ApplyActiveColorSpace: 1
 --- !u!1 &4695605340982690595
 GameObject:
   m_ObjectHideFlags: 0
@@ -3285,7 +3422,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4768167381086440007}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel1.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3317,7 +3454,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2023406520543115025}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Antena2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3349,7 +3486,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6375281586486903836}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Lights.L_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3380,7 +3517,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 199017561103543315}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Antena2.3_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3412,7 +3549,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1892145612589315531}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel2.R_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3443,7 +3580,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2438621140051813568}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel7.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3475,7 +3612,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4928453411701424447}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel3.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3507,7 +3644,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7813435977007890670}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Suspension1.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3539,7 +3676,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9158815669162172406}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel4.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3571,7 +3708,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1333132083856506895}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Suspension5.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3594,6 +3731,38 @@ Transform:
   m_Father: {fileID: 1332133269643751278}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5281379677615338504
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9054476135637641544}
+  m_Layer: 6
+  m_Name: MGCarriage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9054476135637641544
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5281379677615338504}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.0000000010241422, y: 0.0019183127, z: -0.00035518504}
+  m_LocalScale: {x: 1, y: 1, z: 0.9999999}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1721050540239847086}
+  m_Father: {fileID: 7643650172330999042}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5346008682096794698
 GameObject:
   m_ObjectHideFlags: 0
@@ -3603,7 +3772,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1767313437989322901}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Camo_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3634,7 +3803,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 737844819359333249}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel4.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3666,7 +3835,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6617646202306670466}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Camo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3700,7 +3869,7 @@ GameObject:
   - component: {fileID: 4606168767110132133}
   - component: {fileID: 4455178401235059710}
   - component: {fileID: 7591598074950191034}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WheelCollider4L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3741,11 +3910,11 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
+    m_ExtremumSlip: 0.9
+    m_ExtremumValue: 1.8
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 2
   m_SidewaysFriction:
     m_ExtremumSlip: 1.5
     m_ExtremumValue: 1
@@ -3784,7 +3953,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7037534291016526265}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hatch.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3816,7 +3985,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 723038775183249944}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel2.L_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3847,7 +4016,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3902962864034624888}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CameraFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3879,7 +4048,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5481765392411416442}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel1.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3911,7 +4080,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1155666375103127761}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Suspension3.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3943,7 +4112,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1035727252215786976}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel8.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3975,7 +4144,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3667426281899820203}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel3.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4007,7 +4176,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8380627461155958763}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel7.R_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4038,7 +4207,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3216207102582421089}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MudStopper.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4070,7 +4239,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7883038153790279230}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel6.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4102,7 +4271,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4730259673555958242}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Antena1.1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4134,7 +4303,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4726992628638130568}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Suspension4.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4168,7 +4337,7 @@ GameObject:
   - component: {fileID: 4675227755142528942}
   - component: {fileID: 4500102153321354913}
   - component: {fileID: 7984086239354653167}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WheelCollider2L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4209,11 +4378,11 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
+    m_ExtremumSlip: 0.9
+    m_ExtremumValue: 1.8
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 2
   m_SidewaysFriction:
     m_ExtremumSlip: 1.5
     m_ExtremumValue: 1
@@ -4252,7 +4421,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9028958240549160416}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CameraBack_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4283,7 +4452,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4295398110025121281}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel2.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4315,7 +4484,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4222933948946485202}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel4.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4347,7 +4516,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4858287489128063875}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel7.L_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4378,7 +4547,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7977694184517647925}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel5.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4410,7 +4579,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3600606685768943414}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel7.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4442,7 +4611,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9213026057638154311}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel1.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4474,7 +4643,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2517635035229350026}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Lights.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4506,7 +4675,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1240708821077932269}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Camo_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4538,7 +4707,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 256830269690957461}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel4.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4570,7 +4739,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2274262597140148837}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hatch.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4602,7 +4771,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1721050540239847086}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TurretXAxis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4616,13 +4785,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7026763274073172523}
-  m_LocalRotation: {x: 0.7071069, y: 0.00000022197243, z: 0.00000005338506, w: 0.7071067}
-  m_LocalPosition: {x: 0.0000000010241422, y: 0.0019183127, z: -0.00035518504}
-  m_LocalScale: {x: 1, y: 1, z: 0.9999999}
+  m_LocalRotation: {x: 0.7071069, y: 0.00000022188755, z: 0.000000053526342, w: 0.7071067}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1221544831895901062}
-  m_Father: {fileID: 7643650172330999042}
+  m_Father: {fileID: 9054476135637641544}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7061555582038965243
@@ -4634,7 +4803,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3656311039608180044}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel8.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4666,7 +4835,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 460060772018579229}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel8.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4700,7 +4869,7 @@ GameObject:
   - component: {fileID: 2752919940227770287}
   - component: {fileID: 5538478934510553072}
   - component: {fileID: 6902739115704878103}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4787,7 +4956,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2822533912004844641}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Antena2.3_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4818,7 +4987,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7149437081392794666}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hatch.L_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4849,7 +5018,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3149723618897036562}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Lights.R_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4880,7 +5049,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6327457478683606351}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MudStopper2.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4912,7 +5081,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4778246240720305085}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel7.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4944,7 +5113,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1221544831895901062}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TurretXAxis_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4976,7 +5145,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 504798836581448020}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HatchPilot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5008,7 +5177,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5429402043877780979}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MudStopper2.R_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5039,7 +5208,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 229887074438873490}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Antena2.3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5071,7 +5240,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2058630821886198447}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CameraMid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5103,7 +5272,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2908182495096367803}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Antena1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5135,7 +5304,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1823858103674524683}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel5.R_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5166,7 +5335,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5325494104248766671}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Antena1.2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5198,7 +5367,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7643650172330999042}
-  m_Layer: 0
+  - component: {fileID: 8358745933018885688}
+  m_Layer: 6
   m_Name: TurretZAxis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5212,15 +5382,67 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8469757967761171092}
-  m_LocalRotation: {x: 5.1341537e-10, y: 0.0036571322, z: 0.0000000036550611, w: 0.9999933}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.004227292, y: 0.008053077, z: 0.0024912532}
   m_LocalScale: {x: 0.9999997, y: 1, z: 0.9999997}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1721050540239847086}
+  - {fileID: 9054476135637641544}
   m_Father: {fileID: 3284031805268350812}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8358745933018885688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8469757967761171092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28d82819b46951d4fa7e1b60a6b461c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  HorizontalRotatePart: {fileID: 7643650172330999042}
+  VerticalRotatePart: {fileID: 9054476135637641544}
+  AboveTurrets: []
+  Base: {fileID: 216008822412824302}
+  Tank: {fileID: -7148630000186440188}
+  SniperModeCamera: {fileID: 0}
+  HasHorizontalConstraints: 1
+  HorizontalConstraintMin: 245
+  HorizontalConstraintMax: 75
+  HasVerticalConstraints: 1
+  VerticalConstraints:
+  - HorizontalStart: 0
+    HorizontalEnd: 180
+    VerticalMin: -8
+    VerticalMax: 40
+  - HorizontalStart: 180
+    HorizontalEnd: 360
+    VerticalMin: -8
+    VerticalMax: 40
+  HorizontalRotationSpeedMax: 360
+  HorizontalRotationSpeedInit: 30
+  HorizontalRotationAcceleration: 120
+  CurrentHorizontalRotationSpeed: 0
+  HorizontalRotationAxis: 1
+  VerticalRotationSpeedMax: 90
+  VerticalRotationSpeedInit: 5
+  VerticalRotationAcceleration: 90
+  CurrentVerticalRotationSpeed: 0
+  VerticalRotationOffset: 90
+  VerticalPlacementOffset: 30
+  VerticalRotationAxis: 0
+  HasSniperMode: 1
+  RotationSmoothingSpeed: 720
+  RotationkEps: 0.0006
+  Weapons: []
+  _TurretMx: 0
+  _TurretMy: 0
+  lmx: 0
+  lmy: 0
 --- !u!1 &8685254698879192873
 GameObject:
   m_ObjectHideFlags: 0
@@ -5230,7 +5452,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2223842395498672420}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel2.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5262,7 +5484,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4584710570355364181}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel3.R_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5293,7 +5515,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3413736435985018434}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel5.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5327,7 +5549,7 @@ GameObject:
   - component: {fileID: 4183769589015752899}
   - component: {fileID: 5325244067097688594}
   - component: {fileID: 5267054514197665343}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WheelCollider6R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5368,11 +5590,11 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
+    m_ExtremumSlip: 0.9
+    m_ExtremumValue: 1.8
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 2
   m_SidewaysFriction:
     m_ExtremumSlip: 1.5
     m_ExtremumValue: 1
@@ -5413,7 +5635,7 @@ GameObject:
   - component: {fileID: 4767496337545702112}
   - component: {fileID: 8634897498751362215}
   - component: {fileID: 1825596944293381988}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tracks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5494,7 +5716,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5185873053828546184}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CameraMid_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5526,7 +5748,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7179136730387359415}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel4.R_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5557,7 +5779,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7084280111793236462}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel8.L_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5588,7 +5810,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7496601264299825603}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel2.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5620,7 +5842,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6400042685214923036}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CameraMid_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5651,7 +5873,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4767398727580640711}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel7.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}

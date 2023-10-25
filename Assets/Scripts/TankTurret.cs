@@ -69,10 +69,14 @@ public class TankTurret : NetworkBehaviour
 
     public float RotationkEps = 0.00001f;
 
+    public TankWeapon[] Weapons;
+
     [Networked]
     public float TurretMx { get; set; }
     [Networked]
     public float TurretMy { get; set; }
+
+    public bool IsMainTurret => Tank.MainTurret == this;
 
     public Vector3 Axis2Vector3(Axis axis)
     {
@@ -224,22 +228,27 @@ public class TankTurret : NetworkBehaviour
     public void ToggleSniperMode()
     {
         InSniperMode = !InSniperMode;
-        PlayerCamera.Instance.SetSniperModeParams(InSniperMode);
+        PlayerCamera.Instance.SetSniperModeParams(InSniperMode, SniperModeCamera);
         Tank.SetRenderersEnabled(!InSniperMode);
         SetSniperCameraActive(InSniperMode);
         UIManager.SetSniperModeUIEnabled(InSniperMode);
+        UIManager.SetAimingObjectsActive(!InSniperMode);
     }
 
-    float lmx = 0f, lmy = 0f;
+    public float lmx = 0f, lmy = 0f;
     float lmxv = 0f, lmyv = 0f;
 
     private void Update()
     {
         if (Tank.HasInputAuthority && HasSniperMode)
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+            if (Input.GetKeyDown(KeyCode.LeftShift) && SniperModeCamera)
             {
                 ToggleSniperMode();
+            }
+            if(IsMainTurret)
+            {
+
             }
         }
 
