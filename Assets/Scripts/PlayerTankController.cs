@@ -18,9 +18,6 @@ public class PlayerTankController : NetworkBehaviour
     [Tooltip("Even indexes - left wheels, Odd indexes - right wheels")]
     public WheelCollider[] Wheels;
 
-    [Tooltip("Even indexes - left wheels, Odd indexes - right wheels")]
-    public Transform[] ExtraWheels;
-
     public TankTurret[] Turrets;
 
     public TankTurret MainTurret;

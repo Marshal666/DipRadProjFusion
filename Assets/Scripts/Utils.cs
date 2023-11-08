@@ -1,7 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public static class Utils 
 {
@@ -100,6 +105,18 @@ public static class Utils
         }
         //Debug.Log($"a: {a}, min: {min}, max: {max}, ret: {NormalizeAngle360(ret)}");
         return NormalizeAngle360(ret);
+    }
+
+    public static void DestroyObject(UnityEngine.Object o)
+    {
+        Action<UnityEngine.Object> d = UnityEngine.Object.Destroy;
+#if UNITY_EDITOR
+        if (!EditorApplication.isPlaying)
+        {
+            d = UnityEngine.Object.DestroyImmediate;
+        }
+#endif
+        d(o);
     }
 
 }
