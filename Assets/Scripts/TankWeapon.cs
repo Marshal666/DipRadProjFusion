@@ -34,7 +34,7 @@ public class TankWeapon : NetworkBehaviour
     {
         float mx = Turret.lmx;
         float my = Turret.lmy;
-        UIManager.PositionAimingCircle(GetCircleTargetPosition(mx, my, DefaultAimerDistance));
+        UIManager.PositionAimingCircle(GetCircleTargetPosition(DefaultAimerDistance));
         if(!Debug)
         {
             LaserCheck.enabled = false;
@@ -60,12 +60,14 @@ public class TankWeapon : NetworkBehaviour
         }
     }
 
-    public Vector3 GetCircleTargetPosition(float mx, float my, float dist)
+    public Vector3 GetCircleTargetPosition(float dist)
     {
-        //Quaternion.Euler(my, mx, 0f) * PlayerCamera.Instance.TargetLookAtOffset.normalized
         Vector3 ret = ShootPointLocator.position + ShootPointLocator.forward * dist;
         return PlayerCamera.CurrentCamera.WorldToScreenPoint(ret);
     }
+
+    Vector3 aimVel = default;
+    public float aimingCirclePositionSmoothTime = 0.02f;
 
     private void Update()
     {
@@ -82,8 +84,8 @@ public class TankWeapon : NetworkBehaviour
             {
                 AimerDistance = DefaultAimerDistance;
             }
-            Vector3 Target = GetCircleTargetPosition(mx, my, AimerDistance);
-            UIManager.PositionAimingCircle(Target);
+            Vector3 Target = GetCircleTargetPosition(AimerDistance);
+            UIManager.PositionAimingCircle(Vector3.SmoothDamp(UIManager.GetAimingCirclePosition(), Target, ref aimVel, aimingCirclePositionSmoothTime));
             //print("mm");
         }
     }

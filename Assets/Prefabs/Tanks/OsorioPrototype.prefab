@@ -3306,7 +3306,7 @@ MonoBehaviour:
   Shells:
   - {fileID: 11400000, guid: d0137d5dd34b7404f9222f7586d6b53f, type: 2}
   CurrentShellIndex: 0
-  Debug: 0
+  Debug: 1
   LaserCheck: {fileID: 2244038112862456850}
   MainWeapon: 1
 --- !u!120 &2244038112862456850

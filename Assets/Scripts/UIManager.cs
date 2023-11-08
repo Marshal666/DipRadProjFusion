@@ -41,4 +41,6 @@ public class UIManager : MonoBehaviour
         instance.AimingWhiteCircle.position = newPos;
     }
 
+    public static Vector3 GetAimingCirclePosition() => instance.AimingWhiteCircle.position;
+
 }
