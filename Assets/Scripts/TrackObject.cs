@@ -29,6 +29,8 @@ public class TrackObject : MonoBehaviour
             PartLength = TrackShape.Length / Count;
         }
 
+        TrackShape.Reinit();
+
         for(int i = 0; i < Count; i++)
         {
             GameObject obj = Instantiate(TrackPart);

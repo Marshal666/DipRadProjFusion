@@ -25,7 +25,13 @@ public class LinePathTransform : MonoBehaviour
         transform.position = Path.GetPosition(CurrentPoint, CurrentPointDistance);
         if(LookDirection)
         {
-            transform.rotation = Quaternion.LookRotation(Path.PointDirections[CurrentPoint]);
+            Vector3 dir = Path.PointDirections[CurrentPoint];
+            Vector3 up = Vector3.Cross(dir, Vector3.right);
+            //if(Vector3.Dot(dir, up) < 0f)
+            //{
+            //    up = Vector3.down;
+            //}
+            transform.rotation = Quaternion.LookRotation(dir, up);
         }
     }
 
