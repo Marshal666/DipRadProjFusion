@@ -15,11 +15,15 @@ public class LinePath : MonoBehaviour
 
     float[] _Distances;
 
+    float[] _SumDistances;
+
     float _Length;
 
     public IReadOnlyList<Vector3> BasePoints;
 
     public IReadOnlyList<float> Distances;
+
+    public IReadOnlyList<float> SumDistances;
 
     public float Length => _Length;
 
@@ -33,52 +37,81 @@ public class LinePath : MonoBehaviour
         transform.TransformPoints(_BasePoints, Points);
 
         _Length = 0f;
+        _Distances[0] = 0f;
+        _SumDistances[0] = 0f;
 
         for (int i = 1; i < _Distances.Length; i++)
         {
-            _Distances[i - 1] = Vector3.Distance(_BasePoints[i], _BasePoints[i - 1]);
-            _Length += _Distances[i - 1];
+            _Distances[i] = Vector3.Distance(_BasePoints[i], _BasePoints[i - 1]);
+            _Length += _Distances[i];
+            _SumDistances[i] = _SumDistances[i - 1] + _Distances[i];
         }
+
+        //print($"length: {_Length} {Length}");
         
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    int IncrementIndex(int inx)
+    public void Reinit()
     {
-        return ++inx % _BasePoints.Length;
+        if (_BasePoints != null && _BasePoints.Length > 0)
+        {
+            Points = new Vector3[_BasePoints.Length];
+            BasePoints = _BasePoints;
+
+            _Distances = new float[_BasePoints.Length];
+            _SumDistances = new float[_BasePoints.Length];
+            Distances = _Distances;
+            SumDistances = _SumDistances;
+            RefreshPath();
+        }
     }
 
-    int DecrementIndex(int inx)
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    int IncrementIndex(int inx, int max)
+    {
+        return ++inx % max;
+    }
+
+    int DecrementIndex(int inx, int max)
     {
         inx--;
-        if ((inx %= _BasePoints.Length) < 0)
-            inx += _BasePoints.Length;
+        if ((inx %= max) < 0)
+            inx += max;
         return inx;
     }
 
     public (int point, float dist) GetPointDistance(float distance)
     {
-        distance %= Length;
+        distance %= _Length;
         if(distance < 0)
-            distance += Length;
-        int inx = 0;
-        float dp = 0f;
-        while(dp < distance)
+            distance += _Length;
+        //print($"distance: {distance}");
+        int inx = -1;
+        float ds = 0f;
+        while(distance > ds || inx < 0)
         {
-            inx = IncrementIndex(inx);
-            dp += _Distances[inx];
+            inx = IncrementIndex(inx, _Distances.Length);
+            ds += _Distances[IncrementIndex(inx, _Distances.Length)];
         }
-        return (inx + 1, dp - distance);
+        return (inx, distance - ds + _Distances[IncrementIndex(inx, _Distances.Length)]);
     }
 
-    public (int point, float dist) MarchDeltaDistance(int inx, float deltaDist)
+    public (int point, float dist) MarchDeltaDistance(int inx, float cdist, float deltaDist, out float dist)
     {
-        while(deltaDist > 0f)
+        cdist += deltaDist;
+        while(cdist > _Distances[IncrementIndex(inx, _BasePoints.Length)])
         {
-            inx = IncrementIndex(inx);
-            deltaDist -= _Distances[inx];
+            inx = IncrementIndex(inx, _Distances.Length);
+            cdist -= _Distances[inx];
         }
-        return (inx, deltaDist + _Distances[inx]);
+        dist = _SumDistances[inx] + cdist;
+        return (inx, cdist);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public Vector3 GetPosition(int inx, float dist)
+    {
+        return this[inx] + (this[IncrementIndex(inx, _BasePoints.Length)] - this[inx]).normalized * dist;
     }
 
     public void UpdateBasePoint(int inx, Vector3 val)
@@ -88,15 +121,7 @@ public class LinePath : MonoBehaviour
 
     private void Awake()
     {
-        if (_BasePoints != null && _BasePoints.Length > 0)
-        {
-            Points = new Vector3[_BasePoints.Length];
-            BasePoints = _BasePoints;
-
-            _Distances = new float[_BasePoints.Length - 1];
-            Distances = _Distances;
-            RefreshPath();
-        }
+        Reinit();
     }
 
     private void Start()

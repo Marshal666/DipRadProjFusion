@@ -388,7 +388,7 @@ MonoBehaviour:
   Path: {fileID: 1672852550}
   Distance: 0
   CurrentPoint: 0
-  CurrentPointDistance: NaN
+  CurrentPointDistance: 0
 --- !u!65 &331252408
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -468,7 +468,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 331252406}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.84, y: 0.05, z: -6.729}
+  m_LocalPosition: {x: -1.84, y: 0.078, z: -6.729}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1712,6 +1712,9 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0.5}
   - {x: 0, y: 0, z: 1}
   - {x: 0, y: 0, z: 1.5}
+  - {x: 0, y: 0, z: 2}
+  - {x: 0, y: 0, z: 2.5}
+  - {x: 0, y: 0, z: 3}
 --- !u!4 &1672852551
 Transform:
   m_ObjectHideFlags: 0
@@ -1720,7 +1723,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1672852549}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.84, y: 0.05, z: -6.729}
+  m_LocalPosition: {x: -1.84, y: 0.078, z: -6.729}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

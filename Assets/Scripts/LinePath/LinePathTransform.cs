@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -10,8 +11,30 @@ public class LinePathTransform : MonoBehaviour
 
     public float Distance = 0f;
 
+    [Min(0)]
     public int CurrentPoint = 1;
     public float CurrentPointDistance = 0f;
+
+    //public bool m = false;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Reposition()
+    {
+        transform.position = Path.GetPosition(CurrentPoint, CurrentPointDistance);
+    }
+
+    public void SetPositionByDistance(float dist)
+    {
+        Distance = dist;
+        (CurrentPoint, CurrentPointDistance) = Path.GetPointDistance(Distance);
+        Reposition();
+    }
+
+    public void MarchDistance(float deltaDist)
+    {
+        (CurrentPoint, CurrentPointDistance) = Path.MarchDeltaDistance(CurrentPoint, CurrentPointDistance, deltaDist, out Distance);
+        Reposition();
+    }
 
     private void Start()
     {
@@ -21,14 +44,17 @@ public class LinePathTransform : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            (CurrentPoint, CurrentPointDistance) = Path.MarchDeltaDistance(CurrentPoint, 0.5f);
-        }
+
+        //if(m)
+        //{
+        //    MarchDistance(2f);
+        //    m = false;
+        //}
 
         if (Path && Path.Count > 1)
         {
-            transform.position = Path[CurrentPoint - 1] + (Path[CurrentPoint] - Path[CurrentPoint - 1]) * CurrentPointDistance;
+            Reposition();
+            //SetPositionByDistance(Distance);
         }
     }
 }
