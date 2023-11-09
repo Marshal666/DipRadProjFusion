@@ -17,6 +17,10 @@ public class StaticConsts : MonoBehaviour
 
     public static float MaxShellRaycastLength => Instance._MaxShellRaycastLength;
 
+    public LayerMask _GroundLayers;
+
+    public static LayerMask GroundLayers => Instance._GroundLayers;
+
     private void Awake()
     {
         if(instance != null)

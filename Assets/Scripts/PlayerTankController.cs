@@ -30,6 +30,13 @@ public class PlayerTankController : NetworkBehaviour
     /// </summary>
     public TrackObject[] Tracks;
 
+    /// <summary>
+    /// Even indexes - left wheels,
+    /// Odd indexes - right wheels
+    /// </summary>
+    [Tooltip("Even indexes - left wheels, Odd indexes - right wheels")]
+    public WheelCollider[] Sprockets;
+
     public enum WheelSide
     {
         Left = 0,
@@ -99,6 +106,15 @@ public class PlayerTankController : NetworkBehaviour
         foreach (var whell in Wheels)
         {
             whell.rotationSpeed = val;
+        }
+    }
+
+    public void SetSprocketRotation(float val, WheelSide wheelSide)
+    {
+        int start = (int)wheelSide;
+        for(int i = start; i < Sprockets.Length; i += 2)
+        {
+            Sprockets[i].rotationSpeed = val;
         }
     }
 
@@ -278,11 +294,9 @@ public class PlayerTankController : NetworkBehaviour
         }
     }
 
-    void RotateTracks()
+    void RotateTracks(float ls, float rs)
     {
-        float ls = GetMaxWheelRotation(WheelSide.Left);
-        float rs = GetMaxWheelRotation(WheelSide.Right);
-
+        
         //print($"ls: {ls}, rs {rs}");
 
         if(ls != 0f)
@@ -297,9 +311,25 @@ public class PlayerTankController : NetworkBehaviour
 
     #endregion
 
+    void RotateSprockets(float ls, float rs)
+    {
+        if(ls != 0f)
+        {
+            SetSprocketRotation(ls, WheelSide.Left);
+        }
+        if(rs != 0f)
+        {
+            SetSprocketRotation(rs, WheelSide.Right);
+        }
+    }
+    
+
     void Update()
     {
-        RotateTracks();
+        float ls = GetMaxWheelRotation(WheelSide.Left);
+        float rs = GetMaxWheelRotation(WheelSide.Right);
+        RotateTracks(ls, rs);
+        RotateSprockets(ls, rs);
     }
 
     public override void FixedUpdateNetwork()

@@ -743,8 +743,6 @@ MonoBehaviour:
   - {fileID: 5325244067097688594}
   - {fileID: 8876190047474211873}
   - {fileID: 2420582137800140297}
-  - {fileID: 771562629743843604}
-  - {fileID: 3853947640955854583}
   Turrets:
   - {fileID: 216008822412824302}
   - {fileID: 8358745933018885688}
@@ -757,6 +755,9 @@ MonoBehaviour:
   Tracks:
   - {fileID: 2472715129403199196}
   - {fileID: 4536363150485520957}
+  Sprockets:
+  - {fileID: 771562629743843604}
+  - {fileID: 3853947640955854583}
   ForwardRotationSpeedMax: 2160
   BackRotationSpeedMax: -1440
   ForwardRotationAcceleration: 540

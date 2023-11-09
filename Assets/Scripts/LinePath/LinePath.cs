@@ -153,6 +153,11 @@ public class LinePath : MonoBehaviour
         _BasePoints[inx] = val;
     }
 
+    public void UpdateBasePointFromGlobal(int inx, Vector3 val)
+    {
+        _BasePoints[inx] = transform.InverseTransformPoint(val);
+    }
+
     public string ToJSON()
     {
         return JsonUtility.ToJson(this, true);
