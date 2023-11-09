@@ -15,12 +15,18 @@ public class LinePathTransform : MonoBehaviour
     public int CurrentPoint = 1;
     public float CurrentPointDistance = 0f;
 
+    public bool LookDirection = true;
+
     //public bool m = false;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Reposition()
     {
         transform.position = Path.GetPosition(CurrentPoint, CurrentPointDistance);
+        if(LookDirection)
+        {
+            transform.rotation = Quaternion.LookRotation(Path.PointDirections[CurrentPoint]);
+        }
     }
 
     public void SetPositionByDistance(float dist)
@@ -45,14 +51,24 @@ public class LinePathTransform : MonoBehaviour
     void Update()
     {
 
-        //if(m)
+        //if (m)
         //{
-        //    MarchDistance(2f);
+        //    MarchDistance(-1f);
         //    m = false;
         //}
 
+        if (Input.GetKey(KeyCode.G))
+        {
+            MarchDistance(Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.H))
+        {
+            MarchDistance(-Time.deltaTime);
+        }
+
         if (Path && Path.Count > 1)
         {
+            //(CurrentPoint, CurrentPointDistance) = Path.MarchDeltaDistance(CurrentPoint, CurrentPointDistance, Time.deltaTime, out Distance);
             Reposition();
             //SetPositionByDistance(Distance);
         }

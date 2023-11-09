@@ -2,34 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [ExecuteInEditMode]
+[System.Serializable]
 public class LinePath : MonoBehaviour
 {
 
     [SerializeField]
     Vector3[] _BasePoints;
 
+    [DoNotSerialize]
     Vector3[] Points;
 
+    [DoNotSerialize]
+    Vector3[] _PointDirections;
+
+    [DoNotSerialize]
     float[] _Distances;
 
+    [DoNotSerialize]
     float[] _SumDistances;
 
+    [DoNotSerialize]
     float _Length;
 
+    [DoNotSerialize]
     public IReadOnlyList<Vector3> BasePoints;
 
+    [DoNotSerialize]
     public IReadOnlyList<float> Distances;
 
+    [DoNotSerialize]
     public IReadOnlyList<float> SumDistances;
+
+    [DoNotSerialize]
+    public IReadOnlyList<Vector3> PointDirections;
 
     public float Length => _Length;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     void RefreshPath()
     {
+
 #if UNITY_EDITOR
         if(Points == null || Points.Length != _BasePoints.Length)
             Points = new Vector3[_BasePoints.Length];
@@ -47,6 +63,11 @@ public class LinePath : MonoBehaviour
             _SumDistances[i] = _SumDistances[i - 1] + _Distances[i];
         }
 
+        for(int i = 0; i < _PointDirections.Length; i++)
+        {
+            _PointDirections[i] = (this[IncrementIndex(i, _BasePoints.Length)] - this[i]).normalized;
+        }
+
         //print($"length: {_Length} {Length}");
         
     }
@@ -57,6 +78,9 @@ public class LinePath : MonoBehaviour
         {
             Points = new Vector3[_BasePoints.Length];
             BasePoints = _BasePoints;
+
+            _PointDirections = new Vector3[_BasePoints.Length];
+            PointDirections = _PointDirections;
 
             _Distances = new float[_BasePoints.Length];
             _SumDistances = new float[_BasePoints.Length];
@@ -99,10 +123,20 @@ public class LinePath : MonoBehaviour
     public (int point, float dist) MarchDeltaDistance(int inx, float cdist, float deltaDist, out float dist)
     {
         cdist += deltaDist;
-        while(cdist > _Distances[IncrementIndex(inx, _BasePoints.Length)])
+        if (deltaDist >= 0f)
         {
-            inx = IncrementIndex(inx, _Distances.Length);
-            cdist -= _Distances[inx];
+            while (cdist > _Distances[IncrementIndex(inx, _BasePoints.Length)])
+            {
+                inx = IncrementIndex(inx, _Distances.Length);
+                cdist -= _Distances[inx];
+            }
+        } else
+        {
+            while(cdist < 0f)
+            {
+                cdist += _Distances[inx];
+                inx = DecrementIndex(inx, _BasePoints.Length);
+            }
         }
         dist = _SumDistances[inx] + cdist;
         return (inx, cdist);
@@ -111,12 +145,23 @@ public class LinePath : MonoBehaviour
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Vector3 GetPosition(int inx, float dist)
     {
-        return this[inx] + (this[IncrementIndex(inx, _BasePoints.Length)] - this[inx]).normalized * dist;
+        return this[inx] + _PointDirections[inx] * dist;
     }
 
     public void UpdateBasePoint(int inx, Vector3 val)
     {
         _BasePoints[inx] = val;
+    }
+
+    public string ToJSON()
+    {
+        return JsonUtility.ToJson(this, true);
+    }
+
+    public void ParseJSON(string text)
+    {
+        JsonUtility.FromJsonOverwrite(text, this);
+        Reinit();
     }
 
     private void Awake()
