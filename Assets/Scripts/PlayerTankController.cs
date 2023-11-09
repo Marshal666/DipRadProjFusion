@@ -22,7 +22,13 @@ public class PlayerTankController : NetworkBehaviour
 
     public TankTurret MainTurret;
 
-    public Renderer[] Renderers;
+    public Enabler[] Renderers;
+
+    /// <summary>
+    /// Even indexes - left tracks,
+    /// Odd indexes - right tracks
+    /// </summary>
+    public TrackObject[] Tracks;
 
     public enum WheelSide
     {
@@ -52,6 +58,8 @@ public class PlayerTankController : NetworkBehaviour
 
 
     public float SleepVelocity = 0.1f;
+
+    public float TrackRotatoionCoeff = 2f;
 
     private void Awake()
     {
@@ -240,12 +248,59 @@ public class PlayerTankController : NetworkBehaviour
             for(int i = 0; i < Renderers.Length; i++)
             {
                 if (Renderers[i] != null)
-                    Renderers[i].enabled = state;
+                    Renderers[i].SetEnabled(state);
             }
         }
     }
 
     #endregion
+
+    #region TRACK_CONTROL
+
+    float GetMaxWheelRotation(WheelSide side)
+    {
+        int start = (int)side;
+        float max = 0f;
+        for(int i = start; i < Wheels.Length; i += 2)
+        {
+            if (Mathf.Abs(Wheels[i].rotationSpeed) > Mathf.Abs(max))
+                max = Wheels[i].rotationSpeed;
+        }
+        return max;
+    }
+
+    void SetTrackRotation(WheelSide side, float deltaDist)
+    {
+        int start = (int)side;
+        for (int i = start; i < Tracks.Length; i += 2)
+        {
+            Tracks[i].MarchDistance(deltaDist);
+        }
+    }
+
+    void RotateTracks()
+    {
+        float ls = GetMaxWheelRotation(WheelSide.Left);
+        float rs = GetMaxWheelRotation(WheelSide.Right);
+
+        //print($"ls: {ls}, rs {rs}");
+
+        if(ls != 0f)
+        {
+            SetTrackRotation(WheelSide.Left, ls * TrackRotatoionCoeff * Time.deltaTime);
+        }
+        if(rs != 0f)
+        {
+            SetTrackRotation(WheelSide.Right, rs * TrackRotatoionCoeff * Time.deltaTime);
+        }
+    }
+
+    #endregion
+
+    void Update()
+    {
+        RotateTracks();
+    }
 
     public override void FixedUpdateNetwork()
     {

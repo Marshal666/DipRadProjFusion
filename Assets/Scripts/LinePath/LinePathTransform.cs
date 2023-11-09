@@ -26,7 +26,7 @@ public class LinePathTransform : MonoBehaviour
         if(LookDirection)
         {
             Vector3 dir = Path.PointDirections[CurrentPoint];
-            Vector3 up = Vector3.Cross(dir, Vector3.right);
+            Vector3 up = Vector3.Cross(dir, transform.right);
             //if(Vector3.Dot(dir, up) < 0f)
             //{
             //    up = Vector3.down;
@@ -63,14 +63,14 @@ public class LinePathTransform : MonoBehaviour
         //    m = false;
         //}
 
-        if (Input.GetKey(KeyCode.G))
-        {
-            MarchDistance(Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.H))
-        {
-            MarchDistance(-Time.deltaTime);
-        }
+        //if (Input.GetKey(KeyCode.G))
+        //{
+        //    MarchDistance(Time.deltaTime);
+        //}
+        //if (Input.GetKey(KeyCode.H))
+        //{
+        //    MarchDistance(-Time.deltaTime);
+        //}
 
         if (Path && Path.Count > 1)
         {

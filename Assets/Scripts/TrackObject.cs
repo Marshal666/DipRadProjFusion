@@ -12,7 +12,7 @@ public class TrackObject : MonoBehaviour
     public bool FixSpacing = true;
 
     [SerializeField]
-    [HideInInspector]
+    //[HideInInspector]
     LinePathTransform[] Parts;
 
     public void Init()
@@ -43,21 +43,46 @@ public class TrackObject : MonoBehaviour
         }
     }
 
+    public void MarchDistance(float deltaDist)
+    {
+        if(Parts != null)
+        {
+            for(int i = 0; i < Parts.Length; i++)
+            {
+                Parts[i].MarchDistance(deltaDist);
+            }
+        }
+    }
+
     public void Clear()
     {
         if(Parts != null)
         {
             for(int i = 0; i < Parts.Length; i++)
             {
-                Utils.DestroyObject(Parts[i].gameObject);
+                if(Parts[i] != null)
+                    Utils.DestroyObject(Parts[i].gameObject);
             }
             Parts = null;
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        Clear();
+        Init();
     }
+
+    // Update is called once per frame
+    //void Update()
+    //{
+    //    if(Input.GetKey(KeyCode.G))
+    //    {
+    //        MarchDistance(Time.deltaTime);
+    //    }
+    //    if(Input.GetKey(KeyCode.H))
+    //    {
+    //        MarchDistance(-Time.deltaTime);
+    //    }
+    //}
 }
