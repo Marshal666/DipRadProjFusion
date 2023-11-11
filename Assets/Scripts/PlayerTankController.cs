@@ -79,8 +79,15 @@ public class PlayerTankController : NetworkBehaviour
         if (Runner && Runner.LocalPlayer == nobj.InputAuthority)
         {
             PlayerCamera.Instance.Target = transform;
+            TankUIStats.Init(this);
         }
     }
+
+    #region UI_INFO_PARAMS
+
+    public float Speed => rig.ReadVelocity().magnitude;
+
+    #endregion
 
     #region SET_METHODS
 
@@ -290,7 +297,7 @@ public class PlayerTankController : NetworkBehaviour
         int start = (int)side;
         for (int i = start; i < Tracks.Length; i += 2)
         {
-            Tracks[i].MarchDistance(deltaDist);
+            Tracks[i].MarchGirstOffsetOthers(deltaDist);
         }
     }
 

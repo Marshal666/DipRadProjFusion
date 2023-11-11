@@ -22,6 +22,7 @@ public class LinePathTransform : MonoBehaviour
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Reposition()
     {
+        (CurrentPoint, CurrentPointDistance) = Path.GetPointFromDistance(Distance);
         transform.position = Path.GetPosition(CurrentPoint, CurrentPointDistance);
         if(LookDirection)
         {
@@ -38,19 +39,21 @@ public class LinePathTransform : MonoBehaviour
     public void SetPositionByDistance(float dist)
     {
         Distance = dist;
-        (CurrentPoint, CurrentPointDistance) = Path.GetPointDistance(Distance);
+        (CurrentPoint, CurrentPointDistance) = Path.GetPointFromDistance(Distance);
         Reposition();
     }
 
     public void MarchDistance(float deltaDist)
     {
-        (CurrentPoint, CurrentPointDistance) = Path.MarchDeltaDistance(CurrentPoint, CurrentPointDistance, deltaDist, out Distance);
+        //(CurrentPoint, CurrentPointDistance) = Path.MarchDeltaDistance(CurrentPoint, CurrentPointDistance, deltaDist, out Distance);
+        Distance += deltaDist;
+        (CurrentPoint, CurrentPointDistance) = Path.GetPointFromDistance(Distance);
         Reposition();
     }
 
     private void Start()
     {
-        (CurrentPoint, CurrentPointDistance) = Path.GetPointDistance(Distance);
+        (CurrentPoint, CurrentPointDistance) = Path.GetPointFromDistance(Distance);
     }
 
     // Update is called once per frame

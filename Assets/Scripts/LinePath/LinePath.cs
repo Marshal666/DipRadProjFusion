@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -104,20 +105,68 @@ public class LinePath : MonoBehaviour
         return inx;
     }
 
-    public (int point, float dist) GetPointDistance(float distance)
+    public float NormalizeDistance(float distance)
     {
         distance %= _Length;
-        if(distance < 0)
+        if (distance < 0)
             distance += _Length;
+        return distance;
+    }
+
+    public (int point, float dist) GetPointFromDistance(float distance)
+    {
+        //normalize distance
+        distance = NormalizeDistance(distance);
         //print($"distance: {distance}");
+
+        ///////// O(n) solution
+        //int inx = -1;
+        //float ds = 0f;
+        //while(distance > ds || inx < 0)
+        //{
+        //    inx = IncrementIndex(inx, _Distances.Length);
+        //    ds += _Distances[IncrementIndex(inx, _Distances.Length)];
+        //}
+        //return (inx, distance - ds + _Distances[IncrementIndex(inx, _Distances.Length)]);
+        /////////
+
+        ///////// O(log(n)) solution
+        //int inx = Array.BinarySearch(_SumDistances, distance);
         int inx = -1;
-        float ds = 0f;
-        while(distance > ds || inx < 0)
+        int lo = 0;
+        int hi = _SumDistances.Length - 1;
+        while (lo <= hi)
         {
-            inx = IncrementIndex(inx, _Distances.Length);
-            ds += _Distances[IncrementIndex(inx, _Distances.Length)];
+            int i = lo + ((hi - lo) >> 1);
+            float comp = _SumDistances[i] - distance;
+            if(comp == 0f)
+            {
+                inx = i;
+                break;
+            } else if(comp < 0f)
+            {
+                lo = i + 1;
+            } else
+            {
+                hi = i - 1;
+            }
         }
-        return (inx, distance - ds + _Distances[IncrementIndex(inx, _Distances.Length)]);
+        if(inx < 0)
+        {
+            inx = ~lo;
+        }
+        if (inx < 0)
+        {
+            inx = ~inx - 1;
+        }
+        if (inx == -1)
+        {
+            inx = 0;
+        }
+        //print($"inx: {inx}");
+
+        return (inx, distance - _SumDistances[inx]);
+        /////////
     }
 
     public (int point, float dist) MarchDeltaDistance(int inx, float cdist, float deltaDist, out float dist)
@@ -174,9 +223,14 @@ public class LinePath : MonoBehaviour
         Reinit();
     }
 
+    private void OnEnable()
+    {
+        Reinit();
+    }
+
     private void Start()
     {
-        RefreshPath();
+        Reinit();
     }
 
     private void Update()
