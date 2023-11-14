@@ -7,38 +7,38 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [ExecuteInEditMode]
-[System.Serializable]
+[Serializable]
 public class LinePath : MonoBehaviour
 {
 
     [SerializeField]
     Vector3[] _BasePoints;
 
-    [DoNotSerialize]
+    [NonSerialized]
     Vector3[] Points;
 
-    [DoNotSerialize]
+    [NonSerialized]
     Vector3[] _PointDirections;
 
-    [DoNotSerialize]
+    [NonSerialized]
     float[] _Distances;
 
-    [DoNotSerialize]
+    [NonSerialized]
     float[] _SumDistances;
 
-    [DoNotSerialize]
+    [NonSerialized]
     float _Length;
 
-    [DoNotSerialize]
+    [NonSerialized]
     public IReadOnlyList<Vector3> BasePoints;
 
-    [DoNotSerialize]
+    [NonSerialized]
     public IReadOnlyList<float> Distances;
 
-    [DoNotSerialize]
+    [NonSerialized]
     public IReadOnlyList<float> SumDistances;
 
-    [DoNotSerialize]
+    [NonSerialized]
     public IReadOnlyList<Vector3> PointDirections;
 
     public float Length => _Length;

@@ -41,14 +41,16 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         await _runner.StartGame(new StartGameArgs()
         {
             GameMode = mode,
-            SessionName = "TestRoom",
+            SessionName = "TestRoomm",
             Scene = SceneManager.GetActiveScene().buildIndex,
             SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
         });
+        //print("Game started");
     }
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
+        //print("On player joined!");
         if (runner.IsServer)
         {
             // Create a unique position for the player
@@ -64,6 +66,7 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
                     //{
                     //    // tell other player to get his camera attached to this object - done in PlayerTankController
                     //}
+                    //print("Player spawned");
                 }
             );
             // Keep track of the player avatars so we can remove it when they disconnect

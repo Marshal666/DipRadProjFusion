@@ -1,4 +1,5 @@
 using Fusion;
+using Projectiles;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +16,7 @@ public class TankWeapon : NetworkBehaviour
     public float AimerDistance = 128f;
     public float DefaultAimerDistance = 128f;
 
-    public ShellType[] Shells;
+    public ShellStats[] Shells;
 
     public int CurrentShellIndex = 0;
 
@@ -25,7 +26,7 @@ public class TankWeapon : NetworkBehaviour
 
     public bool MainWeapon = false;
 
-    public ShellType CurrentShell => Shells[CurrentShellIndex];
+    public ShellStats CurrentShell => Shells[CurrentShellIndex];
 
     [Networked]
     private TickTimer ReloadTimer { get; set; }
@@ -34,7 +35,10 @@ public class TankWeapon : NetworkBehaviour
     {
         float mx = Turret.lmx;
         float my = Turret.lmy;
-        UIManager.PositionAimingCircle(GetCircleTargetPosition(DefaultAimerDistance));
+        if (GetInput(out NetworkInputData _))
+        {
+            UIManager.PositionAimingCircle(GetCircleTargetPosition(DefaultAimerDistance));
+        }
         if(!Debug)
         {
             LaserCheck.enabled = false;
@@ -47,7 +51,7 @@ public class TankWeapon : NetworkBehaviour
         {
             if(data.FirePressed && ReloadTimer.ExpiredOrNotRunning(Runner))
             {
-                print("Fire");
+                //print("Fire");
                 ReloadTimer = TickTimer.CreateFromSeconds(Runner, ReloadTime);
                 if (Debug)
                 {
@@ -55,6 +59,7 @@ public class TankWeapon : NetworkBehaviour
                     LaserCheck.SetPosition(0, ShootPointLocator.position);
                     LaserCheck.SetPosition(1, ShootPointLocator.position + ShootPointLocator.forward * AimerDistance);
                 }
+                CurrentShell.Fire();
             }
             
         }
@@ -71,7 +76,7 @@ public class TankWeapon : NetworkBehaviour
 
     private void Update()
     {
-        if (MainWeapon)
+        if (MainWeapon && GetInput(out NetworkInputData _))
         {
             float mx = Turret.lmx;
             float my = Turret.lmy;
