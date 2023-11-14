@@ -28,7 +28,7 @@ public class TankUIStats : MonoBehaviour
     {
         if(_controller)
         {
-            SpeedText.text = "Speed: " + (_controller.Speed * 3.6f).ToString("0.00") + " km/h";
+            SpeedText.text = "Speed: " + (_controller.Speed * _controller.VelocitySign * 3.6f).ToString("0.00") + " km/h";
         }
     }
 

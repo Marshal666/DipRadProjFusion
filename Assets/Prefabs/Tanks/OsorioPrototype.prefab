@@ -759,7 +759,7 @@ MonoBehaviour:
   - {fileID: 771562629743843604}
   - {fileID: 3853947640955854583}
   ForwardRotationSpeedMax: 2880
-  BackRotationSpeedMax: -1440
+  BackRotationSpeedMax: -1900
   ForwardRotationAcceleration: 540
   BackRotationAcceleration: 360
   BrakeAccelerationRot: 1440

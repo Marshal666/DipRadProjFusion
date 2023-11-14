@@ -85,7 +85,12 @@ public class PlayerTankController : NetworkBehaviour
 
     #region UI_INFO_PARAMS
 
+
+    public Vector3 Velocity => rig.ReadVelocity();
+
     public float Speed => rig.ReadVelocity().magnitude;
+
+    public float VelocitySign => Mathf.Sign(Vector3.Dot(transform.forward, Velocity));
 
     #endregion
 
