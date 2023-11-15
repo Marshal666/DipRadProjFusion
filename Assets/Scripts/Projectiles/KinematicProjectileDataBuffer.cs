@@ -67,8 +67,8 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
 
         public override void FixedUpdateNetwork()
         {
-            if (IsProxy == true)
-                return;
+            //if (IsProxy == true)
+            //    return;
 
             int tick = Runner.Tick;
 

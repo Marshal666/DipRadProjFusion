@@ -136,8 +136,8 @@ public class TankTurret : NetworkBehaviour
 
     public override void Spawned()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     public override void FixedUpdateNetwork()

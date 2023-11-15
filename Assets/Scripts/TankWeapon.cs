@@ -45,6 +45,11 @@ public class TankWeapon : NetworkBehaviour
         }
     }
 
+    public override void Spawned()
+    {
+        ReloadTimer = TickTimer.None;
+    }
+
     public override void FixedUpdateNetwork()
     {
         if (GetInput(out NetworkInputData data))
@@ -53,13 +58,14 @@ public class TankWeapon : NetworkBehaviour
             {
                 //print("Fire");
                 ReloadTimer = TickTimer.CreateFromSeconds(Runner, ReloadTime);
+                CurrentShell.Fire();
+
                 if (Debug)
                 {
                     LaserCheck.enabled = true;
                     LaserCheck.SetPosition(0, ShootPointLocator.position);
                     LaserCheck.SetPosition(1, ShootPointLocator.position + ShootPointLocator.forward * AimerDistance);
                 }
-                CurrentShell.Fire();
             }
             
         }

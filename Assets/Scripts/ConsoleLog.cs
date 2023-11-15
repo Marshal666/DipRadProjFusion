@@ -19,7 +19,10 @@ public class ConsoleLog : MonoBehaviour
 
     public static void Log(string message)
     {
-        Instance.ConsoleText.text += message;
+        if (Instance != null)
+        {
+            Instance.ConsoleText.text += message;
+        }
     }
 
 }
