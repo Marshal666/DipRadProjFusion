@@ -144,7 +144,8 @@ public class TankTurret : NetworkBehaviour
     {
         //SetRotation(VerticalRotatePart, VerticalRotationAxis, TurretMx);
         //SetRotation(HorizontalRotatePart, HorizontalRotationAxis, TurretMy);
-        if (GetInput(out NetworkInputData data))
+        bool gi = GetInput(out NetworkInputData data);
+        if (gi)
         {
             if (float.IsNaN(data.MX) || float.IsNaN(data.MY))
             {
@@ -173,6 +174,7 @@ public class TankTurret : NetworkBehaviour
                 currentVertical = Mathf.MoveTowardsAngle(currentVertical, my, CurrentVerticalRotationSpeed * Runner.DeltaTime);
                 //SetRotation(VerticalRotatePart, VerticalRotationAxis, -currentVertical);
                 TurretMx = -currentVertical;
+                lmx = -currentVertical;
             } else
             {
                 CurrentVerticalRotationSpeed = 0f;
@@ -209,11 +211,16 @@ public class TankTurret : NetworkBehaviour
                 }
                 //SetRotation(HorizontalRotatePart, HorizontalRotationAxis, currentHorizontal);
                 TurretMy = currentHorizontal;
+                lmy = currentHorizontal;
             } else
             {
                 CurrentHorizontalRotationSpeed = 0f;
                 lmyv = 0f;
             }
+        } else
+        {
+            lmx = TurretMx;
+            lmy = TurretMy;
         }
     }
 
@@ -257,8 +264,8 @@ public class TankTurret : NetworkBehaviour
         //lmy = Mathf.SmoothDampAngle(lmy, TurretMy, ref lmyv, RotationSmoothingTime);
 
         //Works fine, but it's not super smooth
-        lmx = TurretMx;
-        lmy = TurretMy;
+        //lmx = TurretMx;
+        //lmy = TurretMy;
 
         //lmx = Mathf.MoveTowardsAngle(lmx, TurretMx, RotationSmoothingSpeed * Time.deltaTime);
         //lmy = Mathf.MoveTowardsAngle(lmy, TurretMy, RotationSmoothingSpeed * Time.deltaTime);
