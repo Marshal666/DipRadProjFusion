@@ -217,11 +217,29 @@ public class TankTurret : NetworkBehaviour
                 CurrentHorizontalRotationSpeed = 0f;
                 lmyv = 0f;
             }
+            //print($"NFU x_ok: {Mathf.Abs(lmx - TurretMx) <= 5f}, y_ok: {Mathf.Abs(lmy - TurretMy) <= 5f} lmx: {lmx}, lmy: {lmy}, TurretMx: {TurretMx}, TurretMy: {TurretMy}");
         } else
         {
             lmx = TurretMx;
             lmy = TurretMy;
         }
+    }
+
+    public override void Render()
+    {
+        //Causes jittering when doing hull rotation
+        //lmx = Mathf.SmoothDampAngle(lmx, TurretMx, ref lmxv, RotationSmoothingTime);
+        //lmy = Mathf.SmoothDampAngle(lmy, TurretMy, ref lmyv, RotationSmoothingTime);
+
+        //Works fine, but it's not super smooth
+        lmx = TurretMx;
+        lmy = TurretMy;
+
+        //lmx = Mathf.MoveTowardsAngle(lmx, TurretMx, RotationSmoothingSpeed * Time.deltaTime);
+        //lmy = Mathf.MoveTowardsAngle(lmy, TurretMy, RotationSmoothingSpeed * Time.deltaTime);
+
+        SetRotation(VerticalRotatePart, VerticalRotationAxis, lmx);
+        SetRotation(HorizontalRotatePart, HorizontalRotationAxis, lmy);
     }
 
     public void SetSniperCameraActive(bool val)
@@ -249,6 +267,7 @@ public class TankTurret : NetworkBehaviour
     {
         if (Tank.HasInputAuthority && HasSniperMode)
         {
+            //print($"U x_ok: {Mathf.Abs(lmx - TurretMx) <= 5f}, y_ok: {Mathf.Abs(lmy - TurretMy) <= 5f} lmx: {lmx}, lmy: {lmy}, TurretMx: {TurretMx}, TurretMy: {TurretMy}");
             if (Input.GetKeyDown(KeyCode.LeftShift) && SniperModeCamera)
             {
                 ToggleSniperMode();
@@ -258,20 +277,6 @@ public class TankTurret : NetworkBehaviour
 
             }
         }
-
-        //Causes jittering when doing hull rotation
-        //lmx = Mathf.SmoothDampAngle(lmx, TurretMx, ref lmxv, RotationSmoothingTime);
-        //lmy = Mathf.SmoothDampAngle(lmy, TurretMy, ref lmyv, RotationSmoothingTime);
-
-        //Works fine, but it's not super smooth
-        //lmx = TurretMx;
-        //lmy = TurretMy;
-
-        //lmx = Mathf.MoveTowardsAngle(lmx, TurretMx, RotationSmoothingSpeed * Time.deltaTime);
-        //lmy = Mathf.MoveTowardsAngle(lmy, TurretMy, RotationSmoothingSpeed * Time.deltaTime);
-
-        SetRotation(VerticalRotatePart, VerticalRotationAxis, lmx);
-        SetRotation(HorizontalRotatePart, HorizontalRotationAxis, lmy);
     }
 
 }

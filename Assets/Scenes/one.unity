@@ -516,7 +516,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 234.55615, y: 44.06299}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &599975099
 MonoBehaviour:
@@ -988,7 +988,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 524425545}
   m_HandleRect: {fileID: 524425544}
   m_Direction: 2
-  m_Value: 1.0000024
+  m_Value: 1.0000023
   m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2512,7 +2512,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0.494
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
