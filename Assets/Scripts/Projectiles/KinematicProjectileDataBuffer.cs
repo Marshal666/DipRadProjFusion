@@ -86,7 +86,7 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
                 // It might be more suitable to move this logic to projectile object itself in order
                 // to have different projectile behaviours without the need to alter the weapon.
                 // See Projectiles Advanced where such approach is used.
-                UpdateProjectile(ref data, tick, i);
+                UpdateProjectile(ref data, tick);
 
                 _projectileData.Set(i, data);
             }
@@ -139,6 +139,8 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
                     continue;
                 }
 
+                projectileObject.SetPointingDirection(projectile.PointingDirection);
+
                 if (projectile.HitPosition != Vector3.zero)
                 {
                     projectileObject.transform.position = projectile.HitPosition;
@@ -155,14 +157,15 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
 
         // PRIVATE METHODS
 
-        private void UpdateProjectile(ref ProjectileData projectileData, int tick, int index)
+        private void UpdateProjectile(ref ProjectileData projectileData, int tick)
         {
             if (projectileData.HitPosition != Vector3.zero)
                 return;
 
             var previousPosition = GetMovePosition(ref projectileData, tick - 1f);
             var nextPosition = GetMovePosition(ref projectileData, tick);
-            _projectiles[index].SetPointingDirection(nextPosition - previousPosition);
+            //_projectiles[index].SetPointingDirection(nextPosition - previousPosition);
+            projectileData.PointingDirection = (nextPosition - previousPosition).normalized;
 
             var direction = nextPosition - previousPosition;
 
@@ -209,12 +212,13 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
 
             public Vector3 FirePosition;
             public Vector3 FireVelocity;
-
-            // Some properties can have decreased accuracy
+            
             [Networked]
             public Vector3 HitPosition { get; set; }
             [Networked]
             public Vector3 HitDirection { get; set; }
+
+            public Vector3 PointingDirection;
         }
     }
 }

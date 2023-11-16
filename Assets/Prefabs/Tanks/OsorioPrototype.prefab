@@ -3766,7 +3766,7 @@ MonoBehaviour:
   _fireTransform: {fileID: 3373835275307253276}
   _fireClip: {fileID: 8300000, guid: d9b938b4bbeb13f4e81633b1e9d75db1, type: 3}
   _fireSoundSourcesRoot: {fileID: 3373835275307253276}
-  _speed: 1000
+  _speed: 50
   _hitImpulse: 50
   _lifeTime: 4
   _lifeTimeAfterHit: 2
