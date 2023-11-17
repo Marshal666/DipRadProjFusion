@@ -51,11 +51,39 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
             _fireCount++;
         }
 
-        public override Vector3? HitTest(Vector3 position, Vector3 direction)
+        public override Vector3? HitTest(Vector3 position, Vector3 direction, ref Vector3[] OutDebug)
         {
             Vector3? ret = null;
 
-            //TODO
+            ProjectileData data = new ProjectileData()
+            {
+                FireTick = 0,
+                FirePosition = position,
+                FireVelocity = direction * _speed,
+            };
+
+            bool debug = OutDebug != null;
+
+            for(int i = 1; i <= StaticConsts.MaxShellRaycastTicks; i++)
+            {
+                var p1 = GetMovePosition(ref data, i - 1);
+                var p2 = GetMovePosition(ref data, i);
+
+#if UNITY_EDITOR
+                if(debug)
+                {
+                    OutDebug[i - 1] = p1;
+                    OutDebug[i] = p2;
+                }
+#endif
+
+                Vector3 dir = p2 - p1;
+                if(Physics.Raycast(p1, dir, out var hit, dir.magnitude, StaticConsts.GroundLayers, QueryTriggerInteraction.Ignore))
+                {
+                    ret = hit.point;
+                    break;
+                }
+            }
 
             return ret;
         }
@@ -185,7 +213,7 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
                 //{
                 //    hit.Collider.attachedRigidbody.AddForce(direction * _hitImpulse, ForceMode.Impulse);
                 //}
-                string st = $"hit: {hit.Collider.gameObject.name} at: {hit.Point}, dir: {direction}\n";
+                string st = $"hit: {hit.Collider.gameObject.name} at: {hit.Point}, dir: {direction}, tick: {tick}\n";
                 print(st);
                 ConsoleLog.Log(st);
             }

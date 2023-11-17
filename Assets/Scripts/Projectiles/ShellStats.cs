@@ -23,7 +23,7 @@ namespace Projectiles
 
         // PUBLIC METHODS
 
-        public abstract Vector3? HitTest(Vector3 position, Vector3 direction);
+        public abstract Vector3? HitTest(Vector3 position, Vector3 direction, ref Vector3[] OutDebug);
 
         public abstract void Fire();
 

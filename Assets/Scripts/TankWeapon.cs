@@ -43,6 +43,11 @@ public class TankWeapon : NetworkBehaviour
         {
             LaserCheck.enabled = false;
         }
+
+#if UNITY_EDITOR
+        DebugDrawPts = new Vector3[StaticConsts.MaxShellRaycastTicks];
+#endif
+
     }
 
     public override void Spawned()
@@ -80,24 +85,49 @@ public class TankWeapon : NetworkBehaviour
     Vector3 aimVel = default;
     public float aimingCirclePositionSmoothTime = 0.02f;
 
+    //[SerializeField]
+    Vector3[] DebugDrawPts = null;
+    Vector3? DebugHitpoint = null;
+
     private void Update()
     {
-        if (MainWeapon && GetInput(out NetworkInputData _))
+        if (MainWeapon && Object.HasInputAuthority)
         {
             float mx = Turret.lmx;
             float my = Turret.lmy;
-            Vector3? point = CurrentShell.HitTest(ShootPointLocator.position, ShootPointLocator.forward);
+            Vector3? point = CurrentShell.HitTest(ShootPointLocator.position, ShootPointLocator.forward, ref DebugDrawPts);
             if (point.HasValue)
             {
-                AimerDistance = Vector3.Distance(ShootPointLocator.position, point.Value);
-                //print($"hit: {AimerDistance}");
+                //AimerDistance = Vector3.Distance(ShootPointLocator.position, point.Value);
+                DebugHitpoint = point.Value;
+                UIManager.PositionAimingCircle(Vector3.SmoothDamp(UIManager.GetAimingCirclePosition(), PlayerCamera.CurrentCamera.WorldToScreenPoint(point.Value), ref aimVel, aimingCirclePositionSmoothTime));
             } else
             {
                 AimerDistance = DefaultAimerDistance;
+                DebugHitpoint = null;
+
+                Vector3 Target = GetCircleTargetPosition(AimerDistance);
+                UIManager.PositionAimingCircle(Vector3.SmoothDamp(UIManager.GetAimingCirclePosition(), Target, ref aimVel, aimingCirclePositionSmoothTime));
             }
-            Vector3 Target = GetCircleTargetPosition(AimerDistance);
-            UIManager.PositionAimingCircle(Vector3.SmoothDamp(UIManager.GetAimingCirclePosition(), Target, ref aimVel, aimingCirclePositionSmoothTime));
+            
             //print("mm");
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if(DebugDrawPts != null)
+        {
+            Gizmos.color = Color.yellow;
+            for(int i = 1; i < DebugDrawPts.Length; i++)
+            {
+                Gizmos.DrawLine(DebugDrawPts[i - 1], DebugDrawPts[i]);
+            }
+        }
+        if(DebugHitpoint != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(DebugHitpoint.Value, 0.2f);
         }
     }
 

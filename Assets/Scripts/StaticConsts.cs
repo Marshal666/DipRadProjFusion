@@ -11,11 +11,11 @@ public class StaticConsts : MonoBehaviour
 
     public LayerMask _ShellHitLayers;
 
-    public float _MaxShellRaycastLength = 16384f;
+    public int _MaxShellRaycastTicks = 256;
 
     public static LayerMask ShellHitLayers => Instance._ShellHitLayers;
 
-    public static float MaxShellRaycastLength => Instance._MaxShellRaycastLength;
+    public static int MaxShellRaycastTicks => Instance._MaxShellRaycastTicks;
 
     public LayerMask _GroundLayers;
 
