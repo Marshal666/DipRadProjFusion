@@ -227,6 +227,7 @@ public class TankTurret : NetworkBehaviour
 
     public override void Render()
     {
+
         //Causes jittering when doing hull rotation
         //lmx = Mathf.SmoothDampAngle(lmx, TurretMx, ref lmxv, RotationSmoothingTime);
         //lmy = Mathf.SmoothDampAngle(lmy, TurretMy, ref lmyv, RotationSmoothingTime);

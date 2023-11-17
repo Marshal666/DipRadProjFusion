@@ -83,6 +83,7 @@ public class TankWeapon : NetworkBehaviour
     }
 
     Vector3 aimVel = default;
+    Vector3 aimVel2 = default;
     public float aimingCirclePositionSmoothTime = 0.02f;
 
     //[SerializeField]
@@ -98,18 +99,24 @@ public class TankWeapon : NetworkBehaviour
             Vector3? point = CurrentShell.HitTest(ShootPointLocator.position, ShootPointLocator.forward, ref DebugDrawPts);
             if (point.HasValue)
             {
-                //AimerDistance = Vector3.Distance(ShootPointLocator.position, point.Value);
+                UIManager.SetAimingCircleEnabled(true);
+                AimerDistance = Vector3.Distance(ShootPointLocator.position, point.Value);
                 DebugHitpoint = point.Value;
+
+                float newScale = Mathf.Clamp((AimerDistance - StaticConsts.MinAimingCircleApprDistance) / (StaticConsts.MaxAimingCircleApprDistance - StaticConsts.MinAimingCircleApprDistance), 0f, 1f)
+                    * (StaticConsts.MaxAimingCircleScale - StaticConsts.MinAimingCircleScale);
+                UIManager.ScaleAimingCircle(Vector3.one * newScale);
+
                 UIManager.PositionAimingCircle(Vector3.SmoothDamp(UIManager.GetAimingCirclePosition(), PlayerCamera.CurrentCamera.WorldToScreenPoint(point.Value), ref aimVel, aimingCirclePositionSmoothTime));
+                
             } else
             {
+                UIManager.SetAimingCircleEnabled(false);
                 AimerDistance = DefaultAimerDistance;
                 DebugHitpoint = null;
-
-                Vector3 Target = GetCircleTargetPosition(AimerDistance);
-                UIManager.PositionAimingCircle(Vector3.SmoothDamp(UIManager.GetAimingCirclePosition(), Target, ref aimVel, aimingCirclePositionSmoothTime));
             }
-            
+            Vector3 Target = GetCircleTargetPosition(AimerDistance);
+            UIManager.PositionGuideanceCircle(Vector3.SmoothDamp(UIManager.GetGuideanceCirclePositoin(), Target, ref aimVel2, aimingCirclePositionSmoothTime));
             //print("mm");
         }
     }
