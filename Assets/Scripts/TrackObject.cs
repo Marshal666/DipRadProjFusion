@@ -77,7 +77,7 @@ public class TrackObject : MonoBehaviour
 
     public void MarchGirstOffsetOthers(float deltaDist)
     {
-        if(Parts != null || Parts.Length < 1)
+        if(Parts != null && Parts.Length > 0)
         {
             Parts[0].MarchDistance(deltaDist);
             float stDist = Parts[0].Distance;

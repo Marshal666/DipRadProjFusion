@@ -68,6 +68,9 @@ public class PlayerTankController : NetworkBehaviour
 
     public float TrackRotatoionCoeff = 2f;
 
+    [HideInInspector]
+    public NetworkInputData LastInput;
+
     private void Awake()
     {
         rig = GetComponent<NetworkRigidbody>();
@@ -348,6 +351,7 @@ public class PlayerTankController : NetworkBehaviour
     {
         if(GetInput(out NetworkInputData data))
         {
+            LastInput = data;
             //print($"data: {data.ArrowsInput} back: {data.ArrowsInput & NetworkInputData.BACK_BUTTON}");
             Vector3 velocity = rig.ReadVelocity();
             float cspeed = velocity.magnitude;
@@ -465,6 +469,9 @@ public class PlayerTankController : NetworkBehaviour
                 
             }
 
+        } else
+        {
+            LastInput = default;
         }
     }
 

@@ -144,7 +144,9 @@ public class TankTurret : NetworkBehaviour
     {
         //SetRotation(VerticalRotatePart, VerticalRotationAxis, TurretMx);
         //SetRotation(HorizontalRotatePart, HorizontalRotationAxis, TurretMy);
+        //print($"player: {Object.InputAuthority} tick: {Runner.Tick}, dt: {Runner.DeltaTime}");
         bool gi = GetInput(out NetworkInputData data);
+        //print($"local player: {Runner.LocalPlayer}, ia: {Object.InputAuthority}, sa: {Object.StateAuthority}, tia: {Tank.HasInputAuthority}, gi: {gi}");
         if (gi)
         {
             if (float.IsNaN(data.MX) || float.IsNaN(data.MY))
@@ -220,8 +222,8 @@ public class TankTurret : NetworkBehaviour
             //print($"NFU x_ok: {Mathf.Abs(lmx - TurretMx) <= 5f}, y_ok: {Mathf.Abs(lmy - TurretMy) <= 5f} lmx: {lmx}, lmy: {lmy}, TurretMx: {TurretMx}, TurretMy: {TurretMy}");
         } else
         {
-            lmx = TurretMx;
-            lmy = TurretMy;
+            //lmx = TurretMx;
+            //lmy = TurretMy;
         }
     }
 

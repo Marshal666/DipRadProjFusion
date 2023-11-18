@@ -32,7 +32,9 @@ public class LinePathTransform : MonoBehaviour
             //{
             //    up = Vector3.down;
             //}
-            transform.rotation = Quaternion.LookRotation(dir, up);
+            if (dir != Vector3.zero)
+                transform.rotation = Quaternion.LookRotation(dir, up);
+            else transform.rotation = Quaternion.identity;
         }
     }
 

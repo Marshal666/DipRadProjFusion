@@ -72,7 +72,7 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
 
             bool debug = OutDebug != null;
 
-            for(int i = 1; i <= StaticConsts.MaxShellRaycastTicks; i++)
+            for(int i = 1; i < StaticConsts.MaxShellRaycastTicks; i++)
             {
                 var p1 = GetMovePosition(ref data, i - 1);
                 var p2 = GetMovePosition(ref data, i);
@@ -185,7 +185,8 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
                     continue;
                 }
 
-                projectileObject.SetPointingDirection(projectile.PointingDirection);
+                if (projectile.PointingDirection != Vector3.zero)
+                    projectileObject.SetPointingDirection(projectile.PointingDirection);
 
                 if (projectile.HitPosition != Vector3.zero)
                 {
@@ -228,7 +229,18 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
                 projectileData.FinishTick = tick + Mathf.RoundToInt(_lifeTimeAfterHit / Runner.DeltaTime);
 
                 NetworkId id = new NetworkId();
-                var no = hit.Collider.GetComponent<NetworkObject>();
+                NetworkObject no = null;
+                if (hit.Hitbox)
+                {
+                    print($"hit Hitbox: {hit.Hitbox.name}");
+                    no = hit.Hitbox.transform.root.GetComponent<NetworkObject>();
+                }
+                if (hit.Collider)
+                {
+                    print($"hit Collider: {hit.Collider.name}");
+                    no = hit.Collider.transform.root.GetComponent<NetworkObject>();
+                }
+
                 if (no)
                 {
                     id = no.Id;
