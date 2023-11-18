@@ -11,6 +11,8 @@ public class TankWeapon : NetworkBehaviour
 
     public Transform ShootPointLocator;
 
+    public GameObject ShootEffect;
+
     public float ReloadTime = 6f;
 
     public float AimerDistance = 128f;
@@ -64,6 +66,7 @@ public class TankWeapon : NetworkBehaviour
                 //print("Fire");
                 ReloadTimer = TickTimer.CreateFromSeconds(Runner, ReloadTime);
                 CurrentShell.Fire();
+                ShootEffect.SetActive(true);
 
                 if (Debug)
                 {

@@ -1064,7 +1064,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 524425545}
   m_HandleRect: {fileID: 524425544}
   m_Direction: 2
-  m_Value: 1.0000023
+  m_Value: 1.0000025
   m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2300,7 +2300,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ShellHitLayers:
     serializedVersion: 2
-    m_Bits: 155
+    m_Bits: 219
   _MaxShellRaycastTicks: 256
   _GroundLayers:
     serializedVersion: 2

@@ -1,4 +1,5 @@
 using Fusion;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngineInternal;
 
@@ -32,9 +33,15 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
         [Networked, Capacity(64)]
         private NetworkArray<ProjectileData> _projectileData { get; }
 
+        [Networked]
+        [Capacity(64)]
+        public NetworkDictionary<int, ProjectileHitInfo> _hitInfos => default;
+
         private DummyProjectile[] _projectiles = new DummyProjectile[64];
 
         private int _visibleFireCount;
+
+        public HashSet<int> DoneProjectileIndexes = new HashSet<int>();
 
         // WeaponBase INTERFACE
 
@@ -42,6 +49,7 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
         {
             _projectileData.Set(_fireCount % _projectileData.Length, new ProjectileData()
             {
+                Index = _fireCount,
                 FireTick = Runner.Tick,
                 FirePosition = FireTransform.position,
                 FireVelocity = FireTransform.forward * _speed,
@@ -78,7 +86,7 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
 #endif
 
                 Vector3 dir = p2 - p1;
-                if(Physics.Raycast(p1, dir, out var hit, dir.magnitude, StaticConsts.GroundLayers, QueryTriggerInteraction.Ignore))
+                if(Physics.Raycast(p1, dir, out var hit, dir.magnitude, StaticConsts.ShellHitLayers, QueryTriggerInteraction.Ignore))
                 {
                     ret = hit.point;
                     break;
@@ -117,6 +125,16 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
                 UpdateProjectile(ref data, tick);
 
                 _projectileData.Set(i, data);
+            }
+
+            if(_hitInfos.TryGet(Runner.Tick - 1, out var hitInfo) && !DoneProjectileIndexes.Contains(hitInfo.ProjectileIndex)) {
+                bool found = Runner.TryFindObject(hitInfo.HitObjectId, out var obj);
+                string st = $"hit: {(found ? obj.name : "NO_OBJECT")} at: {hitInfo.HitPosition}, dir: {hitInfo.HitDirection}, tick: {hitInfo.Tick}\n";
+                print(st);
+                ConsoleLog.Log(st);
+
+                DoneProjectileIndexes.Add(hitInfo.ProjectileIndex);
+                _hitInfos.Remove(Runner.Tick - 1);
             }
         }
 
@@ -209,13 +227,32 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
                 projectileData.HitDirection = direction;
                 projectileData.FinishTick = tick + Mathf.RoundToInt(_lifeTimeAfterHit / Runner.DeltaTime);
 
+                NetworkId id = new NetworkId();
+                var no = hit.Collider.GetComponent<NetworkObject>();
+                if (no)
+                {
+                    id = no.Id;
+                }
+
+                ProjectileHitInfo info = new ProjectileHitInfo()
+                {
+                    Tick = tick,
+                    HitPosition = hit.Point,
+                    HitDirection = direction,
+                    ProjectileIndex = projectileData.Index,
+                    //HitObject = hit.Collider.gameObject.GetComponent<NetworkObject>(),
+                    HitObjectId = id,
+                    Processed = false,
+                };
+                _hitInfos.Set(tick, info);
+
                 //if (hit.Collider != null && hit.Collider.attachedRigidbody != null)
                 //{
                 //    hit.Collider.attachedRigidbody.AddForce(direction * _hitImpulse, ForceMode.Impulse);
                 //}
-                string st = $"hit: {hit.Collider.gameObject.name} at: {hit.Point}, dir: {direction}, tick: {tick}\n";
-                print(st);
-                ConsoleLog.Log(st);
+                //string st = $"hit: {hit.Collider.gameObject.name} at: {hit.Point}, dir: {direction}, tick: {tick}\n";
+                //print(st);
+                //ConsoleLog.Log(st);
             }
         }
 
@@ -237,6 +274,7 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
 
             public int FireTick;
             public int FinishTick;
+            public int Index;
 
             public Vector3 FirePosition;
             public Vector3 FireVelocity;
@@ -248,5 +286,19 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
 
             public Vector3 PointingDirection;
         }
+
+        [System.Serializable]
+        public struct ProjectileHitInfo : INetworkStruct
+        {
+            public int Tick;
+            public int ProjectileIndex;
+            public Vector3 HitPosition;
+            public Vector3 HitDirection;
+            //Causes big weaver errors
+            //public NetworkObject HitObject;
+            public NetworkId HitObjectId;
+            public bool Processed;
+        }
+
     }
 }
