@@ -24,6 +24,8 @@ public class PlayerTankController : NetworkBehaviour
 
     public Enabler[] Renderers;
 
+    public Enabler[] XRayRenderers;
+    
     /// <summary>
     /// Even indexes - left tracks,
     /// Odd indexes - right tracks
@@ -284,6 +286,17 @@ public class PlayerTankController : NetworkBehaviour
         }
     }
 
+    public void SetEnablersArrayEnabled(Enabler[] arr, bool val)
+    {
+        if (arr != null)
+        {
+            for (int i = 0; i < arr.Length; i++)
+            {
+                arr[i].SetEnabled(val);
+            }
+        }
+    }
+
     #endregion
 
     #region TRACK_CONTROL
@@ -345,6 +358,16 @@ public class PlayerTankController : NetworkBehaviour
         float rs = GetMaxWheelRotation(WheelSide.Right);
         RotateTracks(ls, rs);
         RotateSprockets(ls, rs);
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            SetEnablersArrayEnabled(XRayRenderers, true);
+        }
+
+        if (Input.GetKeyUp(KeyCode.O))
+        {
+            SetEnablersArrayEnabled(XRayRenderers, false);
+        }
     }
 
     public override void FixedUpdateNetwork()

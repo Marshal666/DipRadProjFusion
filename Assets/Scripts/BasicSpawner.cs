@@ -18,16 +18,14 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     private void OnGUI()
     {
-        if (_runner == null)
+        if (_runner != null) return;
+        if (GUI.Button(new Rect(0, 0, 200, 40), "Host"))
         {
-            if (GUI.Button(new Rect(0, 0, 200, 40), "Host"))
-            {
-                StartGame(GameMode.Host);
-            }
-            if (GUI.Button(new Rect(0, 40, 200, 40), "Join"))
-            {
-                StartGame(GameMode.Client);
-            }
+            StartGame(GameMode.Host);
+        }
+        if (GUI.Button(new Rect(0, 40, 200, 40), "Join"))
+        {
+            StartGame(GameMode.Client);
         }
     }
 
