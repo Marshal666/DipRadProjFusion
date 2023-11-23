@@ -75,7 +75,8 @@ Shader "Universal Render Pipeline/Simple Lit  InnerTank"
             // Use same blending / depth states as Standard shader
             ////Blend[_SrcBlend][_DstBlend], [_SrcBlendAlpha][_DstBlendAlpha]
             ////ZWrite[_ZWrite]
-            Ztest Always
+            ZWrite On
+            Ztest GEqual
             Blend SrcAlpha OneMinusSrcAlpha
             //Cull[_Cull]
             //AlphaToMask[_AlphaToMask]

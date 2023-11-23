@@ -358,7 +358,10 @@ public class PlayerTankController : NetworkBehaviour
         float rs = GetMaxWheelRotation(WheelSide.Right);
         RotateTracks(ls, rs);
         RotateSprockets(ls, rs);
-
+        
+        if(!Object.HasInputAuthority)
+            return;
+        
         if (Input.GetKeyDown(KeyCode.O))
         {
             SetEnablersArrayEnabled(XRayRenderers, true);
