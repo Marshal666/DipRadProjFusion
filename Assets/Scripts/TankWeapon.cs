@@ -3,6 +3,7 @@ using Projectiles;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class TankWeapon : NetworkBehaviour
 {
@@ -20,7 +21,7 @@ public class TankWeapon : NetworkBehaviour
 
     public ShellStats[] Shells;
 
-    public int CurrentShellIndex = 0;
+    [FormerlySerializedAs("CurrentShellIndex")] public int CurrentLocalShellIndex = 0;
 
     public bool Debug = false;
 
@@ -28,7 +29,7 @@ public class TankWeapon : NetworkBehaviour
 
     public bool MainWeapon = false;
 
-    public ShellStats CurrentShell => Shells[CurrentShellIndex];
+    public ShellStats CurrentShell => Shells[CurrentLocalShellIndex];
 
     [Networked]
     private TickTimer ReloadTimer { get; set; }

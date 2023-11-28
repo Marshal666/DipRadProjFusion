@@ -12,6 +12,8 @@ public class DamageableSimple : MonoBehaviour, IDamageable
     public DamageableRoot _Root;
     public DamageableRoot Root { get => _Root; set => _Root = value; }
 
+    public IHittable.HittableType Type => IHittable.HittableType.Damageable;
+    
     public void TakeDamage(float damage)
     {
         HP -= damage;

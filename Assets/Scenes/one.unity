@@ -1064,7 +1064,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 524425545}
   m_HandleRect: {fileID: 524425544}
   m_Direction: 2
-  m_Value: 1.0000023
+  m_Value: 1.0000024
   m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2230,6 +2230,7 @@ GameObject:
   - component: {fileID: 1626325268}
   - component: {fileID: 1626325270}
   - component: {fileID: 1626325269}
+  - component: {fileID: 1626325271}
   m_Layer: 0
   m_Name: Root
   m_TagString: Untagged
@@ -2279,13 +2280,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d2263ba2e5fbf740a38cccc742b4be1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HMin: 270
-  HMax: 90
-  Constraints: []
-  ValsTest: []
-  Run: 0
-  current: 30
-  target: 30
+  v1: {x: 0, y: 0, z: 1}
+  v2: {x: 1, y: 0, z: -0.06}
 --- !u!114 &1626325270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2309,6 +2305,22 @@ MonoBehaviour:
   _MaxAimingCircleScale: 1.5
   _MinAimingCircleApprDistance: 128
   _MaxAimingCircleApprDistance: 0.5
+--- !u!114 &1626325271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626325266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76a73a2ffed9d104d8331dfa1801dc44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InnerLayers:
+    serializedVersion: 2
+    m_Bits: 512
+  MaxDamageRaycastDistance: 32
 --- !u!1 &1722775195
 GameObject:
   m_ObjectHideFlags: 0

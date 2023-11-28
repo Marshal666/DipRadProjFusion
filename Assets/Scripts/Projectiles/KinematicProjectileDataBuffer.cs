@@ -27,7 +27,13 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
         private float _lifeTimeAfterHit = 2f;
         [SerializeField]
         private DummyProjectile _dummyProjectilePrefab;
-
+        [SerializeField]
+        public float HitEnergy = 100f;
+        [SerializeField]
+        public float PiercingEnergy = 100f;
+        [SerializeField]
+        public int GlobalIndex = 0;
+        
         [Networked]
         private int _fireCount { get; set; }
         [Networked, Capacity(64)]
@@ -255,6 +261,8 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
                     //HitObject = hit.Collider.gameObject.GetComponent<NetworkObject>(),
                     HitObjectId = id,
                     Processed = false,
+                    HitEnergy = HitEnergy,
+                    PiercingEnergy = PiercingEnergy
                 };
                 _hitInfos.Set(tick, info);
 
@@ -306,6 +314,10 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
             public int ProjectileIndex;
             public Vector3 HitPosition;
             public Vector3 HitDirection;
+            
+            public float HitEnergy;
+            public float PiercingEnergy;
+            
             //Causes big weaver errors
             //public NetworkObject HitObject;
             public NetworkId HitObjectId;
