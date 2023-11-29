@@ -422,8 +422,11 @@ MonoBehaviour:
   BounceOffAngle: 80
   BounceOffEnergyCost: 40
   EnergyPerShrapnelCost: 30
-  DispersionEnergyCoeff: 20
-  SubShrapnelEnergyCoeff: 0.7
+  DispersionEnergyCoeff: 500
+  SubShrapnelEnergyCoeff: 0.33
+  SubShrapnelEnergyCost: 30
+  ArmourEnergyCoeff: 10
+  VectorKEps: 0.0001
 --- !u!114 &1628790778 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3925285380710342715, guid: 10e15f70344c99645a49682124f4c0c7, type: 3}
@@ -675,12 +678,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartPoint: {x: 0, y: 0, z: 0}
-  EndPoint: {x: 0, y: 0.16, z: 4.72}
+  EndPoint: {x: 0, y: 0, z: 2}
+  DrawPointsLineGizmos: 1
+  DrawRotatedLines: 0
   DamageableRoot: {fileID: 1628790778}
   original: []
   current: []
   Shoot: 0
   Restore: 0
+  node:
+    Start: {x: 0, y: 0, z: 0}
+    End: {x: 0, y: 0, z: 0}
+    HitPoints: []
+    Children: []
+  seed: 123
+  DrawNodeGizmos: 1
+  DispersionCount: 20
+  Dispersion: 1
+  DispersionSeed: 123
+  DrawDispersionLines: 0
 --- !u!4 &2086334601
 Transform:
   m_ObjectHideFlags: 0
@@ -689,7 +705,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2086334599}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.846, y: 0.743, z: -1.375}
+  m_LocalPosition: {x: 1.846, y: 0.873, z: -2.325}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

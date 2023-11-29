@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageableLink : MonoBehaviour
+public class DamageableLink : MonoBehaviour, IHittable
 {
 
     public IDamageable Damageable;
 
+    public IHittable.HittableType Type => IHittable.HittableType.Damageable;
+    
     private void Awake()
     {
         var d = GetComponentInParent<IDamageable>();
@@ -14,5 +16,4 @@ public class DamageableLink : MonoBehaviour
             throw new System.Exception("Damageable link has no parent with Damageable component");
         Damageable = d;
     }
-
 }

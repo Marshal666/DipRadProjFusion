@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Projectiles.ProjectileDataBuffer_Kinematic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [ExecuteInEditMode]
 public class DamageSimulator : MonoBehaviour
@@ -26,11 +27,49 @@ public class DamageSimulator : MonoBehaviour
 
     public float SubShrapnelEnergyCoeff = 0.7f;
 
+    public float SubShrapnelEnergyCost = 30f;
+
+    public float ArmourEnergyCoeff = 10f;
+
+    public float VectorKEps = 0.0001f;
+    
     private enum ShrapnelState
     {
         Miss,
         InArmour,
         InInner
+    }
+
+    [Serializable]
+    public class VisualDamageNode
+    {
+        public Vector3 Start;
+        public Vector3 End;
+
+        public List<Vector3> HitPoints;
+        
+        public List<VisualDamageNode> Children;
+
+        public VisualDamageNode Parent;
+
+        public VisualDamageNode(Vector3 start, Vector3 end, VisualDamageNode parent = null)
+        {
+            Start = start;
+            End = end;
+
+            Parent = parent;
+
+            Children = new List<VisualDamageNode>(8);
+            HitPoints = new List<Vector3>(8);
+        }
+
+        public VisualDamageNode AddChild(Vector3 start, Vector3 end)
+        {
+            VisualDamageNode ret = new VisualDamageNode(start, end, this);
+            Children.Add(ret);
+            return ret;
+        }
+        
     }
 
     private void OnEnable()
@@ -58,18 +97,54 @@ public class DamageSimulator : MonoBehaviour
         return angle;
     }
 
-    void _SimulateDamage(KinematicProjectileDataBuffer.ProjectileHitInfo info)
+    void _SimulateDamage(KinematicProjectileDataBuffer.ProjectileHitInfo info, VisualDamageNode visual, int seed)
     {
-        void SendMultipleShrapnel(Vector3 position, Vector3 direction, float energy, int count, float dispersion)
+        
+        Random.InitState(seed);
+        
+        void SendMultipleShrapnel(Vector3 position, Vector3 direction, float energy, int count, float dispersion, 
+            VisualDamageNode node, ShrapnelState state)
         {
             if(count <= 0)
                 return;
-            if(energy <= 0f)
+            if(energy < SubShrapnelEnergyCost)
                 return;
+
+            print($"SendMultipleShrapnel: energy: {energy}, count: {count}, disp: {dispersion}");
+
+            direction = direction.normalized;
+            
+            Vector3 getRandomDirection()
+            {
+                Vector3 helper = Vector3.up;
+                Vector3 dir2 = Vector3.Cross(direction, helper);
+                if (dir2.sqrMagnitude < VectorKEps)
+                {
+                    helper = Vector3.right;
+                }
+                dir2 = Vector3.Cross(direction, helper);
+                Vector3 dir3 = Vector3.Cross(direction, dir2);
+
+                float n1 = Random.Range(-1f, 1f);
+                float n2 = Random.Range(-1f, 1f);
+
+                Vector3 newHDir = (dir2.normalized * n1 + dir3.normalized * n2).normalized;
+                newHDir *= Random.Range(0f, dispersion);
+
+                return (position + direction + newHDir) - position;
+            }
+
+            for (int i = 0; i < count; i++)
+            {
+                Vector3 newDir = getRandomDirection();
+                //print($"newDIr: {newDir}");
+                ShrapnelRaycast(position + VectorKEps * direction, newDir, energy,
+                    node.AddChild(position, position + newDir), state);
+            }
             
         }
 
-        void ShrapnelRaycast(Vector3 position, Vector3 direction, float energy,
+        void ShrapnelRaycast(Vector3 position, Vector3 direction, float energy, VisualDamageNode node,
             ShrapnelState state = ShrapnelState.Miss)
         {
             
@@ -83,9 +158,13 @@ public class DamageSimulator : MonoBehaviour
                     if (energy / 2 >= BounceOffEnergyCost)
                     {
                         //bounce off - create a new shrapnel with two times less energy
+                        Vector3 refl = Vector3.Reflect(direction, normal);
                         ShrapnelRaycast(point,
-                            Vector3.Reflect(direction, normal),
-                            energy / 2, state);
+                            refl,
+                            energy / 2, 
+                            node.AddChild(point, point + refl), 
+                            state);
+                        energy = 0f;
                     }
                     else
                     {
@@ -114,9 +193,12 @@ public class DamageSimulator : MonoBehaviour
                 {
                     ArmourEnd = point;
                 }
-                                
+
+                node.End = ArmourEnd;
                 float armourThickness = Vector3.Distance(ArmourBegin, ArmourEnd);
                 energy -= armourThickness;
+                
+                //ArmourBegin = ArmourEnd = new Vector3(float.NaN, float.NaN, float.NaN);
             }
 
             void DamageDamageable(GameObject g)
@@ -131,16 +213,22 @@ public class DamageSimulator : MonoBehaviour
                 }
 
                 float ohp = dm.HP;
-                dm.TakeDamage(energy);
-                energy -= ohp;
+                if (ohp > 0f)
+                {
+                    dm.TakeDamage(energy);
+                    energy -= ohp;
+                }
             }
+
+            node.Start = position;
+            node.End = position + direction.normalized * MaxDamageRaycastDistance;
             
-            var hits = DoubleRaycasting.DoubleRaycastAll(info.HitPosition, info.HitDirection,
-                MaxDamageRaycastDistance, InnerLayers);
+            var hits = DoubleRaycasting.DoubleRaycastAll(position, direction, MaxDamageRaycastDistance, InnerLayers);
+
+            print($"New shrapnel: position={position}, direction={direction}, energy={energy}, hitsL: {hits.Length}");
 
             if (hits == null || hits.Length < 1)
                 return;
-
             
             ArmourBegin = ArmourEnd = new Vector3(float.NaN, float.NaN, float.NaN);
             
@@ -150,6 +238,7 @@ public class DamageSimulator : MonoBehaviour
                 IHittable h = g.GetComponent<IHittable>();
                 if (h == null)
                     continue;
+                node.End = hits[i].point;
                 switch (h.Type)
                 {
                     case IHittable.HittableType.InnerArea:
@@ -164,17 +253,15 @@ public class DamageSimulator : MonoBehaviour
                                 
                                 EndPiercingPart(hits[i].point);
                                 
-                                if (energy <= 0f)
-                                {
-                                    //absorbed
-                                    return;
-                                }
+                                state = ShrapnelState.InInner;
                                 
                                 //create additional shrapnels - if armour was penned
                                 SendMultipleShrapnel(hits[i].point, direction,
                                     energy * SubShrapnelEnergyCoeff,
                                     Mathf.FloorToInt(energy / EnergyPerShrapnelCost),
-                                    energy / DispersionEnergyCoeff
+                                    energy / DispersionEnergyCoeff,
+                                    node,
+                                    state
                                 );
                                 break;
                             case ShrapnelState.InInner:
@@ -204,15 +291,12 @@ public class DamageSimulator : MonoBehaviour
 
                         break;
                     case IHittable.HittableType.Damageable:
-
+                        node.HitPoints.Add(hits[i].point);
                         switch (state)
                         {
                             case ShrapnelState.Miss:
                                 
                                 DamageDamageable(g);
-
-                                if (energy <= 0f)
-                                    return;
 
                                 break;
                             case ShrapnelState.InArmour:
@@ -221,21 +305,13 @@ public class DamageSimulator : MonoBehaviour
 
                                 state = ShrapnelState.InInner;
                                 
-                                if(energy <= 0f)
-                                    return;
-                                
                                 DamageDamageable(g);
-                                
-                                if(energy <= 0f)
-                                    return;
+
                                 
                                 break;
                             case ShrapnelState.InInner:
                                 
                                 DamageDamageable(g);
-
-                                if (energy <= 0f)
-                                    return;
                                 
                                 break;
                             default: throw new Exception("Invalid shrapnel state");
@@ -244,16 +320,21 @@ public class DamageSimulator : MonoBehaviour
                         break;
                     default: throw new Exception("Invalid IHittable type");
                 }
+                if (energy <= 0f)
+                {
+                    return;
+                }
             }
         }
         
-        ShrapnelRaycast(info.HitPosition, info.HitDirection, info.Energy);
+        ShrapnelRaycast(info.HitPosition, info.HitDirection, info.Energy, visual);
         
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SimulateDamage(KinematicProjectileDataBuffer.ProjectileHitInfo info)
+    public static void SimulateDamage(KinematicProjectileDataBuffer.ProjectileHitInfo info, VisualDamageNode visual,
+        int seed)
     {
-        Instance._SimulateDamage(info);
+        Instance._SimulateDamage(info, visual, seed);
     }
 }
