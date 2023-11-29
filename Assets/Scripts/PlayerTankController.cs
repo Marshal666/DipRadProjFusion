@@ -359,7 +359,7 @@ public class PlayerTankController : NetworkBehaviour
         RotateTracks(ls, rs);
         RotateSprockets(ls, rs);
         
-        if(!Object.HasInputAuthority)
+        if(Object && !Object.HasInputAuthority)
             return;
         
         if (Input.GetKeyDown(KeyCode.O))

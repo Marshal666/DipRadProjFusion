@@ -96,7 +96,7 @@ public class TankWeapon : NetworkBehaviour
 
     private void Update()
     {
-        if (MainWeapon && Object.HasInputAuthority)
+        if (MainWeapon && Object && Object.HasInputAuthority)
         {
             float mx = Turret.lmx;
             float my = Turret.lmy;

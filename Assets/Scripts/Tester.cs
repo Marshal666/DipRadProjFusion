@@ -1,15 +1,27 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Projectiles.ProjectileDataBuffer_Kinematic;
 using UnityEditor;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class Tester : MonoBehaviour
 {
 
     public Vector3 StartPoint = default;
 
     public Vector3 EndPoint = new Vector3(0, 0, 3f);
+
+    
+
+    public DamageableRoot DamageableRoot;
+
+    public float[] original, current;
+    
+    public bool Shoot = false;
+
+    public bool Restore = false;
     
     // Start is called before the first frame update
     void Start()
@@ -20,7 +32,36 @@ public class Tester : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Shoot)
+        {
+            Vector3 start = transform.TransformPoint(StartPoint);
+            Vector3 end = transform.TransformPoint(EndPoint);
+
+            original = DamageableRoot.GetState();
+            
+            DamageSimulator.SimulateDamage(
+                new KinematicProjectileDataBuffer.ProjectileHitInfo()
+                {
+                    Energy = 500,
+                    HitDirection = end - start,
+                    HitPosition = start
+                }
+                );
+
+            current = DamageableRoot.GetState();
+
+            Shoot = false;
+        }
+
+        if (Restore)
+        {
+            if (original != null)
+            {
+                DamageableRoot.SetState(original);
+            }
+
+            Restore = false;
+        }
     }
 
     private void OnDrawGizmos()
@@ -31,24 +72,5 @@ public class Tester : MonoBehaviour
         Gizmos.color = Color.red;
         
         Gizmos.DrawLine(start, end);
-
-        float dist = Vector3.Distance(start, end);
-
-        var hits = DoubleRaycasting.DoubleRaycastAll(start, end - start, dist, Int32.MaxValue, QueryTriggerInteraction.Ignore);
-        
-        //var hits = Physics.RaycastAll(start, end - start, dist);
-
-        if (hits != null)
-        {
-            Gizmos.color = Color.magenta;
-            int i = 0;
-            foreach (var hit in hits)
-            {
-                Gizmos.DrawSphere(hit.point, 0.1f);
-                #if UNITY_EDITOR
-                Handles.Label(hit.point + Vector3.up * 0.3f, (i++).ToString());
-                #endif
-            }
-        }
     }
 }

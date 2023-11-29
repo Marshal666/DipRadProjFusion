@@ -1,6 +1,7 @@
 using Fusion;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngineInternal;
 
 namespace Projectiles.ProjectileDataBuffer_Kinematic
@@ -27,10 +28,8 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
         private float _lifeTimeAfterHit = 2f;
         [SerializeField]
         private DummyProjectile _dummyProjectilePrefab;
-        [SerializeField]
-        public float HitEnergy = 100f;
-        [SerializeField]
-        public float PiercingEnergy = 100f;
+        [FormerlySerializedAs("HitEnergy")] [SerializeField]
+        public float Energy = 100f;
         [SerializeField]
         public int GlobalIndex = 0;
         
@@ -261,8 +260,7 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
                     //HitObject = hit.Collider.gameObject.GetComponent<NetworkObject>(),
                     HitObjectId = id,
                     Processed = false,
-                    HitEnergy = HitEnergy,
-                    PiercingEnergy = PiercingEnergy
+                    Energy = Energy,
                 };
                 _hitInfos.Set(tick, info);
 
@@ -315,8 +313,7 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
             public Vector3 HitPosition;
             public Vector3 HitDirection;
             
-            public float HitEnergy;
-            public float PiercingEnergy;
+            public float Energy;
             
             //Causes big weaver errors
             //public NetworkObject HitObject;

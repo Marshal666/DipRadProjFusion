@@ -107,6 +107,11 @@ public static class Utils
         return NormalizeAngle360(ret);
     }
 
+    public static bool HasNaN(this Vector3 v)
+    {
+        return float.IsNaN(v.x) || float.IsNaN(v.y) || float.IsNaN(v.z);
+    }
+
     public static void DestroyObject(UnityEngine.Object o)
     {
         Action<UnityEngine.Object> d = UnityEngine.Object.Destroy;
