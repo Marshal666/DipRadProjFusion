@@ -166,6 +166,15 @@ public class Tester : MonoBehaviour
                         Gizmos.DrawSphere(pt, 0.05f);
                     }
                 }
+                if(vn.ArmourPoints != null)
+                {
+                    Gizmos.color = Color.yellow;
+                    foreach(var pt in vn.ArmourPoints)
+                    {
+                        Gizmos.DrawSphere(pt.pt, 0.01f);
+                    }
+                    Gizmos.color = Color.red;
+                }
                 if(vn.Children == null)
                     return;
                 foreach (var ch in vn.Children)

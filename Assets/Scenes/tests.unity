@@ -423,9 +423,9 @@ MonoBehaviour:
   BounceOffEnergyCost: 40
   EnergyPerShrapnelCost: 30
   DispersionEnergyCoeff: 500
-  SubShrapnelEnergyCoeff: 0.33
+  SubShrapnelEnergyCoeff: 0.1
   SubShrapnelEnergyCost: 30
-  ArmourEnergyCoeff: 10
+  ArmourEnergyCoeff: 80
   VectorKEps: 0.0001
 --- !u!114 &1628790778 stripped
 MonoBehaviour:

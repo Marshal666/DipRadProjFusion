@@ -47,6 +47,8 @@ public class DamageSimulator : MonoBehaviour
         public Vector3 End;
 
         public List<Vector3> HitPoints;
+
+        public List<(Vector3 pt, bool end)> ArmourPoints;
         
         public List<VisualDamageNode> Children;
 
@@ -61,6 +63,7 @@ public class DamageSimulator : MonoBehaviour
 
             Children = new List<VisualDamageNode>(8);
             HitPoints = new List<Vector3>(8);
+            ArmourPoints = new List<(Vector3 pt, bool end)>(8);
         }
 
         public VisualDamageNode AddChild(Vector3 start, Vector3 end)
@@ -171,13 +174,15 @@ public class DamageSimulator : MonoBehaviour
                         //try to go through some armour again..
                         state = ShrapnelState.InArmour;
                         ArmourBegin = point;
+                        node.ArmourPoints.Add((ArmourBegin, false));
                     }
                 }
                 else
                 {
                     //try to go through some armour again..
                     state = ShrapnelState.InArmour;
-                    ArmourBegin =point;
+                    ArmourBegin = point;
+                    node.ArmourPoints.Add((ArmourBegin, false));
                 }
             }
 
@@ -195,10 +200,11 @@ public class DamageSimulator : MonoBehaviour
                 }
 
                 node.End = ArmourEnd;
+                node.ArmourPoints.Add((ArmourEnd, true));
                 float armourThickness = Vector3.Distance(ArmourBegin, ArmourEnd);
-                energy -= armourThickness;
+                energy -= armourThickness * ArmourEnergyCoeff;
                 
-                //ArmourBegin = ArmourEnd = new Vector3(float.NaN, float.NaN, float.NaN);
+                ArmourBegin = ArmourEnd = new Vector3(float.NaN, float.NaN, float.NaN);
             }
 
             void DamageDamageable(GameObject g)
@@ -225,7 +231,7 @@ public class DamageSimulator : MonoBehaviour
             
             var hits = DoubleRaycasting.DoubleRaycastAll(position, direction, MaxDamageRaycastDistance, InnerLayers);
 
-            print($"New shrapnel: position={position}, direction={direction}, energy={energy}, hitsL: {hits.Length}");
+            //print($"New shrapnel: position={position}, direction={direction}, energy={energy}, hitsL: {hits.Length}");
 
             if (hits == null || hits.Length < 1)
                 return;
@@ -252,6 +258,10 @@ public class DamageSimulator : MonoBehaviour
                                 //armour is either penned or this shrapnel is absorbed (later)
                                 
                                 EndPiercingPart(hits[i].point);
+
+                                if (energy <= 0f)
+                                    //absorbed
+                                    return;
                                 
                                 state = ShrapnelState.InInner;
                                 
@@ -281,6 +291,7 @@ public class DamageSimulator : MonoBehaviour
                             case ShrapnelState.InArmour:
                                 //continue going through armour
                                 ArmourEnd = hits[i].point;
+                                node.ArmourPoints.Add((ArmourEnd, true));
                                 break;
                             case ShrapnelState.InInner:
                                 //either bounce off or get absorbed (later)
@@ -302,6 +313,9 @@ public class DamageSimulator : MonoBehaviour
                             case ShrapnelState.InArmour:
                                 
                                 EndPiercingPart(hits[i].point);
+
+                                if (energy <= 0f)
+                                    return;
 
                                 state = ShrapnelState.InInner;
                                 
