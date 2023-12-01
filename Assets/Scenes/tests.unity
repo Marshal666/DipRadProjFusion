@@ -419,13 +419,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   MaxDamageRaycastDistance: 32
-  BounceOffAngle: 80
+  BounceOffAngle: 78
   BounceOffEnergyCost: 40
-  EnergyPerShrapnelCost: 30
-  DispersionEnergyCoeff: 500
-  SubShrapnelEnergyCoeff: 0.1
-  SubShrapnelEnergyCost: 30
-  ArmourEnergyCoeff: 80
+  EnergyPerShrapnelCost: 15
+  DispersionEnergyCoeff: 430
+  SubShrapnelEnergyCoeff: 0.05
+  SubShrapnelEnergyCost: 10
+  ArmourEnergyCoeff: 5000
+  MinAngleNerfLimit: 0.01
   VectorKEps: 0.0001
 --- !u!114 &1628790778 stripped
 MonoBehaviour:

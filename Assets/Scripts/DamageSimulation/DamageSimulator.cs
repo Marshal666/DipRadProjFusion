@@ -31,6 +31,8 @@ public class DamageSimulator : MonoBehaviour
 
     public float ArmourEnergyCoeff = 10f;
 
+    public float MinAngleNerfLimit = 0.01f;
+
     public float VectorKEps = 0.0001f;
     
     private enum ShrapnelState
@@ -151,7 +153,7 @@ public class DamageSimulator : MonoBehaviour
             ShrapnelState state = ShrapnelState.Miss)
         {
             
-            Vector3 ArmourBegin, ArmourEnd;
+            Vector3 ArmourBegin, ArmourEnd, ArmourNormal;
 
             void HandleArmourHit(Vector3 point, Vector3 direction, Vector3 normal)
             {
@@ -174,6 +176,7 @@ public class DamageSimulator : MonoBehaviour
                         //try to go through some armour again..
                         state = ShrapnelState.InArmour;
                         ArmourBegin = point;
+                        ArmourNormal = normal;
                         node.ArmourPoints.Add((ArmourBegin, false));
                     }
                 }
@@ -182,11 +185,12 @@ public class DamageSimulator : MonoBehaviour
                     //try to go through some armour again..
                     state = ShrapnelState.InArmour;
                     ArmourBegin = point;
+                    ArmourNormal = normal;
                     node.ArmourPoints.Add((ArmourBegin, false));
                 }
             }
 
-            void EndPiercingPart(Vector3 point)
+            void EndPiercingPart(Vector3 point, Vector3 normal)
             {
                 //in case there was no armour before this..
                 if (ArmourBegin.HasNaN())
@@ -202,9 +206,13 @@ public class DamageSimulator : MonoBehaviour
                 node.End = ArmourEnd;
                 node.ArmourPoints.Add((ArmourEnd, true));
                 float armourThickness = Vector3.Distance(ArmourBegin, ArmourEnd);
-                energy -= armourThickness * ArmourEnergyCoeff;
-                
-                ArmourBegin = ArmourEnd = new Vector3(float.NaN, float.NaN, float.NaN);
+                float angle = GetHitAngle(direction, normal);
+                float oe = energy;
+                energy -= armourThickness * ArmourEnergyCoeff * Mathf.Max(MinAngleNerfLimit, Mathf.Cos(angle * Mathf.Deg2Rad));
+
+                //print($"End piercing: thickness: {armourThickness}, energy before: {oe}, energy now: {energy}");
+
+                ArmourBegin = ArmourEnd = ArmourNormal = new Vector3(float.NaN, float.NaN, float.NaN);
             }
 
             void DamageDamageable(GameObject g)
@@ -236,7 +244,7 @@ public class DamageSimulator : MonoBehaviour
             if (hits == null || hits.Length < 1)
                 return;
             
-            ArmourBegin = ArmourEnd = new Vector3(float.NaN, float.NaN, float.NaN);
+            ArmourBegin = ArmourNormal = ArmourEnd = new Vector3(float.NaN, float.NaN, float.NaN);
             
             for (int i = 0; i < hits.Length; i++)
             {
@@ -257,7 +265,7 @@ public class DamageSimulator : MonoBehaviour
                             case ShrapnelState.InArmour:
                                 //armour is either penned or this shrapnel is absorbed (later)
                                 
-                                EndPiercingPart(hits[i].point);
+                                EndPiercingPart(hits[i].point, ArmourNormal);
 
                                 if (energy <= 0f)
                                     //absorbed
@@ -312,7 +320,7 @@ public class DamageSimulator : MonoBehaviour
                                 break;
                             case ShrapnelState.InArmour:
                                 
-                                EndPiercingPart(hits[i].point);
+                                EndPiercingPart(hits[i].point, ArmourNormal);
 
                                 if (energy <= 0f)
                                     return;
