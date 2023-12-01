@@ -425,7 +425,7 @@ MonoBehaviour:
   DispersionEnergyCoeff: 430
   SubShrapnelEnergyCoeff: 0.05
   SubShrapnelEnergyCost: 10
-  ArmourEnergyCoeff: 5000
+  ArmourEnergyCoeff: 1500
   MinAngleNerfLimit: 0.01
   VectorKEps: 0.0001
 --- !u!114 &1628790778 stripped
@@ -706,7 +706,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2086334599}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.846, y: 0.873, z: -2.325}
+  m_LocalPosition: {x: 1.846, y: 0.668, z: -2.325}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
