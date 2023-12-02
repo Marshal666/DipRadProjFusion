@@ -420,7 +420,12 @@ MonoBehaviour:
     m_Bits: 512
   MaxDamageRaycastDistance: 32
   BounceOffAngle: 78
-  BounceOffEnergyCost: 40
+  BounceOffAltMaxEnergy: 45
+  BounceOffSubAngleProbabilityMin: 0
+  BounceOffSubAngleMin: 40
+  BounceOffSubAngleProbabilityMax: 0.8
+  BounceOffSubAngleMax: 90
+  BounceOffEnergyCost: 5
   EnergyPerShrapnelCost: 15
   DispersionEnergyCoeff: 430
   SubShrapnelEnergyCoeff: 0.05
@@ -706,7 +711,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2086334599}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.846, y: 0.668, z: -2.325}
+  m_LocalPosition: {x: 1.846, y: 0.957, z: -2.325}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

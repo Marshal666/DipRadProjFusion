@@ -19,6 +19,13 @@ public class DamageSimulator : MonoBehaviour
 
     public float BounceOffAngle = 80f;
 
+    //for small energy shrapnels
+    public float BounceOffAltMaxEnergy = 30f;
+    public float BounceOffSubAngleProbabilityMin = 0f;
+    public float BounceOffSubAngleMin = 40f;
+    public float BounceOffSubAngleProbabilityMax = 0.8f;
+    public float BounceOffSubAngleMax = 90f;
+
     public float BounceOffEnergyCost = 40f;
 
     public float EnergyPerShrapnelCost = 30f;
@@ -159,7 +166,12 @@ public class DamageSimulator : MonoBehaviour
             {
                 print($"Enter piercing: {energy}");
                 float angle = GetHitAngle(direction, normal);
-                if (angle >= BounceOffAngle)
+                float angleProb = Utils.MapInterval(angle, BounceOffSubAngleMin, BounceOffSubAngleMax, BounceOffSubAngleProbabilityMin, BounceOffSubAngleProbabilityMax);
+                bool bounceOffAlt = 
+                    energy <= BounceOffAltMaxEnergy 
+                    && Random.value >= angleProb;
+                print($"Bounce off alt: {bounceOffAlt}, aprob: {angleProb}, angle: {angle}");
+                if (angle >= BounceOffAngle || bounceOffAlt)
                 {
                     if (energy / 2 >= BounceOffEnergyCost)
                     {
@@ -213,7 +225,7 @@ public class DamageSimulator : MonoBehaviour
                 float energyLoss = armourThickness * ArmourEnergyCoeff * Mathf.Max(MinAngleNerfLimit, Mathf.Cos(angle * Mathf.Deg2Rad));
                 energy -= energyLoss;
 
-                print($"End piercing: thickness: {armourThickness}, energy before: {oe}, energy now: {energy}, loss: {energyLoss}");
+                //print($"End piercing: thickness: {armourThickness}, energy before: {oe}, energy now: {energy}, loss: {energyLoss}");
 
                 ArmourBegin = ArmourEnd = ArmourNormal = new Vector3(float.NaN, float.NaN, float.NaN);
             }
