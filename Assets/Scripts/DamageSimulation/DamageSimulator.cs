@@ -52,6 +52,14 @@ public class DamageSimulator : MonoBehaviour
     [Serializable]
     public class VisualDamageNode
     {
+
+        [Serializable]
+        public struct ShrapnelSpawnData
+        {
+            public float Distance;
+            public int Count;
+        }
+
         public Vector3 Start;
         public Vector3 End;
 
@@ -63,6 +71,13 @@ public class DamageSimulator : MonoBehaviour
 
         public VisualDamageNode Parent;
 
+        public List<ShrapnelSpawnData> SpawnData;
+
+        [NonSerialized]
+        public float Dist;
+        [NonSerialized]
+        public Vector3 Dir;
+
         public VisualDamageNode(Vector3 start, Vector3 end, VisualDamageNode parent = null)
         {
             Start = start;
@@ -73,6 +88,7 @@ public class DamageSimulator : MonoBehaviour
             Children = new List<VisualDamageNode>(8);
             HitPoints = new List<Vector3>(8);
             ArmourPoints = new List<(Vector3 pt, bool end)>(8);
+            SpawnData = new List<ShrapnelSpawnData>(4);
         }
 
         public VisualDamageNode AddChild(Vector3 start, Vector3 end)
@@ -109,10 +125,12 @@ public class DamageSimulator : MonoBehaviour
         return angle;
     }
 
-    void _SimulateDamage(KinematicProjectileDataBuffer.ProjectileHitInfo info, VisualDamageNode visual, int seed)
+    void _SimulateDamage(KinematicProjectileDataBuffer.ProjectileHitInfo info, VisualDamageNode visual, int seed, ref GhostEffectObject ghost)
     {
         
         Random.InitState(seed);
+
+        GameObject objg = null;
         
         void SendMultipleShrapnel(Vector3 position, Vector3 direction, float energy, int count, float dispersion, 
             VisualDamageNode node, ShrapnelState state)
@@ -122,7 +140,7 @@ public class DamageSimulator : MonoBehaviour
             if(energy < SubShrapnelEnergyCost)
                 return;
 
-            print($"SendMultipleShrapnel: energy: {energy}, count: {count}, disp: {dispersion}");
+            //print($"SendMultipleShrapnel: energy: {energy}, count: {count}, disp: {dispersion}");
 
             direction = direction.normalized;
             
@@ -164,13 +182,13 @@ public class DamageSimulator : MonoBehaviour
 
             void HandleArmourHit(Vector3 point, Vector3 direction, Vector3 normal)
             {
-                print($"Enter piercing: {energy}");
+                //print($"Enter piercing: {energy}");
                 float angle = GetHitAngle(direction, normal);
                 float angleProb = Utils.MapInterval(angle, BounceOffSubAngleMin, BounceOffSubAngleMax, BounceOffSubAngleProbabilityMin, BounceOffSubAngleProbabilityMax);
                 bool bounceOffAlt = 
                     energy <= BounceOffAltMaxEnergy 
                     && Random.value >= angleProb;
-                print($"Bounce off alt: {bounceOffAlt}, aprob: {angleProb}, angle: {angle}");
+                //print($"Bounce off alt: {bounceOffAlt}, aprob: {angleProb}, angle: {angle}");
                 if (angle >= BounceOffAngle || bounceOffAlt)
                 {
                     if (energy / 2 >= BounceOffEnergyCost)
@@ -184,6 +202,7 @@ public class DamageSimulator : MonoBehaviour
                             node.AddChild(spoint, spoint + refl), 
                             state);
                         energy = 0f;
+                        node.SpawnData.Add(new VisualDamageNode.ShrapnelSpawnData() { Count = 1, Distance = Vector3.Distance(node.Start, node.End) });
                     }
                     else
                     {
@@ -258,6 +277,11 @@ public class DamageSimulator : MonoBehaviour
 
             if (hits == null || hits.Length < 1)
                 return;
+
+            if(objg == null)
+            {
+                objg = hits[0].collider.gameObject;
+            }
             
             ArmourBegin = ArmourNormal = ArmourEnd = new Vector3(float.NaN, float.NaN, float.NaN);
             
@@ -287,15 +311,17 @@ public class DamageSimulator : MonoBehaviour
                                     return;
                                 
                                 state = ShrapnelState.InInner;
-                                
+
                                 //create additional shrapnels - if armour was penned
+                                int count = Mathf.FloorToInt(energy / EnergyPerShrapnelCost);
                                 SendMultipleShrapnel(hits[i].point, direction,
                                     energy * SubShrapnelEnergyCoeff,
-                                    Mathf.FloorToInt(energy / EnergyPerShrapnelCost),
+                                    count,
                                     energy / DispersionEnergyCoeff,
                                     node,
                                     state
                                 );
+                                node.SpawnData.Add(new VisualDamageNode.ShrapnelSpawnData() { Count = count, Distance = Vector3.Distance(node.Start, node.End) });
                                 break;
                             case ShrapnelState.InInner:
                                 //continue the shrapnel moving
@@ -365,13 +391,22 @@ public class DamageSimulator : MonoBehaviour
         }
         
         ShrapnelRaycast(info.HitPosition, info.HitDirection, info.Energy, visual);
+
+        if(objg)
+        {
+            ghost = objg.GetComponentInParent<GhostEffectObject>();
+            if(ghost == null)
+            {
+                ghost = objg.GetComponent<GhostEffectObject>();
+            }
+        }
         
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SimulateDamage(KinematicProjectileDataBuffer.ProjectileHitInfo info, VisualDamageNode visual,
-        int seed)
+        int seed, ref GhostEffectObject ghost)
     {
-        Instance._SimulateDamage(info, visual, seed);
+        Instance._SimulateDamage(info, visual, seed, ref ghost);
     }
 }

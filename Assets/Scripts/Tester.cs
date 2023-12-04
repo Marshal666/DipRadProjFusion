@@ -39,6 +39,12 @@ public class Tester : MonoBehaviour
     public int DispersionSeed = 123;
 
     public bool DrawDispersionLines = false;
+
+    public DamageVisualizer Visualizer;
+
+    public bool Visualize = false;
+
+    GhostEffectObject ghost;
     
     // Start is called before the first frame update
     void Start()
@@ -66,7 +72,8 @@ public class Tester : MonoBehaviour
                     HitPosition = start
                 },
                 node,
-                seed
+                seed,
+                ref ghost
                 );
 
             current = DamageableRoot.GetState();
@@ -80,9 +87,18 @@ public class Tester : MonoBehaviour
             {
                 DamageableRoot.SetState(original);
             }
-
+            if(Visualizer)
+            {
+                Visualizer.Reset();
+            }
             Restore = false;
             node = null;
+        }
+
+        if(Visualize && Visualizer)
+        {
+            Visualizer.VisualizeDamage(node, ghost);
+            Visualize = false;
         }
     }
 
