@@ -2,9 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Projectiles.ProjectileDataBuffer_Kinematic;
-using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 [ExecuteInEditMode]
 public class Tester : MonoBehaviour
@@ -19,6 +22,8 @@ public class Tester : MonoBehaviour
     public bool DrawRotatedLines = false;
 
     public DamageableRoot DamageableRoot;
+
+    public Transform TankTarget;
 
     public float[] original, current;
     
@@ -44,6 +49,8 @@ public class Tester : MonoBehaviour
 
     public bool Visualize = false;
 
+    public float ShootAtTankDistance = 5f;
+
     GhostEffectObject ghost;
     
     // Start is called before the first frame update
@@ -52,53 +59,93 @@ public class Tester : MonoBehaviour
         
     }
 
+    void ShootF()
+    {
+        Vector3 start = transform.TransformPoint(StartPoint);
+        Vector3 end = transform.TransformPoint(EndPoint);
+
+        original = DamageableRoot.GetState();
+
+        node = new DamageSimulator.VisualDamageNode(default, default);
+
+        DamageSimulator.SimulateDamage(
+            new KinematicProjectileDataBuffer.ProjectileHitInfo()
+            {
+                Energy = 500,
+                HitDirection = end - start,
+                HitPosition = start
+            },
+            node,
+            seed,
+            ref ghost
+            );
+
+        current = DamageableRoot.GetState();
+
+        Shoot = false;
+    }
+
+    void RestoreF()
+    {
+        if (original != null && current != null && current.Length == original.Length && current.Length > 0)
+        {
+            DamageableRoot.SetState(original);
+        }
+        if (Visualizer)
+        {
+            Visualizer.Reset();
+        }
+        Restore = false;
+        node = null;
+    }
+
+    void VisualizeF()
+    {
+        Visualizer.VisualizeDamage(node, ghost);
+        Visualize = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (Shoot)
         {
-            Vector3 start = transform.TransformPoint(StartPoint);
-            Vector3 end = transform.TransformPoint(EndPoint);
-
-            original = DamageableRoot.GetState();
-
-            node = new DamageSimulator.VisualDamageNode(default, default);
-            
-            DamageSimulator.SimulateDamage(
-                new KinematicProjectileDataBuffer.ProjectileHitInfo()
-                {
-                    Energy = 500,
-                    HitDirection = end - start,
-                    HitPosition = start
-                },
-                node,
-                seed,
-                ref ghost
-                );
-
-            current = DamageableRoot.GetState();
-
-            Shoot = false;
+            ShootF();
         }
 
         if (Restore)
         {
-            if (original != null)
-            {
-                DamageableRoot.SetState(original);
-            }
-            if(Visualizer)
-            {
-                Visualizer.Reset();
-            }
-            Restore = false;
-            node = null;
+            RestoreF();
         }
 
         if(Visualize && Visualizer)
         {
-            Visualizer.VisualizeDamage(node, ghost);
-            Visualize = false;
+            VisualizeF();
+        }
+
+        bool inEditor = false;
+
+#if UNITY_EDITOR
+        inEditor = !EditorApplication.isPlaying;
+#endif
+
+        if(Input.GetKeyDown(KeyCode.Mouse0) && !inEditor)
+        {
+            Ray r = PlayerCamera.CurrentCamera.ScreenPointToRay(Input.mousePosition);
+
+            if(Physics.Raycast(r, out var hit))
+            {
+                StartPoint = hit.point - r.direction.normalized * ShootAtTankDistance;
+                EndPoint = hit.point;
+            } else
+            {
+                StartPoint = r.origin;
+                EndPoint = r.direction + StartPoint;
+            }
+
+            RestoreF();
+            ShootF();
+            VisualizeF();
         }
     }
 

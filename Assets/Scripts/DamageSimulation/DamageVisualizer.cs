@@ -60,8 +60,10 @@ public class DamageVisualizer : MonoBehaviour
         Speed = this.LongestPath / SimulationTime;
 
         Ghost = ghost;
-
-        Ghost.SetMaterial(GhostEffectObject.MaterialType.Ghost);
+        if (Ghost)
+        {
+            Ghost.SetMaterial(GhostEffectObject.MaterialType.Ghost);
+        }
 
         RunningTime = 0f;
 
@@ -69,13 +71,41 @@ public class DamageVisualizer : MonoBehaviour
 
     }
 
+    void NodeCleanup()
+    {
+        if (CurrentNodes == null)
+            return;
+        for (int i = 0; i < CurrentNodes.Count; i++)
+        {
+            var node = CurrentNodes[i];
+            if (node.shrapnel != null)
+            {
+                if (node.SpawnerIndex == -1)
+                {
+                    MainShell.ReturnObject(node.shrapnel.gameObject);
+                    node.shrapnel = null;
+                }
+                else
+                {
+                    ShrapnelModels[node.SpawnerIndex].ReturnObject(node.shrapnel.gameObject);
+                    node.shrapnel = null;
+                }
+            }
+        }
+    }
+
     public void Reset()
     {
         State = VisualizerState.Idle;
-        if(CurrentNodes == null)
+        NodeCleanup();
+        if (CurrentNodes == null)
+        {
             CurrentNodes = new List<VGNode>(32);
+        }
         else
+        {
             CurrentNodes.Clear();
+        }
         RunningTime = 0f;
     }
 
@@ -166,7 +196,11 @@ public class DamageVisualizer : MonoBehaviour
             if(RunningTime >= SimulationTime)
             {
                 //print($"Visualizer done! time: {RunningTime}");
-                Ghost.SetMaterial(GhostEffectObject.MaterialType.Original);
+                if (Ghost)
+                {
+                    Ghost.SetMaterial(GhostEffectObject.MaterialType.Original);
+                }
+                NodeCleanup();
                 State = VisualizerState.Done;
             }
         }
