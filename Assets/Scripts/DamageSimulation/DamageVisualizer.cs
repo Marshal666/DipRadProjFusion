@@ -9,9 +9,11 @@ public class DamageVisualizer : MonoBehaviour
 
     public ObjectHolder[] ShrapnelModels;
 
+    public ObjectHolder HitPoints;
+
     DamageSimulator.VisualDamageNode Node;
 
-    GhostEffectObject Ghost;
+    PlayerTankController Tank;
 
     [Tooltip("In seconds")]
     public float SimulationTime = 10f;
@@ -31,7 +33,7 @@ public class DamageVisualizer : MonoBehaviour
 
     public VisualizerState State = VisualizerState.Idle;
 
-    public void VisualizeDamage(DamageSimulator.VisualDamageNode node, GhostEffectObject ghost)
+    public void VisualizeDamage(DamageSimulator.VisualDamageNode node, PlayerTankController tank)
     {
 
         float LongestPath(DamageSimulator.VisualDamageNode node)
@@ -59,10 +61,10 @@ public class DamageVisualizer : MonoBehaviour
 
         Speed = this.LongestPath / SimulationTime;
 
-        Ghost = ghost;
-        if (Ghost)
+        Tank = tank;
+        if (Tank)
         {
-            Ghost.SetMaterial(GhostEffectObject.MaterialType.Ghost);
+            Tank.SetGhostingEnabled(true);
         }
 
         RunningTime = 0f;
@@ -75,6 +77,7 @@ public class DamageVisualizer : MonoBehaviour
     {
         if (CurrentNodes == null)
             return;
+        HitPoints.ReclaimAll();
         for (int i = 0; i < CurrentNodes.Count; i++)
         {
             var node = CurrentNodes[i];
@@ -111,7 +114,7 @@ public class DamageVisualizer : MonoBehaviour
 
     float RunningTime = 0f;
     
-    public class VGNode
+    private class VGNode
     {
         public DamageSimulator.VisualDamageNode vn;
         public ShrapnelGraphic shrapnel = null;
@@ -120,6 +123,7 @@ public class DamageVisualizer : MonoBehaviour
         public int SpawnerIndex = -1;
         public int CurrentSpawnData = 0;
         public int CurrentChildIndex = 0;
+        public int CurrentHitPointIndex = 0;
 
         public VGNode(DamageSimulator.VisualDamageNode node)
         {
@@ -128,7 +132,7 @@ public class DamageVisualizer : MonoBehaviour
 
     }
 
-    public List<VGNode> CurrentNodes = new List<VGNode>(32);
+    private List<VGNode> CurrentNodes = new List<VGNode>(32);
 
     private void Update()
     {
@@ -172,6 +176,7 @@ public class DamageVisualizer : MonoBehaviour
                 }
                 node.dist += Speed * Time.deltaTime;
 
+                //for child-shrapnels
                 if (node.vn.Children != null && node.vn.SpawnData.Count > 0 && node.CurrentSpawnData < node.vn.SpawnData.Count && node.vn.SpawnData[node.CurrentSpawnData].Distance <= node.dist)
                 {
                     for (int j = 0; j < node.vn.SpawnData[node.CurrentSpawnData].Count && j + node.CurrentChildIndex < node.vn.Children.Count; j++)
@@ -182,6 +187,16 @@ public class DamageVisualizer : MonoBehaviour
                     node.CurrentSpawnData++;
                 }
 
+                //hit point highlight
+                if (node.vn.HitPoints != null && node.vn.HitPoints.Count > 0 && node.CurrentHitPointIndex < node.vn.HitPoints.Count)
+                {
+                    if (node.vn.HitPoints[node.CurrentHitPointIndex].dist <= node.dist)
+                    {
+                        HitPoints.GetObject().transform.position = node.vn.HitPoints[node.CurrentHitPointIndex++].point;
+                    }
+                }
+
+                //done playing node
                 if (node.dist >= node.vn.Dist)
                 {
                     node.shrapnel.SetPosition(node.vn.End, node.dist / node.vn.Dist * ShrapnelLinesScale);
@@ -196,9 +211,9 @@ public class DamageVisualizer : MonoBehaviour
             if(RunningTime >= SimulationTime)
             {
                 //print($"Visualizer done! time: {RunningTime}");
-                if (Ghost)
+                if (Tank)
                 {
-                    Ghost.SetMaterial(GhostEffectObject.MaterialType.Original);
+                    Tank.SetGhostingEnabled(false);
                 }
                 NodeCleanup();
                 State = VisualizerState.Done;

@@ -1,3 +1,4 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +16,7 @@ public interface IDamageable : IHittable
 
 }
 
-public class DamageableRoot : MonoBehaviour
+public class DamageableRoot : NetworkBehaviour
 {
 
     public IDamageable[] Items;
@@ -27,7 +28,18 @@ public class DamageableRoot : MonoBehaviour
         {
             Items[i].Root = this;
         }
+        
     }
+
+    //bool d = true;
+    //public override void FixedUpdateNetwork()
+    //{
+    //    if(d)
+    //    {
+    //        print($"Items count: {Items.Length}, hash: {GetHash()}, sum: {HP_Sum()}");
+    //        d = false;
+    //    }
+    //}
 
     public float[] GetState()
     {
@@ -56,6 +68,36 @@ public class DamageableRoot : MonoBehaviour
         {
             Items[i].HP = state[i];
         }
+    }
+
+    public int GetHash()
+    {
+        int ret = 0;
+        if (Items == null)
+        {
+            return ret;
+        }
+        int mul = 1;
+        for(int i = 0; i < Items.Length; i++)
+        {
+            ret += Items[i].HP.GetHashCode() * mul;
+            mul += 1024;
+        }
+        return ret;
+    }
+
+    public float HP_Sum()
+    {
+        float ret = 0;
+        if (Items == null)
+        {
+            return ret;
+        }
+        for (int i = 0; i < Items.Length; i++)
+        {
+            ret += Items[i].HP;
+        }
+        return ret;
     }
 
 }

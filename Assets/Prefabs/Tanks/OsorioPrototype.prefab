@@ -1017,7 +1017,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -1266,7 +1268,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -1404,7 +1408,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -2080,9 +2086,9 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.9
-    m_ExtremumValue: 1.8
-    m_AsymptoteSlip: 0.8
+    m_ExtremumSlip: 0.5
+    m_ExtremumValue: 1
+    m_AsymptoteSlip: 0.7
     m_AsymptoteValue: 0.5
     m_Stiffness: 2
   m_SidewaysFriction:
@@ -2212,7 +2218,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -2389,7 +2397,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -3075,7 +3085,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -3245,7 +3257,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -3552,7 +3566,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -3841,7 +3857,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 100
+  _interpolationDataSource: 0
+  InitHP: 50
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -4534,9 +4552,9 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.9
-    m_ExtremumValue: 1.8
-    m_AsymptoteSlip: 0.8
+    m_ExtremumSlip: 0.5
+    m_ExtremumValue: 1
+    m_AsymptoteSlip: 0.7
     m_AsymptoteValue: 0.5
     m_Stiffness: 2
   m_SidewaysFriction:
@@ -4666,7 +4684,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -4988,7 +5008,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -5527,7 +5549,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 100
+  _interpolationDataSource: 0
+  InitHP: 50
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -5724,7 +5748,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -6249,7 +6275,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -6636,7 +6664,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 200
+  _interpolationDataSource: 0
+  InitHP: 50
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -6815,7 +6845,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -7244,7 +7276,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -7367,9 +7401,9 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.9
-    m_ExtremumValue: 1.8
-    m_AsymptoteSlip: 0.8
+    m_ExtremumSlip: 0.5
+    m_ExtremumValue: 1
+    m_AsymptoteSlip: 0.7
     m_AsymptoteValue: 0.5
     m_Stiffness: 2
   m_SidewaysFriction:
@@ -7547,9 +7581,9 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.9
-    m_ExtremumValue: 1.8
-    m_AsymptoteSlip: 0.8
+    m_ExtremumSlip: 0.5
+    m_ExtremumValue: 1
+    m_AsymptoteSlip: 0.7
     m_AsymptoteValue: 0.5
     m_Stiffness: 2
   m_SidewaysFriction:
@@ -7665,9 +7699,9 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.9
-    m_ExtremumValue: 1.8
-    m_AsymptoteSlip: 0.8
+    m_ExtremumSlip: 0.5
+    m_ExtremumValue: 1
+    m_AsymptoteSlip: 0.7
     m_AsymptoteValue: 0.5
     m_Stiffness: 2
   m_SidewaysFriction:
@@ -7827,9 +7861,9 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.9
-    m_ExtremumValue: 1.8
-    m_AsymptoteSlip: 0.8
+    m_ExtremumSlip: 0.5
+    m_ExtremumValue: 1
+    m_AsymptoteSlip: 0.7
     m_AsymptoteValue: 0.5
     m_Stiffness: 2
   m_SidewaysFriction:
@@ -8035,7 +8069,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -8350,7 +8386,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -8767,7 +8805,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -8859,9 +8899,9 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.9
-    m_ExtremumValue: 1.8
-    m_AsymptoteSlip: 0.8
+    m_ExtremumSlip: 0.5
+    m_ExtremumValue: 1
+    m_AsymptoteSlip: 0.7
     m_AsymptoteValue: 0.5
     m_Stiffness: 2
   m_SidewaysFriction:
@@ -9315,7 +9355,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -9407,9 +9449,9 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.9
-    m_ExtremumValue: 1.8
-    m_AsymptoteSlip: 0.8
+    m_ExtremumSlip: 0.5
+    m_ExtremumValue: 1
+    m_AsymptoteSlip: 0.7
     m_AsymptoteValue: 0.5
     m_Stiffness: 2
   m_SidewaysFriction:
@@ -9539,7 +9581,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -9739,9 +9783,9 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.9
-    m_ExtremumValue: 1.8
-    m_AsymptoteSlip: 0.8
+    m_ExtremumSlip: 0.5
+    m_ExtremumValue: 1
+    m_AsymptoteSlip: 0.7
     m_AsymptoteValue: 0.5
     m_Stiffness: 2
   m_SidewaysFriction:
@@ -9947,7 +9991,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -10117,7 +10163,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -10331,7 +10379,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -10487,9 +10537,9 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.9
-    m_ExtremumValue: 1.8
-    m_AsymptoteSlip: 0.8
+    m_ExtremumSlip: 0.5
+    m_ExtremumValue: 1
+    m_AsymptoteSlip: 0.7
     m_AsymptoteValue: 0.5
     m_Stiffness: 2
   m_SidewaysFriction:
@@ -10573,9 +10623,9 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.9
-    m_ExtremumValue: 1.8
-    m_AsymptoteSlip: 0.8
+    m_ExtremumSlip: 0.5
+    m_ExtremumValue: 1
+    m_AsymptoteSlip: 0.7
     m_AsymptoteValue: 0.5
     m_Stiffness: 2
   m_SidewaysFriction:
@@ -10963,7 +11013,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -11209,7 +11261,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -11566,10 +11620,11 @@ MonoBehaviour:
   _lifeTime: 4
   _lifeTimeAfterHit: 2
   _dummyProjectilePrefab: {fileID: 5364321150684711477, guid: 4841055cca234dc40a1f9b9c34a15e45, type: 3}
-  Energy: 100
+  Energy: 500
   GlobalIndex: 0
   __hitInfos:
     _items: []
+  _rngSeed: 0
 --- !u!1 &5813530500264520342
 GameObject:
   m_ObjectHideFlags: 0
@@ -11700,7 +11755,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -12073,6 +12130,7 @@ GameObject:
   - component: {fileID: 1920780485507028374}
   - component: {fileID: 2877822014897022766}
   - component: {fileID: 3925285380710342715}
+  - component: {fileID: 9078804299831349386}
   m_Layer: 6
   m_Name: OsorioPrototype
   m_TagString: Untagged
@@ -12128,10 +12186,53 @@ MonoBehaviour:
   - {fileID: 6730906630912970612}
   - {fileID: 1920780485507028374}
   - {fileID: 2877822014897022766}
+  - {fileID: 3925285380710342715}
   - {fileID: 1247358552389890187}
   - {fileID: 777217454541281083}
   - {fileID: 8177014237433987016}
+  - {fileID: 7149639807858210074}
+  - {fileID: 2181826192990723503}
+  - {fileID: 1370756976047995485}
+  - {fileID: 5151736829548551593}
+  - {fileID: 599790478306836497}
+  - {fileID: 5191701475238958721}
+  - {fileID: 8777205057239770761}
+  - {fileID: 4586350128132223062}
+  - {fileID: 2082423063312696414}
+  - {fileID: 7692221829949096073}
+  - {fileID: 5233845008759032592}
+  - {fileID: 7286706126381462573}
+  - {fileID: 532187195928792330}
+  - {fileID: 8664157532591149480}
+  - {fileID: 3685333284100247998}
+  - {fileID: 334116819939720147}
+  - {fileID: 7479974881202120155}
+  - {fileID: 4685303266654938958}
+  - {fileID: 7971823685231024282}
+  - {fileID: 1200302926081711020}
+  - {fileID: 1011477766194716212}
+  - {fileID: 3271937516627309046}
+  - {fileID: 9139530359720791410}
+  - {fileID: 4709983836100440894}
+  - {fileID: 6484657543324977070}
+  - {fileID: 9141460690410536487}
+  - {fileID: 7884058959769568461}
+  - {fileID: 2069948200495988927}
+  - {fileID: 3017911149467374241}
+  - {fileID: 6036325236222588487}
+  - {fileID: 4871300427462910109}
+  - {fileID: 2185714966605813317}
+  - {fileID: 6857439067733656427}
+  - {fileID: 7218399777655384606}
+  - {fileID: 8454060321020608243}
+  - {fileID: 2533333236237054963}
+  - {fileID: 3784669139918420848}
+  - {fileID: 3787529324838036522}
   - {fileID: 4772823051917237306}
+  - {fileID: 4851284417265319029}
+  - {fileID: 7922156650794664952}
+  - {fileID: 8246718417799649913}
+  - {fileID: 4709820725431261938}
   SimulationBehaviours: []
 --- !u!54 &2164773885171869993
 Rigidbody:
@@ -12236,6 +12337,12 @@ MonoBehaviour:
   - {fileID: 4456302991934243979}
   - {fileID: 4014173248932619657}
   - {fileID: 8696365480442107046}
+  ObjectTransforms:
+  - {fileID: 4551190940939128939}
+  - {fileID: 2612386816906899402}
+  - {fileID: 3373835275307253276}
+  - {fileID: 8003790709203390091}
+  Ghost: {fileID: 9078804299831349386}
   Tracks:
   - {fileID: 2898839241229727702}
   - {fileID: 287801952398954664}
@@ -12289,6 +12396,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d54f147b3ce992c42b667a133b8fdc3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+--- !u!114 &9078804299831349386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6302620085713561815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 552649a4853a1b947b48c3b1b58ec2a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OriginalMaterial: {fileID: 2100000, guid: 2641bac5a795cbe44a8d3c3a54f88fed, type: 2}
+  GhostMaterial: {fileID: 2100000, guid: faf352d5a2b7854418db7cf3bdb8d4c2, type: 2}
+  Renderers:
+  - {fileID: 3773492263852403784}
+  - {fileID: 7014098015832177357}
 --- !u!1 &6391700646872614244
 GameObject:
   m_ObjectHideFlags: 0
@@ -12539,7 +12664,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -12631,9 +12758,9 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.9
-    m_ExtremumValue: 1.8
-    m_AsymptoteSlip: 0.8
+    m_ExtremumSlip: 0.5
+    m_ExtremumValue: 1
+    m_AsymptoteSlip: 0.7
     m_AsymptoteValue: 0.5
     m_Stiffness: 2
   m_SidewaysFriction:
@@ -12763,7 +12890,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -12855,9 +12984,9 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.9
-    m_ExtremumValue: 1.8
-    m_AsymptoteSlip: 0.8
+    m_ExtremumSlip: 0.5
+    m_ExtremumValue: 1
+    m_AsymptoteSlip: 0.7
     m_AsymptoteValue: 0.5
     m_Stiffness: 2
   m_SidewaysFriction:
@@ -13018,7 +13147,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -13348,9 +13479,9 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.9
-    m_ExtremumValue: 1.8
-    m_AsymptoteSlip: 0.8
+    m_ExtremumSlip: 0.5
+    m_ExtremumValue: 1
+    m_AsymptoteSlip: 0.7
     m_AsymptoteValue: 0.5
     m_Stiffness: 2
   m_SidewaysFriction:
@@ -13575,7 +13706,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -13762,9 +13895,9 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.9
-    m_ExtremumValue: 1.8
-    m_AsymptoteSlip: 0.8
+    m_ExtremumSlip: 0.5
+    m_ExtremumValue: 1
+    m_AsymptoteSlip: 0.7
     m_AsymptoteValue: 0.5
     m_Stiffness: 2
   m_SidewaysFriction:
@@ -14127,9 +14260,9 @@ WheelCollider:
   m_Mass: 600
   m_WheelDampingRate: 100
   m_ForwardFriction:
-    m_ExtremumSlip: 0.9
-    m_ExtremumValue: 1.8
-    m_AsymptoteSlip: 0.8
+    m_ExtremumSlip: 0.5
+    m_ExtremumValue: 1
+    m_AsymptoteSlip: 0.7
     m_AsymptoteValue: 0.5
     m_Stiffness: 2
   m_SidewaysFriction:
@@ -14292,7 +14425,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 500
+  _interpolationDataSource: 0
+  InitHP: 50
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -15587,7 +15722,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 1000
+  _interpolationDataSource: 0
+  InitHP: 50
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -16328,7 +16465,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -16466,7 +16605,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -16680,7 +16821,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -16894,7 +17037,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 50
+  _interpolationDataSource: 0
+  InitHP: 10
+  __HP: 0
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
@@ -21437,6 +21582,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1785220491511020073, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
   m_PrefabInstance: {fileID: 4221887955747389637}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5151736829548551593 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
+  m_PrefabInstance: {fileID: 4221887955747389637}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6694432965819099607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6694432965819099607 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7381487657842190610, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
@@ -21779,6 +21935,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1785220491511020073, guid: 958e8642e44360b498e84d7dd51458d2, type: 3}
   m_PrefabInstance: {fileID: 4520123752576950553}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4851284417265319029 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -150433102712595092, guid: 958e8642e44360b498e84d7dd51458d2, type: 3}
+  m_PrefabInstance: {fileID: 4520123752576950553}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6398202682489341963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6398202682489341963 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7381487657842190610, guid: 958e8642e44360b498e84d7dd51458d2, type: 3}
@@ -21901,6 +22068,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c647a6603df199d4a9723a4ce944dc3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2181826192990723503 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
+  m_PrefabInstance: {fileID: 7182936561837785283}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422957201575700945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8892509382047365866 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1785220491511020073, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
@@ -22009,6 +22187,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c647a6603df199d4a9723a4ce944dc3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1370756976047995485 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
+  m_PrefabInstance: {fileID: 7992875412111861553}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620417288666648099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c4a945737da74041b3f4cb20512ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &8514623829788761368 stripped

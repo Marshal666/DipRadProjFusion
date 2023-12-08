@@ -41,6 +41,9 @@ public class PlayerCamera : MonoBehaviour
 
     static PlayerCamera instance;
 
+    public bool Stoppable = false;
+    public KeyCode StopKeyCode = KeyCode.C;
+
     float old;
     public static PlayerCamera Instance => instance;
 
@@ -93,6 +96,9 @@ public class PlayerCamera : MonoBehaviour
     private void Update()
     {
         if (!Target)
+            return;
+
+        if (Stoppable && Input.GetKey(StopKeyCode))
             return;
 
         mx = Utils.NormalizeAngle360(mx + Input.GetAxis("Mouse X") * Sensitivity);

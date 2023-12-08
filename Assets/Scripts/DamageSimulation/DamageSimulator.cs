@@ -63,7 +63,7 @@ public class DamageSimulator : MonoBehaviour
         public Vector3 Start;
         public Vector3 End;
 
-        public List<Vector3> HitPoints;
+        public List<(Vector3 point, float dist)> HitPoints;
 
         public List<(Vector3 pt, bool end)> ArmourPoints;
         
@@ -86,7 +86,7 @@ public class DamageSimulator : MonoBehaviour
             Parent = parent;
 
             Children = new List<VisualDamageNode>(8);
-            HitPoints = new List<Vector3>(8);
+            HitPoints = new List<(Vector3, float)>(8);
             ArmourPoints = new List<(Vector3 pt, bool end)>(8);
             SpawnData = new List<ShrapnelSpawnData>(4);
         }
@@ -125,7 +125,7 @@ public class DamageSimulator : MonoBehaviour
         return angle;
     }
 
-    void _SimulateDamage(KinematicProjectileDataBuffer.ProjectileHitInfo info, VisualDamageNode visual, int seed, ref GhostEffectObject ghost)
+    void _SimulateDamage(KinematicProjectileDataBuffer.ProjectileHitInfo info, VisualDamageNode visual, int seed, ref PlayerTankController tank)
     {
         
         Random.InitState(seed);
@@ -351,7 +351,7 @@ public class DamageSimulator : MonoBehaviour
 
                         break;
                     case IHittable.HittableType.Damageable:
-                        node.HitPoints.Add(hits[i].point);
+                        node.HitPoints.Add((hits[i].point, Vector3.Distance(node.Start, node.End)));
                         switch (state)
                         {
                             case ShrapnelState.Miss:
@@ -392,12 +392,12 @@ public class DamageSimulator : MonoBehaviour
         
         ShrapnelRaycast(info.HitPosition, info.HitDirection, info.Energy, visual);
 
-        if(objg)
+        if(objg && !tank)
         {
-            ghost = objg.GetComponentInParent<GhostEffectObject>();
-            if(ghost == null)
+            tank = objg.GetComponentInParent<PlayerTankController>();
+            if(tank == null)
             {
-                ghost = objg.GetComponent<GhostEffectObject>();
+                tank = objg.GetComponent<PlayerTankController>();
             }
         }
         
@@ -405,8 +405,8 @@ public class DamageSimulator : MonoBehaviour
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SimulateDamage(KinematicProjectileDataBuffer.ProjectileHitInfo info, VisualDamageNode visual,
-        int seed, ref GhostEffectObject ghost)
+        int seed, ref PlayerTankController tank)
     {
-        Instance._SimulateDamage(info, visual, seed, ref ghost);
+        Instance._SimulateDamage(info, visual, seed, ref tank);
     }
 }

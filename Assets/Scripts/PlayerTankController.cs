@@ -1,4 +1,5 @@
 using Fusion;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,6 +26,10 @@ public class PlayerTankController : NetworkBehaviour
     public Enabler[] Renderers;
 
     public Enabler[] XRayRenderers;
+
+    public Transform[] ObjectTransforms;
+
+    public GhostEffectObject Ghost;
     
     /// <summary>
     /// Even indexes - left tracks,
@@ -70,6 +75,8 @@ public class PlayerTankController : NetworkBehaviour
 
     public float TrackRotatoionCoeff = 2f;
 
+    public bool IsCurrentPlayer => Object.HasInputAuthority;
+
     [HideInInspector]
     public NetworkInputData LastInput;
 
@@ -77,6 +84,8 @@ public class PlayerTankController : NetworkBehaviour
     {
         rig = GetComponent<NetworkRigidbody>();
         nobj = GetComponent<NetworkObject>();
+        if (!Ghost)
+            Ghost = GetComponent<GhostEffectObject>();
     }
 
     public override void Spawned()
@@ -87,6 +96,86 @@ public class PlayerTankController : NetworkBehaviour
             TankUIStats.Init(this);
         }
     }
+
+    #region CREW_EVENTS
+
+    public void OnDriverDeath()
+    {
+
+    }
+
+    public void OnGunnerDeath()
+    {
+
+    }
+
+    public void OnLoaderDeath()
+    {
+
+    }
+
+    #endregion
+
+    #region INFO_STUFF
+
+    public class TransformInfo
+    {
+        public Vector3 Position;
+        public Quaternion Rotation;
+        public Vector3 Scale;
+
+        public TransformInfo(Vector3 position, Quaternion rotation, Vector3 scale)
+        {
+            Position = position;
+            Rotation = rotation;
+            Scale = scale;
+        }
+
+        public TransformInfo(Transform t)
+        {
+            Position = t.position;
+            Rotation = t.rotation;
+            Scale = t.localScale;
+        }
+
+        public void SetToTransform(Transform t)
+        {
+            t.position = Position;
+            t.rotation = Rotation;
+            t.localScale = Scale;
+        }
+
+    }
+
+    public TransformInfo[] GetTransformInfos()
+    {
+        if (ObjectTransforms == null)
+            return null;
+        if(ObjectTransforms.Length <= 0)
+            return null;
+        TransformInfo[] ret = new TransformInfo[ObjectTransforms.Length];
+        for(int i = 0; i < ObjectTransforms.Length; i++)
+        {
+            ret[i] = new TransformInfo(ObjectTransforms[i]);
+        }
+        return ret;
+    }
+
+    public void SetTransformInfos(TransformInfo[] transformInfos)
+    {
+        if(transformInfos == null)
+            return;
+        if (ObjectTransforms == null)
+            return;
+        if (transformInfos.Length != ObjectTransforms.Length)
+            throw new ArgumentException("transfromInfos.Length != ObjectTransforms.Length");
+        for (int i = 0; i < ObjectTransforms.Length; i++)
+        {
+            transformInfos[i].SetToTransform(ObjectTransforms[i]);
+        }
+    }
+
+    #endregion
 
     #region UI_INFO_PARAMS
 
@@ -350,7 +439,18 @@ public class PlayerTankController : NetworkBehaviour
             SetSprocketRotation(rs, WheelSide.Right);
         }
     }
-    
+
+    public Dictionary<bool, GhostEffectObject.MaterialType> GhostType = new Dictionary<bool, GhostEffectObject.MaterialType>()
+    {
+        { true, GhostEffectObject.MaterialType.Ghost },
+        { false, GhostEffectObject.MaterialType.Original }
+    };
+
+    public void SetGhostingEnabled(bool enabled)
+    {
+        SetEnablersArrayEnabled(XRayRenderers, enabled);
+        Ghost.SetMaterial(GhostType[enabled]);
+    }
 
     void Update()
     {
@@ -364,12 +464,12 @@ public class PlayerTankController : NetworkBehaviour
         
         if (Input.GetKeyDown(KeyCode.O))
         {
-            SetEnablersArrayEnabled(XRayRenderers, true);
+            SetGhostingEnabled(true);
         }
 
         if (Input.GetKeyUp(KeyCode.O))
         {
-            SetEnablersArrayEnabled(XRayRenderers, false);
+            SetGhostingEnabled(false);
         }
     }
 

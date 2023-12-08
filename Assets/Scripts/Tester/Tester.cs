@@ -51,7 +51,7 @@ public class Tester : MonoBehaviour
 
     public float ShootAtTankDistance = 5f;
 
-    GhostEffectObject ghost;
+    PlayerTankController hitTank;
     
     // Start is called before the first frame update
     void Start()
@@ -77,7 +77,7 @@ public class Tester : MonoBehaviour
             },
             node,
             seed,
-            ref ghost
+            ref hitTank
             );
 
         current = DamageableRoot.GetState();
@@ -101,7 +101,7 @@ public class Tester : MonoBehaviour
 
     void VisualizeF()
     {
-        Visualizer.VisualizeDamage(node, ghost);
+        Visualizer.VisualizeDamage(node, hitTank);
         Visualize = false;
     }
 
@@ -226,7 +226,7 @@ public class Tester : MonoBehaviour
                 {
                     foreach (var pt in vn.HitPoints)
                     {
-                        Gizmos.DrawSphere(pt, 0.05f);
+                        Gizmos.DrawSphere(pt.point, 0.05f);
                     }
                 }
                 if(vn.ArmourPoints != null)

@@ -42,11 +42,16 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
         [Capacity(64)]
         public NetworkDictionary<int, ProjectileHitInfo> _hitInfos => default;
 
+        [Networked]
+        public int rngSeed { get; set; }
+
         private DummyProjectile[] _projectiles = new DummyProjectile[64];
 
         private int _visibleFireCount;
 
         public HashSet<int> DoneProjectileIndexes = new HashSet<int>();
+
+        private TankHitInfo _tankHitInfo;
 
         // WeaponBase INTERFACE
 
@@ -104,6 +109,7 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
         public override void Spawned()
         {
             _visibleFireCount = _fireCount;
+            rngSeed = Random.Range(int.MinValue, int.MaxValue);
         }
 
         public override void FixedUpdateNetwork()
@@ -136,8 +142,14 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
                 bool found = Runner.TryFindObject(hitInfo.HitObjectId, out var obj);
                 string st = $"hit: {(found ? obj.name : "NO_OBJECT")} at: {hitInfo.HitPosition}, dir: {hitInfo.HitDirection}, tick: {hitInfo.Tick}\n";
                 print(st);
-                ConsoleLog.Log(st);
+                //ConsoleLog.Log(st);
 
+                if (_tankHitInfo != null)
+                {
+                    ConsoleLog.Log($"Dmg hash: {_tankHitInfo.DamageableRoot.GetHash()}, sum: {_tankHitInfo.DamageableRoot.HP_Sum()}\n");
+                }
+
+                _tankHitInfo = null;
                 DoneProjectileIndexes.Add(hitInfo.ProjectileIndex);
                 _hitInfos.Remove(Runner.Tick - 1);
             }
@@ -207,6 +219,21 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
             _visibleFireCount = _fireCount;
         }
 
+        void OnProjectileHit(ProjectileHitInfo info)
+        {
+
+            NetworkObject obj = null;
+            PlayerTankController ptc = null;
+
+            if (!info.IsValidTank(Runner, ref obj, ref ptc))
+                return;
+
+            _tankHitInfo = new TankHitInfo(ptc, info);
+
+            DamageSimulator.SimulateDamage(info, _tankHitInfo.DamageNode, rngSeed, ref ptc);
+
+        }
+
         // PRIVATE METHODS
 
         private void UpdateProjectile(ref ProjectileData projectileData, int tick)
@@ -263,6 +290,7 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
                     Energy = Energy,
                 };
                 _hitInfos.Set(tick, info);
+                OnProjectileHit(info);
 
                 //if (hit.Collider != null && hit.Collider.attachedRigidbody != null)
                 //{
@@ -319,6 +347,20 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
             //public NetworkObject HitObject;
             public NetworkId HitObjectId;
             public bool Processed;
+
+            public bool IsValidTank(NetworkRunner Runner, ref NetworkObject obj, ref PlayerTankController ptc)
+            {
+                if(!HitObjectId.IsValid)
+                    return false;
+                Runner.TryFindObject(HitObjectId, out obj);
+                if (!obj)
+                    return false;
+                ptc = obj.GetComponent<PlayerTankController>();
+                if (!ptc)
+                    return false;
+                return true;
+            }
+
         }
 
     }
