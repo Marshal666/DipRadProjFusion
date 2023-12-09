@@ -10,9 +10,15 @@ public interface IDamageable : IHittable
 
     public float HP { get; set; }
 
+    public float OfflineHP { get; set; }
+
+    public bool Offline { get; set; }
+
     public DamageableRoot Root { get; set; }
 
     public void ApplyDoneDamage();
+
+    public void Restore();
 
 }
 
@@ -41,6 +47,28 @@ public class DamageableRoot : NetworkBehaviour
     //    }
     //}
 
+    public void ApplyDamage()
+    {
+        for (int i = 0; i < Items.Length; i++)
+        {
+            if (Items[i] is not DamageableLink)
+            {
+                Items[i].ApplyDoneDamage();
+            }
+        }
+    }
+
+    public void RestoreAll()
+    {
+        for (int i = 0; i < Items.Length; i++)
+        {
+            if (Items[i] is not DamageableLink)
+            {
+                Items[i].Restore();
+            }
+        }
+    }
+
     public float[] GetState()
     {
         float[] ret = null;
@@ -67,6 +95,16 @@ public class DamageableRoot : NetworkBehaviour
         for (int i = 0; i < Items.Length; i++)
         {
             Items[i].HP = state[i];
+        }
+    }
+
+    public void SetOffline()
+    {
+        if (Items == null)
+            return;
+        for (int i = 0; i < Items.Length; i++)
+        {
+            Items[i].Offline = true;
         }
     }
 

@@ -10,12 +10,20 @@ public class UIManager : MonoBehaviour
 
     public GameObject AimingObjects;
 
+    public GameObject DoneDmgMsgItemsHolder;
+
+    public GameObject ReceivedDmgMsgItemsHolder;
 
     public RectTransform AimingWhiteCircle;
 
     public RectTransform GuideanceWhiteCircle;
 
+    public GameObject TextMsgItem;
+
     static UIManager instance;
+
+    public TankHealthUI healthUI;
+
     public static UIManager Instance => instance;
 
     private void Awake()
@@ -56,6 +64,39 @@ public class UIManager : MonoBehaviour
     public static void SetAimingCircleEnabled(bool val)
     {
         instance.AimingWhiteCircle.gameObject.SetActive(val);
+    }
+
+    public static void SetHealthItemState(PlayerTankController.TankHealthBits bit, bool alive)
+    {
+        Instance.healthUI.SetItemState(bit, alive);
+    }
+
+    public static void SetHealthItemStates(PlayerTankController.TankHealthBits[] bits, bool alive)
+    {
+        if (bits == null)
+            return;
+        foreach (var bit in bits)
+        {
+            Instance.healthUI.SetItemState(bit, alive);
+        }
+    }
+
+    public static void AddDoneDmgTextMsgItem(string text)
+    {
+        if (Instance.DoneDmgMsgItemsHolder.activeSelf)
+        {
+            var o = Instantiate(Instance.TextMsgItem, Instance.DoneDmgMsgItemsHolder.transform);
+            o.GetComponent<Text>().text = text;
+        }
+    }
+
+    public static void AddReceivedDmgTextMsgItem(string text)
+    {
+        if (Instance.ReceivedDmgMsgItemsHolder.activeSelf)
+        {
+            var o = Instantiate(Instance.TextMsgItem, Instance.ReceivedDmgMsgItemsHolder.transform);
+            o.GetComponent<Text>().text = text;
+        }
     }
 
     public static Vector3 GetAimingCirclePosition() => instance.AimingWhiteCircle.position;

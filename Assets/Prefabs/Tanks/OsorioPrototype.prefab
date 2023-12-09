@@ -3863,7 +3863,19 @@ MonoBehaviour:
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnTrackLDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!33 &473264694284583000
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5555,7 +5567,19 @@ MonoBehaviour:
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnTrackRDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!33 &7344694724796165230
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -6670,7 +6694,19 @@ MonoBehaviour:
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnGunBarrelDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3595504294776018190
 GameObject:
   m_ObjectHideFlags: 0
@@ -12302,6 +12338,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 2
+  _DamageableParts:
+  - Part: 0
+    Object: {fileID: 6398202682489341963}
+  - Part: 1
+    Object: {fileID: 422957201575700945}
+  - Part: 2
+    Object: {fileID: 6694432965819099607}
+  - Part: 3
+    Object: {fileID: 620417288666648099}
+  - Part: 4
+    Object: {fileID: 8317571271497753886}
+  - Part: 5
+    Object: {fileID: 7542934775421682182}
+  - Part: 6
+    Object: {fileID: 3561936487992594885}
+  - Part: 7
+    Object: {fileID: 2272672089766418793}
+  - Part: 8
+    Object: {fileID: 2914151469425710777}
+  _TankHealth: []
+  ComponentFixTime: 5
   Wheels:
   - {fileID: 2348907646281253954}
   - {fileID: 7807625302142412972}
@@ -14431,7 +14488,19 @@ MonoBehaviour:
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnGunBreechDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7554590967212805436
 GameObject:
   m_ObjectHideFlags: 0
@@ -15728,7 +15797,19 @@ MonoBehaviour:
   _Root: {fileID: 0}
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnEngineDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8372697499103424452
 GameObject:
   m_ObjectHideFlags: 0
@@ -21501,6 +21582,34 @@ PrefabInstance:
       propertyPath: _HP
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1920780485507028374}
+    - target: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnLoaderDamaged
+      objectReference: {fileID: 0}
+    - target: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerTankController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 86964675375409143, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -21725,6 +21834,34 @@ PrefabInstance:
     - target: {fileID: -150433102712595092, guid: 958e8642e44360b498e84d7dd51458d2, type: 3}
       propertyPath: _HP
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -150433102712595092, guid: 958e8642e44360b498e84d7dd51458d2, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -150433102712595092, guid: 958e8642e44360b498e84d7dd51458d2, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -150433102712595092, guid: 958e8642e44360b498e84d7dd51458d2, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1920780485507028374}
+    - target: {fileID: -150433102712595092, guid: 958e8642e44360b498e84d7dd51458d2, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -150433102712595092, guid: 958e8642e44360b498e84d7dd51458d2, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnDriverDamaged
+      objectReference: {fileID: 0}
+    - target: {fileID: -150433102712595092, guid: 958e8642e44360b498e84d7dd51458d2, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerTankController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: -150433102712595092, guid: 958e8642e44360b498e84d7dd51458d2, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 54372784584258048, guid: 958e8642e44360b498e84d7dd51458d2, type: 3}
       propertyPath: m_Layer
@@ -21975,6 +22112,34 @@ PrefabInstance:
       propertyPath: _HP
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1920780485507028374}
+    - target: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnGunnerDamaged
+      objectReference: {fileID: 0}
+    - target: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerTankController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 86964675375409143, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -22095,6 +22260,34 @@ PrefabInstance:
     - target: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
       propertyPath: _HP
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1920780485507028374}
+    - target: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnCommanderDamaged
+      objectReference: {fileID: 0}
+    - target: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerTankController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: -150433102712595092, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
+      propertyPath: ApplyDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 86964675375409143, guid: 03ed54a518308e14eb114cc9ea2c2454, type: 3}
       propertyPath: m_Enabled

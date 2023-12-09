@@ -144,9 +144,15 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
                 print(st);
                 //ConsoleLog.Log(st);
 
+                //if (_tankHitInfo != null)
+                //{
+                //    ConsoleLog.Log($"Dmg hash: {_tankHitInfo.DamageableRoot.GetHash()}, sum: {_tankHitInfo.DamageableRoot.HP_Sum()}\n");
+                //}
+
                 if (_tankHitInfo != null)
                 {
                     ConsoleLog.Log($"Dmg hash: {_tankHitInfo.DamageableRoot.GetHash()}, sum: {_tankHitInfo.DamageableRoot.HP_Sum()}\n");
+                    _tankHitInfo.DamageableRoot.ApplyDamage();
                 }
 
                 _tankHitInfo = null;
