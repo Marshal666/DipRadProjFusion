@@ -353,7 +353,8 @@ MonoBehaviour:
   Turret: {fileID: 1247358552389890187}
   ShootPointLocator: {fileID: 3373835275307253276}
   ShootEffect: {fileID: 3208096052698755633}
-  ReloadTime: 4
+  ReloadTimeNormal: 4
+  ReloadTimeSlow: 6
   AimerDistance: 128
   DefaultAimerDistance: 128
   Shells:
@@ -1021,9 +1022,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &272176186365948905
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1272,9 +1286,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &8025462927275134776
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1412,9 +1439,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &275247507585125392
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2222,9 +2262,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &8821920543353858186
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2401,9 +2454,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &2508745416309795191
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3089,9 +3155,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &7617835903010143471
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3261,9 +3340,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &7343272585002784249
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3570,9 +3662,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &4566220784750031056
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3861,6 +3966,7 @@ MonoBehaviour:
   InitHP: 50
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
       m_Calls:
@@ -4700,9 +4806,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &6379874314257531507
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5024,9 +5143,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &1410220678731095902
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5565,6 +5697,7 @@ MonoBehaviour:
   InitHP: 50
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
       m_Calls:
@@ -5776,9 +5909,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &3270184871930009971
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -6303,9 +6449,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &5275648303108668318
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -6692,6 +6851,7 @@ MonoBehaviour:
   InitHP: 50
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
       m_Calls:
@@ -6885,9 +7045,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &2375523312775103402
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -7316,9 +7489,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &8923870368633041063
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -8109,9 +8295,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &4669078255203537156
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -8426,9 +8625,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &6150044764969556921
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -8845,9 +9057,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &3744513836594117343
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -9395,9 +9620,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &2979587959709206444
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -9621,9 +9859,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &7963003711435514161
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -10031,9 +10282,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &3121229987594100535
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -10203,9 +10467,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &4073600734499761620
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -10419,9 +10696,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &5111719990382492979
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -11053,9 +11343,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &114295874478553434
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -11301,9 +11604,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &4102645258390903047
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -11651,7 +11967,7 @@ MonoBehaviour:
   _fireTransform: {fileID: 3373835275307253276}
   _fireClip: {fileID: 8300000, guid: d9b938b4bbeb13f4e81633b1e9d75db1, type: 3}
   _fireSoundSourcesRoot: {fileID: 3373835275307253276}
-  _speed: 50
+  _speed: 200
   _hitImpulse: 50
   _lifeTime: 4
   _lifeTimeAfterHit: 2
@@ -11795,9 +12111,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &3856154881712482560
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -12725,9 +13054,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &7594814988512118393
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -12951,9 +13293,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &8303039671033061163
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -13208,9 +13563,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &8915871803298061016
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -13767,9 +14135,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &1480953131002796820
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -14486,6 +14867,7 @@ MonoBehaviour:
   InitHP: 50
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
       m_Calls:
@@ -15795,6 +16177,7 @@ MonoBehaviour:
   InitHP: 50
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
       m_Calls:
@@ -16550,9 +16933,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &7473342050845848129
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -16690,9 +17086,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &4004990028684244503
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -16906,9 +17315,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &8220236246066864763
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -17122,9 +17544,22 @@ MonoBehaviour:
   InitHP: 10
   __HP: 0
   _Root: {fileID: 0}
+  _OfflineHP: 0
   ApplyDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1920780485507028374}
+        m_TargetAssemblyTypeName: PlayerTankController, Assembly-CSharp
+        m_MethodName: OnAmmoDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &8193620816545516804
 MeshCollider:
   m_ObjectHideFlags: 0

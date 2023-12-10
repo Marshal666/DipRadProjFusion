@@ -5,9 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
+using Random = UnityEngine.Random;
 
 public class PlayerTankController : NetworkBehaviour
 {
+
+    #region HEALTH_PARTS
 
     public enum TankHealthBits
     {
@@ -42,6 +45,9 @@ public class PlayerTankController : NetworkBehaviour
         if(val)
         {
             DamageableParts[bit].Restore();
+        } else
+        {
+            DamageableParts[bit].HP = 0f;
         }
         if (IsCurrentPlayer)
         {
@@ -54,24 +60,55 @@ public class PlayerTankController : NetworkBehaviour
         return TankHealth.Get((int)bit);
     }
 
+    public TankHealthBits? GetAliveNonEssentialMemeber()
+    {
+        if (HasCommander)
+            return TankHealthBits.Commander;
+        if(HasLoader) 
+            return TankHealthBits.Loader;
+        return null;
+    }
+
     TankHealthBits[] HealthValues = (TankHealthBits[])Enum.GetValues(typeof(TankHealthBits));
 
     TankHealthBits[] FixableComponents = new TankHealthBits[] { TankHealthBits.Engine, TankHealthBits.GunBreech, TankHealthBits.GunBarrel, TankHealthBits.TrackL, TankHealthBits.TrackR };
 
     public float ComponentFixTime = 5f;
 
-    public void FullyHealTank()
+    public float CrewmanRecoveryTime = 4f;
+
+    public void SetHealthStats(bool h)
     {
         var vals = HealthValues;
         foreach (var val in vals)
         {
-            SetTankHealth(val, true);
+            SetTankHealth(val, h);
         }
         droot.RestoreAll();
     }
 
+    public void FullyHealTank()
+    {
+        SetHealthStats(true);
+    }
+
+    public void KillTank()
+    {
+        SetHealthStats(false);
+    }
+
     [Networked, Capacity(16)]
     public NetworkArray<TickTimer> RepairTimes { get; } = MakeInitializer(Enumerable.Repeat(TickTimer.None, 16).ToArray());
+
+    [Networked]
+    public TickTimer DriverRecovery { get; set; } = TickTimer.None;
+    [Networked]
+    public NetworkBool DriverRecovering { get; set; } = false;
+
+    [Networked]
+    public TickTimer GunnerRecovery { get; set; } = TickTimer.None;
+    [Networked]
+    public NetworkBool GunnerRecovering { get; set; } = false;
 
     public bool ComponentRepaired(TankHealthBits bit)
     {
@@ -97,6 +134,36 @@ public class PlayerTankController : NetworkBehaviour
     public bool HasGunBreech => TankHealth[5];
     public bool HasGunBarrel => TankHealth[6];
     public bool HasTracks => TankHealth[7] & TankHealth[8];
+
+    public int AliveCrewCount
+    {
+        get
+        {
+            int ret = 0;
+            if (HasDriver) ret++;
+            if (HasGunner) ret++;
+            if (HasLoader) ret++;
+            if (HasCommander) ret++;
+            return ret;
+        }
+    }
+
+    public bool IsDeadWorthy()
+    {
+        if (AliveCrewCount < 2)
+            return true; 
+        return false;
+    }
+
+    public void DieIfNeeded()
+    {
+        if(IsDeadWorthy())
+        {
+            Die();
+        }
+    }
+
+    #endregion
 
     private NetworkRigidbody rig;
 
@@ -172,6 +239,10 @@ public class PlayerTankController : NetworkBehaviour
 
     DamageableRoot droot;
 
+    [Networked]
+    int rngSeed { get; set; }
+    UnityEngine.Random.State rngState;
+
     private void Awake()
     {
         rig = GetComponent<NetworkRigidbody>();
@@ -197,6 +268,9 @@ public class PlayerTankController : NetworkBehaviour
             TankUIStats.Init(this);
         }
         FullyHealTank();
+        rngSeed = Random.Range(int.MinValue, int.MaxValue);
+        Random.InitState(rngSeed);
+        rngState = Random.state;
     }
 
     #region CREW_EVENTS
@@ -214,6 +288,7 @@ public class PlayerTankController : NetworkBehaviour
                 UIManager.AddReceivedDmgTextMsgItem("Driver is dead");
             }
             SetTankHealth(TankHealthBits.Driver, false);
+            DieIfNeeded();
         }
     }
 
@@ -230,6 +305,7 @@ public class PlayerTankController : NetworkBehaviour
                 UIManager.AddReceivedDmgTextMsgItem("Gunner is dead");
             }
             SetTankHealth(TankHealthBits.Gunner, false);
+            DieIfNeeded();
         }
     }
 
@@ -246,6 +322,7 @@ public class PlayerTankController : NetworkBehaviour
                 UIManager.AddReceivedDmgTextMsgItem("Loader is dead");
             }
             SetTankHealth(TankHealthBits.Loader, false);
+            DieIfNeeded();
         }
     }
 
@@ -262,6 +339,7 @@ public class PlayerTankController : NetworkBehaviour
                 UIManager.AddReceivedDmgTextMsgItem("Commander is dead");
             }
             SetTankHealth(TankHealthBits.Commander, false);
+            DieIfNeeded();
         }
     }
 
@@ -347,6 +425,30 @@ public class PlayerTankController : NetworkBehaviour
             }
             SetTankHealth(TankHealthBits.TrackR, false);
             SetRepairTime(TankHealthBits.TrackR, ComponentFixTime);
+        }
+    }
+
+    public void OnAmmoDamaged(IDamageable d)
+    {
+        if(d.HP <= 0f)
+        {
+            Random.state = rngState;
+            float val = Random.value;
+            if(val >= StaticConsts.ShellDeathDetonationProb)
+            {
+                Die();
+            }
+            rngState = Random.state;
+        }
+    }
+
+    public void Die()
+    {
+        KillTank();
+        if (IsCurrentPlayer)
+        {
+            print("You died (lol)");
+            UIManager.SetYouDiedTextEnabled(true);
         }
     }
 
@@ -714,6 +816,35 @@ public class PlayerTankController : NetworkBehaviour
         if(GetInput(out NetworkInputData data))
         {
 
+            if (IsDeadWorthy())
+                return;
+
+            if(!HasGunner && !GunnerRecovering)
+            {
+                GunnerRecovering = true;
+                GunnerRecovery = TickTimer.CreateFromSeconds(Runner, CrewmanRecoveryTime);
+            }
+            if(GunnerRecovering && GunnerRecovery.Expired(Runner))
+            {
+                SetTankHealth(TankHealthBits.Gunner, true);
+                SetTankHealth(GetAliveNonEssentialMemeber().Value, false);
+                GunnerRecovering = false;
+                GunnerRecovery = TickTimer.None;
+            }
+
+            if(!HasDriver && !DriverRecovering)
+            {
+                DriverRecovering = true;
+                DriverRecovery = TickTimer.CreateFromSeconds(Runner, CrewmanRecoveryTime);
+            }
+            if(DriverRecovering && DriverRecovery.Expired(Runner))
+            {
+                SetTankHealth(TankHealthBits.Driver, true);
+                SetTankHealth(GetAliveNonEssentialMemeber().Value, false);
+                DriverRecovering = false;
+                DriverRecovery = TickTimer.None;
+            }
+
             //repairs
             foreach (var comp in FixableComponents)
             {
@@ -722,6 +853,11 @@ public class PlayerTankController : NetworkBehaviour
                 if (!h && r)
                 {
                     SetTankHealth(comp, true);
+                } else if(!h && IsCurrentPlayer)
+                {
+                    TickTimer t = GetRepairTimer(comp);
+                    float v = (ComponentFixTime - t.RemainingTime(Runner).Value) / ComponentFixTime;
+                    UIManager.SetHealthItemHP(comp, v);
                 }
             }
 

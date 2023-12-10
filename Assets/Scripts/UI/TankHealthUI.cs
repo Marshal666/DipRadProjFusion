@@ -40,4 +40,10 @@ public class TankHealthUI : MonoBehaviour
         Items[bit].color = col;
     }
 
+    public void SetItemHP(PlayerTankController.TankHealthBits bit, float alive)
+    {
+        Color col = Color.Lerp(DeadColor, HealthyColor, alive);
+        Items[bit].color = col;
+    }
+
 }

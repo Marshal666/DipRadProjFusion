@@ -50,7 +50,8 @@ public class PlayerCamera : MonoBehaviour
     public void SetMainCameraEnabled(bool val)
     {
         Camera.enabled = val;
-        CurrentCamera = Camera;
+        if (val)
+            CurrentCamera = Camera;
         Listener.enabled = val;
     }
 

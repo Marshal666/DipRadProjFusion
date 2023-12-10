@@ -39,6 +39,10 @@ public class StaticConsts : MonoBehaviour
 
     public static float MaxAimingCircleApprDistance => Instance._MaxAimingCircleApprDistance;
 
+    public float _ShellDeathDetonationProb = 0.34f;
+
+    public static float ShellDeathDetonationProb => Instance._ShellDeathDetonationProb;
+
     private void Awake()
     {
         if(instance != null)

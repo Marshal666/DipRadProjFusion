@@ -14,7 +14,9 @@ public class TankWeapon : NetworkBehaviour
 
     public GameObject ShootEffect;
 
-    public float ReloadTime = 6f;
+    public float ReloadTime => Tank.HasLoader ? ReloadTimeNormal : ReloadTimeSlow;
+    public float ReloadTimeNormal = 4f;
+    public float ReloadTimeSlow = 6f;
 
     public float AimerDistance = 128f;
     public float DefaultAimerDistance = 128f;
@@ -29,10 +31,15 @@ public class TankWeapon : NetworkBehaviour
 
     public bool MainWeapon = false;
 
+    public PlayerTankController Tank => Turret.Tank;
+
     public ShellStats CurrentShell => Shells[CurrentLocalShellIndex];
 
     [Networked]
     private TickTimer ReloadTimer { get; set; }
+
+    [Networked]
+    private NetworkBool Reloaded { get; set; } = true;
 
     private void Start()
     {
@@ -56,16 +63,53 @@ public class TankWeapon : NetworkBehaviour
     public override void Spawned()
     {
         ReloadTimer = TickTimer.None;
+        if (Tank.IsCurrentPlayer)
+        {
+            UIManager.SetReloadProgress(1f);
+        }
     }
 
     public override void FixedUpdateNetwork()
     {
         if (GetInput(out NetworkInputData data))
         {
-            if(data.FirePressed && ReloadTimer.ExpiredOrNotRunning(Runner))
+            if (Tank.HasGunBreech)
+            {
+                if (!Reloaded && !ReloadTimer.IsRunning)
+                {
+                    ReloadTimer = TickTimer.CreateFromSeconds(Runner, ReloadTime);
+                    if(Tank.IsCurrentPlayer)
+                    {
+                        UIManager.SetReloadProgress(0f);
+                    }
+                }
+                else if (!Reloaded && ReloadTimer.Expired(Runner))
+                {
+                    Reloaded = true;
+                    ReloadTimer = TickTimer.None;
+                    if (Tank.IsCurrentPlayer)
+                    {
+                        UIManager.SetReloadProgress(1f);
+                    }
+                }
+                else if (!Reloaded && ReloadTimer.IsRunning && Tank.IsCurrentPlayer)
+                {
+                    //update UI reload
+                    UIManager.SetReloadProgress(1f - ReloadTimer.RemainingTime(Runner).Value / ReloadTime);
+                }
+            } else
+            {
+                Reloaded = false;
+            }
+            if(data.FirePressed && Reloaded && Tank.HasGunBarrel && Tank.HasGunner)
             {
                 //print("Fire");
-                ReloadTimer = TickTimer.CreateFromSeconds(Runner, ReloadTime);
+                Reloaded = false;
+                if (Tank.IsCurrentPlayer)
+                {
+                    UIManager.SetReloadProgress(0f);
+                }
+
                 CurrentShell.Fire();
                 ShootEffect.SetActive(true);
 
@@ -112,7 +156,7 @@ public class TankWeapon : NetworkBehaviour
                 UIManager.ScaleAimingCircle(Vector3.one * newScale);
 
                 UIManager.PositionAimingCircle(Vector3.SmoothDamp(UIManager.GetAimingCirclePosition(), PlayerCamera.CurrentCamera.WorldToScreenPoint(point.Value), ref aimVel, aimingCirclePositionSmoothTime));
-                
+
             } else
             {
                 UIManager.SetAimingCircleEnabled(false);

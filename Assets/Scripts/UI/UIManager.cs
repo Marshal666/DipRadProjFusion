@@ -24,6 +24,10 @@ public class UIManager : MonoBehaviour
 
     public TankHealthUI healthUI;
 
+    public Slider ReloadSlider;
+
+    public GameObject YouDiedText;
+
     public static UIManager Instance => instance;
 
     private void Awake()
@@ -81,6 +85,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public static void SetHealthItemHP(PlayerTankController.TankHealthBits bit, float val)
+    {
+        Instance.healthUI.SetItemHP(bit, val);
+    }
+
     public static void AddDoneDmgTextMsgItem(string text)
     {
         if (Instance.DoneDmgMsgItemsHolder.activeSelf)
@@ -97,6 +106,16 @@ public class UIManager : MonoBehaviour
             var o = Instantiate(Instance.TextMsgItem, Instance.ReceivedDmgMsgItemsHolder.transform);
             o.GetComponent<Text>().text = text;
         }
+    }
+
+    public static void SetReloadProgress(float progress)
+    {
+        Instance.ReloadSlider.value = progress;
+    }
+
+    public static void SetYouDiedTextEnabled(bool enabled)
+    {
+        Instance.YouDiedText.SetActive(enabled);
     }
 
     public static Vector3 GetAimingCirclePosition() => instance.AimingWhiteCircle.position;

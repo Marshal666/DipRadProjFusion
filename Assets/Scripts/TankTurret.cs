@@ -149,7 +149,7 @@ public class TankTurret : NetworkBehaviour
         //print($"local player: {Runner.LocalPlayer}, ia: {Object.InputAuthority}, sa: {Object.StateAuthority}, tia: {Tank.HasInputAuthority}, gi: {gi}");
         if (gi)
         {
-            if (float.IsNaN(data.MX) || float.IsNaN(data.MY))
+            if (float.IsNaN(data.MX) || float.IsNaN(data.MY) || !Tank.HasGunner)
             {
                 CurrentHorizontalRotationSpeed = 0f;
                 CurrentVerticalRotationSpeed = 0f;
@@ -256,11 +256,11 @@ public class TankTurret : NetworkBehaviour
     public void ToggleSniperMode()
     {
         InSniperMode = !InSniperMode;
+        SetSniperCameraActive(InSniperMode);
         PlayerCamera.Instance.SetSniperModeParams(InSniperMode, SniperModeCamera);
         Tank.SetRenderersEnabled(!InSniperMode);
-        SetSniperCameraActive(InSniperMode);
         UIManager.SetSniperModeUIEnabled(InSniperMode);
-        UIManager.SetAimingObjectsActive(!InSniperMode);
+        //UIManager.SetAimingObjectsActive(!InSniperMode);
     }
 
     public float lmx = 0f, lmy = 0f;
@@ -274,10 +274,6 @@ public class TankTurret : NetworkBehaviour
             if (Input.GetKeyDown(KeyCode.LeftShift) && SniperModeCamera)
             {
                 ToggleSniperMode();
-            }
-            if(IsMainTurret)
-            {
-
             }
         }
     }

@@ -52,11 +52,23 @@ public class Tester : MonoBehaviour
     public float ShootAtTankDistance = 5f;
 
     PlayerTankController hitTank;
+
+    public UnityEngine.UI.Slider SpeedSlider;
+
+    public float SimulationTimeMin = 1f;
+
+    public float SimulationTimeMax = 20f;
+
+    public void OnSpeedSliderChanged(float speed)
+    {
+        Visualizer.SimulationTime = SimulationTimeMin + speed * (SimulationTimeMax - SimulationTimeMin);
+    }
     
     // Start is called before the first frame update
     void Start()
     {
         DamageableRoot.SetOffline();
+        SpeedSlider.value = (Visualizer.SimulationTime - SimulationTimeMin) / (SimulationTimeMax - SimulationTimeMin);
     }
 
     void ShootF()
