@@ -20,6 +20,8 @@ public class DamageVisualizer : MonoBehaviour
 
     public float ShrapnelLinesScale = 0.5f;
 
+    public bool Offline = false;
+
     float LongestPath = 0f;
 
     float Speed = 0f;
@@ -213,7 +215,7 @@ public class DamageVisualizer : MonoBehaviour
                 //print($"Visualizer done! time: {RunningTime}");
                 if (Tank)
                 {
-                    Tank.SetGhostingEnabled(false);
+                    Tank.SetGhostingEnabled(false, Offline);
                 }
                 NodeCleanup();
                 State = VisualizerState.Done;

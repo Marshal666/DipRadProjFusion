@@ -12,9 +12,50 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     [SerializeField] private NetworkPrefabRef _playerPrefab;
 
-    public Vector3 SpawnOffset = default;
+    private static BasicSpawner _Instance;
+
+    public static BasicSpawner Instance => _Instance;
+
+    [Serializable]
+    public struct SpawnPoint
+    {
+        public Vector3 Position;
+        public Vector3 Rotation;
+
+        public SpawnPoint(Vector3 position, Vector3 rotation)
+        {
+            Position = position;
+            Rotation = rotation;
+        }
+
+    }
+
+    public SpawnPoint[] SpawnPoints = new SpawnPoint[4]
+        {
+          new SpawnPoint(new Vector3(0,0,0), new Vector3(0,0,0)),
+          new SpawnPoint(new Vector3(1,0,0), new Vector3(0,0,0)),
+          new SpawnPoint(new Vector3(0,0,1), new Vector3(0,0,0)),
+          new SpawnPoint(new Vector3(1,0,1), new Vector3(0,0,0)),
+        };
 
     private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
+
+    void Awake()
+    {
+        _Instance = this;
+    }
+
+    void OnDrawGizmos()
+    {
+        if(SpawnPoints != null)
+        {
+            Gizmos.color = Color.yellow;
+            for(int i = 0; i < SpawnPoints.Length; i++)
+            {
+                Gizmos.DrawSphere(SpawnPoints[i].Position, 0.5f);
+            }
+        }
+    }
 
     private void OnGUI()
     {
@@ -52,10 +93,11 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         if (runner.IsServer)
         {
             // Create a unique position for the player
-            Vector3 spawnPosition = new Vector3((player.RawEncoded % runner.Config.Simulation.DefaultPlayers) * 3, 0, 0) + SpawnOffset;
+            var point = GetSpawnPoint(player.RawEncoded);
+            Vector3 spawnPosition = point.Position;
             NetworkObject networkPlayerObject = runner.Spawn(
                 _playerPrefab, spawnPosition,
-                Quaternion.identity, player,
+                Quaternion.Euler(point.Rotation), player,
                 (runner, o) => {
                     //if (player == runner.LocalPlayer)
                     //{
@@ -124,4 +166,10 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
     public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data) { }
     public void OnSceneLoadDone(NetworkRunner runner) { }
     public void OnSceneLoadStart(NetworkRunner runner) { }
+
+    public SpawnPoint GetSpawnPoint(int playerId)
+    {
+        return SpawnPoints[playerId % SpawnPoints.Length];
+    }
+
 }

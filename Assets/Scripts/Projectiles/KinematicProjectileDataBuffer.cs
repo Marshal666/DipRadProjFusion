@@ -141,13 +141,6 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
             if(_hitInfos.TryGet(Runner.Tick - 1, out var hitInfo) && !DoneProjectileIndexes.Contains(hitInfo.ProjectileIndex)) {
                 bool found = Runner.TryFindObject(hitInfo.HitObjectId, out var obj);
                 string st = $"hit: {(found ? obj.name : "NO_OBJECT")} at: {hitInfo.HitPosition}, dir: {hitInfo.HitDirection}, tick: {hitInfo.Tick}\n";
-                print(st);
-                //ConsoleLog.Log(st);
-
-                //if (_tankHitInfo != null)
-                //{
-                //    ConsoleLog.Log($"Dmg hash: {_tankHitInfo.DamageableRoot.GetHash()}, sum: {_tankHitInfo.DamageableRoot.HP_Sum()}\n");
-                //}
 
                 if (_tankHitInfo != null)
                 {

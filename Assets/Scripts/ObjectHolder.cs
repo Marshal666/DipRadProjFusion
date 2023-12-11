@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+public interface IHoldable
+{
+    public ObjectHolder Holder { get; set; }
+}
+
 public class ObjectHolder : MonoBehaviour
 {
 
@@ -25,6 +30,11 @@ public class ObjectHolder : MonoBehaviour
         for (int i = 0; i < Size; i++)
         {
             GameObject g = Instantiate(Object, transform);
+            IHoldable h = g.GetComponent<IHoldable>();
+            if (h != null) 
+            {
+                h.Holder = this;
+            }
             g.SetActive(false);
             FreeObjects.Add(g);
         }
@@ -35,6 +45,11 @@ public class ObjectHolder : MonoBehaviour
         for (int i = 0; i < Size; i++)
         {
             GameObject g = Instantiate(Object, transform);
+            IHoldable h = g.GetComponent<IHoldable>();
+            if (h != null)
+            {
+                h.Holder = this;
+            }
             g.SetActive(false);
             FreeObjects.Add(g);
         }

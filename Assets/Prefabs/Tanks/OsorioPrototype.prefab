@@ -7836,7 +7836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TargetWheel: {fileID: 4807287068442628423}
-  PositioningOffset: {x: 0, y: 0, z: 0}
+  PositioningOffset: {x: -0.11, y: 0, z: 0}
 --- !u!1 &4105421559448426714
 GameObject:
   m_ObjectHideFlags: 0
@@ -12688,6 +12688,11 @@ MonoBehaviour:
     Object: {fileID: 2914151469425710777}
   _TankHealth: []
   ComponentFixTime: 5
+  CrewmanRecoveryTime: 4
+  _DriverRecovering:
+    _value: 0
+  _GunnerRecovering:
+    _value: 0
   Wheels:
   - {fileID: 2348907646281253954}
   - {fileID: 7807625302142412972}
@@ -12797,6 +12802,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OriginalMaterial: {fileID: 2100000, guid: 2641bac5a795cbe44a8d3c3a54f88fed, type: 2}
   GhostMaterial: {fileID: 2100000, guid: faf352d5a2b7854418db7cf3bdb8d4c2, type: 2}
+  DestroyedMaterial: {fileID: 2100000, guid: 245a5a93c0002e849ad42920cea7d485, type: 2}
   Renderers:
   - {fileID: 3773492263852403784}
   - {fileID: 7014098015832177357}
@@ -13937,7 +13943,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TargetWheel: {fileID: 4340507698547742450}
-  PositioningOffset: {x: 0, y: 0, z: 0}
+  PositioningOffset: {x: 0.11, y: 0, z: 0}
 --- !u!1 &6788572230173629724
 GameObject:
   m_ObjectHideFlags: 0

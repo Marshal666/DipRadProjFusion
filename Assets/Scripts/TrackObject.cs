@@ -113,14 +113,6 @@ public class TrackObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (Input.GetKey(KeyCode.G))
-        //{
-        //    MarchDistance(Time.deltaTime);
-        //}
-        //if (Input.GetKey(KeyCode.H))
-        //{
-        //    MarchDistance(-Time.deltaTime);
-        //}
 
         if (GroundPoints != null)
         {
@@ -148,29 +140,6 @@ public class TrackObject : MonoBehaviour
             }
         }
 
-    }
-
-    private void FixedUpdate()
-    {
-        //if (GroundPoints != null)
-        //{
-        //    for (int i = 0; i < GroundPoints.Length; i++)
-        //    {
-        //        Transform ts = TrackShape.transform;
-        //        Vector3 origin = ts.TransformPoint(GroundPointsInitial[i]) + ts.up * GroundPointSpringLength;
-        //        Vector3 dir = -ts.up;
-
-        //        RaycastHit hit;
-        //        if (Physics.Raycast(origin, dir, out hit, GroundPointSpringLength + GroundPointSpringDownOffset, StaticConsts.GroundLayers))
-        //        {
-        //            GroundPointTargets[i] = hit.point;
-        //        }
-        //        else
-        //        {
-        //            GroundPointTargets[i] = ts.TransformPoint(GroundPointsInitial[i]);
-        //        }
-        //    }
-        //}
     }
 
     private void OnDrawGizmos()

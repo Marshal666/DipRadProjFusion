@@ -24,10 +24,11 @@ public class LinePathTransform : MonoBehaviour
     {
         (CurrentPoint, CurrentPointDistance) = Path.GetPointFromDistance(Distance);
         transform.position = Path.GetPosition(CurrentPoint, CurrentPointDistance);
+        Vector3 right = Path.transform.right;
         if(LookDirection)
         {
             Vector3 dir = Path.PointDirections[CurrentPoint];
-            Vector3 up = Vector3.Cross(dir, transform.right);
+            Vector3 up = Vector3.Cross(dir, right);
             //if(Vector3.Dot(dir, up) < 0f)
             //{
             //    up = Vector3.down;

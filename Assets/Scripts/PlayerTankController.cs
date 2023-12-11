@@ -39,10 +39,12 @@ public class PlayerTankController : NetworkBehaviour
     [Networked, Capacity(16)]
     public NetworkArray<NetworkBool> TankHealth { get; }
 
+    public ObjectHolder ExplosionsHolder;
+
     public void SetTankHealth(TankHealthBits bit, bool val)
     {
         TankHealth.Set((int)bit, val);
-        if(val)
+        if (val)
         {
             DamageableParts[bit].Restore();
         } else
@@ -64,7 +66,7 @@ public class PlayerTankController : NetworkBehaviour
     {
         if (HasCommander)
             return TankHealthBits.Commander;
-        if(HasLoader) 
+        if (HasLoader)
             return TankHealthBits.Loader;
         return null;
     }
@@ -76,6 +78,8 @@ public class PlayerTankController : NetworkBehaviour
     public float ComponentFixTime = 5f;
 
     public float CrewmanRecoveryTime = 4f;
+
+    public float RespawnTime = 10f;
 
     public void SetHealthStats(bool h)
     {
@@ -90,11 +94,16 @@ public class PlayerTankController : NetworkBehaviour
     public void FullyHealTank()
     {
         SetHealthStats(true);
+        Dead = false;
+        Ghost.SetMaterial(GhostEffectObject.MaterialType.Original);
     }
 
     public void KillTank()
     {
         SetHealthStats(false);
+        Dead = true;
+        Ghost.SetMaterial(GhostEffectObject.MaterialType.Destroyed);
+        ExplosionsHolder.GetObject().transform.position = transform.position;
     }
 
     [Networked, Capacity(16)]
@@ -110,6 +119,11 @@ public class PlayerTankController : NetworkBehaviour
     [Networked]
     public NetworkBool GunnerRecovering { get; set; } = false;
 
+    [Networked]
+    public TickTimer RespawnTimer { get; set;} = TickTimer.None;
+    [Networked]
+    public NetworkBool Respawning { get; set; } = false;
+
     public bool ComponentRepaired(TankHealthBits bit)
     {
         return RepairTimes.Get((int)bit).Expired(Runner);
@@ -119,7 +133,7 @@ public class PlayerTankController : NetworkBehaviour
     {
         RepairTimes.Set((int)bit, TickTimer.CreateFromSeconds(Runner, val));
     }
-    
+
     public TickTimer GetRepairTimer(TankHealthBits bit)
     {
         return RepairTimes.Get((int)bit);
@@ -134,6 +148,9 @@ public class PlayerTankController : NetworkBehaviour
     public bool HasGunBreech => TankHealth[5];
     public bool HasGunBarrel => TankHealth[6];
     public bool HasTracks => TankHealth[7] & TankHealth[8];
+
+    [Networked]
+    NetworkBool Dead { get; set; } = false;
 
     public int AliveCrewCount
     {
@@ -161,6 +178,30 @@ public class PlayerTankController : NetworkBehaviour
         {
             Die();
         }
+    }
+
+    public void Die()
+    {
+        if (Dead)
+            return;
+        KillTank();
+        if (IsCurrentPlayer)
+        {
+            //print("You died (lol)");
+            UIManager.SetYouDiedTextEnabled(true);
+        }
+    }
+
+    public void Respawn()
+    {
+        FullyHealTank();
+        CurrentRotationSpeed = 0;
+        CurrentTraverseSpeed = 0;
+        rig.WriteVelocity(Vector3.zero);
+        var point = BasicSpawner.Instance.GetSpawnPoint(Object.InputAuthority);
+        rig.WritePosition(point.Position);
+        rig.WriteRotation(Quaternion.Euler(point.Rotation));
+        UIManager.SetYouDiedTextEnabled(false);
     }
 
     #endregion
@@ -237,17 +278,47 @@ public class PlayerTankController : NetworkBehaviour
     [HideInInspector]
     public NetworkInputData LastInput;
 
+    public bool Debug = false;
+
     DamageableRoot droot;
 
     [Networked]
     int rngSeed { get; set; }
     UnityEngine.Random.State rngState;
 
+    Transform DebugTextTransform;
+    UnityEngine.UI.Text DebugText;
+
+    public void UpdateDebugText()
+    {
+        string txt = $"{Object.InputAuthority}\n";
+        if (HasDriver) txt += "D";
+        if (HasGunner) txt += "G";
+        if (HasLoader) txt += "L";
+        if (HasCommander) txt += "C";
+
+        txt += "\n";
+        if (HasEngine) txt += "E";
+        if(HasGunBarrel) txt += "B";
+        if(HasGunBreech) txt += "G";
+        if (HasTracks) txt += "T";
+
+        DebugTextTransform.position = PlayerCamera.CurrentCamera.WorldToScreenPoint(transform.position);
+        DebugText.text = txt;
+    }
+
     private void Awake()
     {
         rig = GetComponent<NetworkRigidbody>();
         nobj = GetComponent<NetworkObject>();
         droot = GetComponent<DamageableRoot>();
+        ExplosionsHolder = EffectsContainer.ExplosionsHolder;
+        DebugTextTransform = Instantiate(UIManager.Instance.DebugTankTextPrefab, UIManager.Instance.Canvas.transform).transform;
+        DebugText = DebugTextTransform.GetComponent<UnityEngine.UI.Text>();
+        if(!Debug)
+        {
+            DebugText.gameObject.SetActive(false);
+        }
         if (!Ghost)
             Ghost = GetComponent<GhostEffectObject>();
         if(_DamageableParts != null)
@@ -439,16 +510,6 @@ public class PlayerTankController : NetworkBehaviour
                 Die();
             }
             rngState = Random.state;
-        }
-    }
-
-    public void Die()
-    {
-        KillTank();
-        if (IsCurrentPlayer)
-        {
-            print("You died (lol)");
-            UIManager.SetYouDiedTextEnabled(true);
         }
     }
 
@@ -728,6 +789,11 @@ public class PlayerTankController : NetworkBehaviour
 
     #region TRACK_CONTROL
 
+    [Networked]
+    public float MaxLeftWheelRotation { get; set; } = 0f;
+    [Networked]
+    public float MaxRightWheelRotation { get; set; } = 0f;
+
     float GetMaxWheelRotation(WheelSide side)
     {
         int start = (int)side;
@@ -738,6 +804,12 @@ public class PlayerTankController : NetworkBehaviour
                 max = Wheels[i].rotationSpeed;
         }
         return max;
+    }
+
+    void UpdateMaxWheelRotation()
+    {
+        MaxLeftWheelRotation = GetMaxWheelRotation(WheelSide.Left);
+        MaxRightWheelRotation = GetMaxWheelRotation(WheelSide.Right);
     }
 
     void SetTrackRotation(WheelSide side, float deltaDist)
@@ -778,22 +850,33 @@ public class PlayerTankController : NetworkBehaviour
         }
     }
 
-    public Dictionary<bool, GhostEffectObject.MaterialType> GhostType = new Dictionary<bool, GhostEffectObject.MaterialType>()
-    {
-        { true, GhostEffectObject.MaterialType.Ghost },
-        { false, GhostEffectObject.MaterialType.Original }
-    };
-
-    public void SetGhostingEnabled(bool enabled)
+    public void SetGhostingEnabled(bool enabled, bool offline = false)
     {
         SetEnablersArrayEnabled(XRayRenderers, enabled);
-        Ghost.SetMaterial(GhostType[enabled]);
+        if (enabled)
+        {
+            Ghost.SetMaterial(GhostEffectObject.MaterialType.Ghost);
+        } else
+        {
+            if(offline)
+            {
+                Ghost.SetMaterial(GhostEffectObject.MaterialType.Original);
+                return;
+            }
+            if(IsDeadWorthy())
+            {
+                Ghost.SetMaterial(GhostEffectObject.MaterialType.Destroyed);
+            } else
+            {
+                Ghost.SetMaterial(GhostEffectObject.MaterialType.Original);
+            }
+        }
     }
 
     void Update()
     {
-        float ls = GetMaxWheelRotation(WheelSide.Left);
-        float rs = GetMaxWheelRotation(WheelSide.Right);
+        float ls = MaxLeftWheelRotation;
+        float rs = MaxRightWheelRotation;
         RotateTracks(ls, rs);
         RotateSprockets(ls, rs);
         
@@ -813,11 +896,30 @@ public class PlayerTankController : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        if(GetInput(out NetworkInputData data))
-        {
 
-            if (IsDeadWorthy())
-                return;
+        if (Debug)
+            UpdateDebugText();
+
+        if (IsDeadWorthy() || Dead)
+        {
+            //start regenerating (for respawn)
+            if (!Respawning)
+            {
+                Respawning = true;
+                RespawnTimer = TickTimer.CreateFromSeconds(Runner, RespawnTime);
+            }
+            //when regeneration has ended
+            if (Respawning && RespawnTimer.Expired(Runner))
+            {
+                Respawning = false;
+                RespawnTimer = TickTimer.None;
+                Respawn();
+            }
+            return;
+        }
+
+        if (GetInput(out NetworkInputData data))
+        {
 
             if(!HasGunner && !GunnerRecovering)
             {
@@ -983,6 +1085,8 @@ public class PlayerTankController : NetworkBehaviour
                 }
                 
             }
+
+            UpdateMaxWheelRotation();
 
         } 
         else

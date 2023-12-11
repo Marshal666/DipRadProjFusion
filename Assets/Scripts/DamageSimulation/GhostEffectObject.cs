@@ -7,21 +7,32 @@ public class GhostEffectObject : MonoBehaviour
 
     public Material OriginalMaterial;
     public Material GhostMaterial;
+    public Material DestroyedMaterial;
 
     public Renderer[] Renderers;
 
     public enum MaterialType
     {
         Original,
-        Ghost
+        Ghost,
+        Destroyed
     }
 
     public void SetMaterial(MaterialType type)
     {
         Material mat = OriginalMaterial;
-        if(type == MaterialType.Ghost)
+        switch (type)
         {
-            mat = GhostMaterial;
+            case MaterialType.Original:
+                break;
+            case MaterialType.Ghost:
+                mat = GhostMaterial;
+                break;
+            case MaterialType.Destroyed:
+                mat = DestroyedMaterial;
+                break;
+            default:
+                throw new System.ArgumentException("MaterialType");
         }
         if(Renderers != null)
         {

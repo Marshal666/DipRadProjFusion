@@ -41,6 +41,9 @@ public class TankWeapon : NetworkBehaviour
     [Networked]
     private NetworkBool Reloaded { get; set; } = true;
 
+    [Networked]
+    private NetworkBool Shot { get; set; } = false;
+
     private void Start()
     {
         float mx = Turret.lmx;
@@ -73,6 +76,8 @@ public class TankWeapon : NetworkBehaviour
     {
         if (GetInput(out NetworkInputData data))
         {
+            if (Shot)
+                Shot = false;
             if (Tank.HasGunBreech)
             {
                 if (!Reloaded && !ReloadTimer.IsRunning)
@@ -111,7 +116,8 @@ public class TankWeapon : NetworkBehaviour
                 }
 
                 CurrentShell.Fire();
-                ShootEffect.SetActive(true);
+                //ShootEffect.SetActive(true);
+                Shot = true;
 
                 if (Debug)
                 {
@@ -121,6 +127,14 @@ public class TankWeapon : NetworkBehaviour
                 }
             }
             
+        }
+    }
+
+    public override void Render()
+    {
+        if(Shot)
+        {
+            ShootEffect.SetActive(true);
         }
     }
 

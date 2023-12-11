@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
 
+    public GameObject Canvas;
+
     public GameObject SniperModeObjects;
 
     public GameObject AimingObjects;
@@ -27,6 +29,8 @@ public class UIManager : MonoBehaviour
     public Slider ReloadSlider;
 
     public GameObject YouDiedText;
+
+    public GameObject DebugTankTextPrefab;
 
     public static UIManager Instance => instance;
 
