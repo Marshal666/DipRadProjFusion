@@ -1,4 +1,5 @@
 using Fusion;
+using Fusion.Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -95,6 +96,7 @@ public class PlayerTankController : NetworkBehaviour
     {
         SetHealthStats(true);
         Dead = false;
+        JustDied = false;
         Ghost.SetMaterial(GhostEffectObject.MaterialType.Original);
     }
 
@@ -102,8 +104,7 @@ public class PlayerTankController : NetworkBehaviour
     {
         SetHealthStats(false);
         Dead = true;
-        Ghost.SetMaterial(GhostEffectObject.MaterialType.Destroyed);
-        ExplosionsHolder.GetObject().transform.position = transform.position;
+        JustDied = true;
     }
 
     [Networked, Capacity(16)]
@@ -139,7 +140,6 @@ public class PlayerTankController : NetworkBehaviour
         return RepairTimes.Get((int)bit);
     }
 
-
     public bool HasDriver => TankHealth[0];
     public bool HasGunner => TankHealth[1];
     public bool HasLoader => TankHealth[2];
@@ -151,6 +151,8 @@ public class PlayerTankController : NetworkBehaviour
 
     [Networked]
     NetworkBool Dead { get; set; } = false;
+
+    public bool JustDied = false;
 
     public int AliveCrewCount
     {
@@ -185,11 +187,6 @@ public class PlayerTankController : NetworkBehaviour
         if (Dead)
             return;
         KillTank();
-        if (IsCurrentPlayer)
-        {
-            //print("You died (lol)");
-            UIManager.SetYouDiedTextEnabled(true);
-        }
     }
 
     public void Respawn()
@@ -275,8 +272,7 @@ public class PlayerTankController : NetworkBehaviour
 
     public bool IsCurrentPlayer => Object.HasInputAuthority;
 
-    [HideInInspector]
-    public NetworkInputData LastInput;
+    public bool IsHostPlayer => Object.HasStateAuthority;
 
     public bool Debug = false;
 
@@ -291,7 +287,7 @@ public class PlayerTankController : NetworkBehaviour
 
     public void UpdateDebugText()
     {
-        string txt = $"{Object.InputAuthority}\n";
+        string txt = $"{Object.InputAuthority}{(IsHostPlayer ? "H" : "")}\n";
         if (HasDriver) txt += "D";
         if (HasGunner) txt += "G";
         if (HasLoader) txt += "L";
@@ -358,8 +354,11 @@ public class PlayerTankController : NetworkBehaviour
             {
                 UIManager.AddReceivedDmgTextMsgItem("Driver is dead");
             }
-            SetTankHealth(TankHealthBits.Driver, false);
-            DieIfNeeded();
+            if (IsHostPlayer)
+            {
+                SetTankHealth(TankHealthBits.Driver, false);
+                DieIfNeeded();
+            }
         }
     }
 
@@ -375,8 +374,11 @@ public class PlayerTankController : NetworkBehaviour
             {
                 UIManager.AddReceivedDmgTextMsgItem("Gunner is dead");
             }
-            SetTankHealth(TankHealthBits.Gunner, false);
-            DieIfNeeded();
+            if (IsHostPlayer)
+            {
+                SetTankHealth(TankHealthBits.Gunner, false);
+                DieIfNeeded();
+            }
         }
     }
 
@@ -392,8 +394,11 @@ public class PlayerTankController : NetworkBehaviour
             {
                 UIManager.AddReceivedDmgTextMsgItem("Loader is dead");
             }
-            SetTankHealth(TankHealthBits.Loader, false);
-            DieIfNeeded();
+            if (IsHostPlayer)
+            {
+                SetTankHealth(TankHealthBits.Loader, false);
+                DieIfNeeded();
+            }
         }
     }
 
@@ -409,8 +414,11 @@ public class PlayerTankController : NetworkBehaviour
             {
                 UIManager.AddReceivedDmgTextMsgItem("Commander is dead");
             }
-            SetTankHealth(TankHealthBits.Commander, false);
-            DieIfNeeded();
+            if (IsHostPlayer)
+            {
+                SetTankHealth(TankHealthBits.Commander, false);
+                DieIfNeeded();
+            }
         }
     }
 
@@ -426,8 +434,11 @@ public class PlayerTankController : NetworkBehaviour
             {
                 UIManager.AddReceivedDmgTextMsgItem("Engine got destroyed");
             }
-            SetTankHealth(TankHealthBits.Engine, false);
-            SetRepairTime(TankHealthBits.Engine, ComponentFixTime);
+            if (IsHostPlayer)
+            {
+                SetTankHealth(TankHealthBits.Engine, false);
+                SetRepairTime(TankHealthBits.Engine, ComponentFixTime);
+            }
         }
     }
 
@@ -443,8 +454,11 @@ public class PlayerTankController : NetworkBehaviour
             {
                 UIManager.AddReceivedDmgTextMsgItem("Gun breech is broken");
             }
-            SetTankHealth(TankHealthBits.GunBreech, false);
-            SetRepairTime(TankHealthBits.GunBreech, ComponentFixTime);
+            if (IsHostPlayer)
+            {
+                SetTankHealth(TankHealthBits.GunBreech, false);
+                SetRepairTime(TankHealthBits.GunBreech, ComponentFixTime);
+            }
         }
     }
 
@@ -460,8 +474,11 @@ public class PlayerTankController : NetworkBehaviour
             {
                 UIManager.AddReceivedDmgTextMsgItem("Gun Barrel is broken");
             }
-            SetTankHealth(TankHealthBits.GunBarrel, false);
-            SetRepairTime(TankHealthBits.GunBarrel, ComponentFixTime);
+            if (IsHostPlayer)
+            {
+                SetTankHealth(TankHealthBits.GunBarrel, false);
+                SetRepairTime(TankHealthBits.GunBarrel, ComponentFixTime);
+            }
         }
     }
 
@@ -477,8 +494,11 @@ public class PlayerTankController : NetworkBehaviour
             {
                 UIManager.AddReceivedDmgTextMsgItem("Left Track is destroyed");
             }
-            SetTankHealth(TankHealthBits.TrackL, false);
-            SetRepairTime(TankHealthBits.TrackL, ComponentFixTime);
+            if (IsHostPlayer)
+            {
+                SetTankHealth(TankHealthBits.TrackL, false);
+                SetRepairTime(TankHealthBits.TrackL, ComponentFixTime);
+            }
         }
     }
 
@@ -494,8 +514,11 @@ public class PlayerTankController : NetworkBehaviour
             {
                 UIManager.AddReceivedDmgTextMsgItem("Right Track is destroyed");
             }
-            SetTankHealth(TankHealthBits.TrackR, false);
-            SetRepairTime(TankHealthBits.TrackR, ComponentFixTime);
+            if (IsHostPlayer)
+            {
+                SetTankHealth(TankHealthBits.TrackR, false);
+                SetRepairTime(TankHealthBits.TrackR, ComponentFixTime);
+            }
         }
     }
 
@@ -507,7 +530,18 @@ public class PlayerTankController : NetworkBehaviour
             float val = Random.value;
             if(val >= StaticConsts.ShellDeathDetonationProb)
             {
-                Die();
+                if (!IsCurrentPlayer)
+                {
+                    UIManager.AddDoneDmgTextMsgItem("Ammo");
+                }
+                else
+                {
+                    UIManager.AddReceivedDmgTextMsgItem("Ammo racked");
+                }
+                if (IsHostPlayer)
+                {
+                    Die();
+                }
             }
             rngState = Random.state;
         }
@@ -900,11 +934,12 @@ public class PlayerTankController : NetworkBehaviour
         if (Debug)
             UpdateDebugText();
 
-        if (IsDeadWorthy() || Dead)
+        if (Dead)
         {
             //start regenerating (for respawn)
             if (!Respawning)
             {
+                JustDied = true;
                 Respawning = true;
                 RespawnTimer = TickTimer.CreateFromSeconds(Runner, RespawnTime);
             }
@@ -968,7 +1003,7 @@ public class PlayerTankController : NetworkBehaviour
             {
                 return;
             }
-            LastInput = data;
+            
             //print($"data: {data.ArrowsInput} back: {data.ArrowsInput & NetworkInputData.BACK_BUTTON}");
             Vector3 velocity = rig.ReadVelocity();
             float cspeed = velocity.magnitude;
@@ -1089,11 +1124,41 @@ public class PlayerTankController : NetworkBehaviour
             UpdateMaxWheelRotation();
 
         } 
-        else
-        {
-            LastInput = default;
-        }
+    }
 
+    public override void Render()
+    {
+        if(JustDied)
+        {
+            ExplosionsHolder.GetObject().transform.position = transform.position;
+            JustDied = false;
+        }
+        if(Dead)
+        {
+            Ghost.SetMaterial(GhostEffectObject.MaterialType.Destroyed);
+        }
+        if (IsCurrentPlayer)
+        {
+            foreach (var comp in HealthValues)
+            {
+                UIManager.SetHealthItemState(comp, TankHealth.Get((int)comp));
+            }
+            foreach (var comp in FixableComponents)
+            {
+                bool h = GetTankHealth(comp);
+                bool r = ComponentRepaired(comp);
+                if (!h && !r)
+                {
+                    TickTimer tt = GetRepairTimer(comp);
+                    float? t = tt.RemainingTime(Runner);
+                    if (t.HasValue)
+                    {
+                        float v = (ComponentFixTime - t.Value) / ComponentFixTime;
+                        UIManager.SetHealthItemHP(comp, v);
+                    }
+                }
+            }
+        }
     }
 
 }
