@@ -14,10 +14,12 @@ public class EffectsContainer : MonoBehaviour
 
     public static ObjectHolder ExplosionsHolder => Instance._ExplosionsHolder;
 
+    public static bool Initialized { get; private set; } = false;
+
     private void Awake()
     {
         _Instance = this;
-
+        Initialized = true;
     }
 
     // Update is called once per frame

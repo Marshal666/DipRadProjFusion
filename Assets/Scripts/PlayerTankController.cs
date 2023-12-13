@@ -1,3 +1,4 @@
+using ExitGames.Client.Photon;
 using Fusion;
 using Fusion.Photon.Realtime;
 using System;
@@ -308,10 +309,16 @@ public class PlayerTankController : NetworkBehaviour
         rig = GetComponent<NetworkRigidbody>();
         nobj = GetComponent<NetworkObject>();
         droot = GetComponent<DamageableRoot>();
-        ExplosionsHolder = EffectsContainer.ExplosionsHolder;
-        DebugTextTransform = Instantiate(UIManager.Instance.DebugTankTextPrefab, UIManager.Instance.Canvas.transform).transform;
-        DebugText = DebugTextTransform.GetComponent<UnityEngine.UI.Text>();
-        if(!Debug)
+        if (EffectsContainer.Initialized)
+        {
+            ExplosionsHolder = EffectsContainer.ExplosionsHolder;
+        }
+        if (UIManager.Instance)
+        {
+            DebugTextTransform = Instantiate(UIManager.Instance.DebugTankTextPrefab, UIManager.Instance.Canvas.transform).transform;
+            DebugText = DebugTextTransform.GetComponent<UnityEngine.UI.Text>();
+        }
+        if(!Debug && DebugText)
         {
             DebugText.gameObject.SetActive(false);
         }
@@ -909,8 +916,13 @@ public class PlayerTankController : NetworkBehaviour
 
     void Update()
     {
-        float ls = MaxLeftWheelRotation;
-        float rs = MaxRightWheelRotation;
+        float ls, rs;
+        ls = rs = 0f;
+        if (Runner)
+        {
+            ls = MaxLeftWheelRotation;
+            rs = MaxRightWheelRotation;
+        }
         RotateTracks(ls, rs);
         RotateSprockets(ls, rs);
         
