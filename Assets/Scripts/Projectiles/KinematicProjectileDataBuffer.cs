@@ -238,6 +238,8 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
 
         }
 
+        public Dictionary<PlayerRef, (Vector3 t, Vector3 d)> PlayerHits = new Dictionary<PlayerRef, (Vector3 t, Vector3 d)>();
+
         // PRIVATE METHODS
 
         private void UpdateProjectile(ref ProjectileData projectileData, int tick)
@@ -266,13 +268,17 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
 
                 NetworkId id = new NetworkId();
                 NetworkObject no = null;
-                Hitbox hi = null;
-                if (hit.Hitbox)
+                Hitbox hi = hit.Hitbox;
+
+                Vector3 HitboxPosition = Vector3.zero;
+                Quaternion HitboxRotation = Quaternion.identity;
+
+                if (hi)
                 {
                     print($"hit Hitbox: {hit.Hitbox.name}");
-                    hi = hit.Hitbox;
                     no = hi.transform.root.GetComponent<NetworkObject>();
-                    
+
+                    Runner.LagCompensation.PositionRotation(hi, no.InputAuthority, out HitboxPosition, out HitboxRotation);
                 } else
                 {
                     throw new System.Exception("No Hitbox on hit object! This should not be the case!!!");
@@ -294,7 +300,16 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
                     Processed = false,
                     Energy = Energy,
                     HitboxId = hit.Hitbox.HitboxIndex,
+                    HitboxPosition = HitboxPosition,
+                    HitboxRotation = HitboxRotation,
                 };
+
+                Vector3 s = info.HitPosition;
+                Vector3 b = Utils.TransfromFromObjectCoords(s, hi.transform, tank.GetHitboxDamageModel(hi));
+                PlayerHits[no.InputAuthority] = (s, b);
+
+                info.HitPosition = b;
+
                 _hitInfos.Set(tick, info);
                 //OnProjectileHit(info);
 
@@ -316,6 +331,18 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
                 return data.FirePosition;
 
             return data.FirePosition + data.FireVelocity * time + time * time * Physics.gravity;
+        }
+
+        private void OnDrawGizmos()
+        {
+            
+            foreach(var hit in PlayerHits)
+            {
+                Gizmos.color = Color.cyan;
+                Gizmos.DrawSphere(hit.Value.d, 0.1f);
+                Gizmos.color = Color.blue;
+                Gizmos.DrawSphere(hit.Value.t, 0.1f);
+            }
         }
 
         // DATA STRUCTURES
@@ -346,6 +373,9 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
             public int ProjectileIndex;
             public Vector3 HitPosition;
             public Vector3 HitDirection;
+
+            public Vector3 HitboxPosition;
+            public Quaternion HitboxRotation;
 
             public int HitboxId;
             

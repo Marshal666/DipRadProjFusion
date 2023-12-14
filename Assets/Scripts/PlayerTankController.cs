@@ -283,6 +283,8 @@ public class PlayerTankController : NetworkBehaviour
 
     HitboxRoot hroot;
 
+    int SpawnedTick = 0;
+
     [Networked]
     int rngSeed { get; set; }
     UnityEngine.Random.State rngState;
@@ -353,6 +355,8 @@ public class PlayerTankController : NetworkBehaviour
 
         Transform dmgmot = DamageModel.transform;
         dmgmot.SetParent(StaticConsts.RootObject.transform);
+
+        SpawnedTick = Runner.Tick;
     }
 
     #region CREW_EVENTS
@@ -834,6 +838,11 @@ public class PlayerTankController : NetworkBehaviour
         }
     }
 
+    public Transform GetHitboxDamageModel(Hitbox h)
+    {
+        return DamageModel.Parts[h.HitboxIndex].Target;
+    }
+
     #endregion
 
     #region TRACK_CONTROL
@@ -954,8 +963,9 @@ public class PlayerTankController : NetworkBehaviour
         if (Debug)
             UpdateDebugText();
 
-        if (Runner.Tick > 64)
-            Utils.SetTankInnerColliderTargets(Runner, this, hroot, Object.InputAuthority);
+        //updated when needed (for damage simulation)
+        //if (Runner.Tick > SpawnedTick + 64)
+        //    Utils.SetTankInnerColliderTargets(Runner, this, hroot, Object.InputAuthority);
 
         if (Dead)
         {

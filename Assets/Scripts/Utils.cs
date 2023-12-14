@@ -171,6 +171,8 @@ public static class Utils
 
         for (int i = 0; i < root.Hitboxes.Length; i++)
         {
+            if (!root.IsHitboxActive(root.Hitboxes[i]))
+                continue;
             Runner.LagCompensation.PositionRotation(root.Hitboxes[i], player, out HitboxPosition, out HitboxRotation);
             Hitboxes.Add((HitboxRotation, i));
         }
