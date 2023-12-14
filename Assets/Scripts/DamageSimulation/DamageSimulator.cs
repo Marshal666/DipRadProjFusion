@@ -389,7 +389,7 @@ public class DamageSimulator : MonoBehaviour
                 }
             }
         }
-        
+
         ShrapnelRaycast(info.HitPosition, info.HitDirection, info.Energy, visual);
 
         if(objg && !tank)

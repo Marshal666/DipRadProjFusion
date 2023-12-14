@@ -96,7 +96,7 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
 #endif
 
                 Vector3 dir = p2 - p1;
-                if(Physics.Raycast(p1, dir, out var hit, dir.magnitude, StaticConsts.ShellHitLayers, QueryTriggerInteraction.Ignore))
+                if(Physics.Raycast(p1, dir, out var hit, dir.magnitude, StaticConsts.ShellHitLayersTest, QueryTriggerInteraction.Ignore))
                 {
                     ret = hit.point;
                     break;
@@ -138,9 +138,11 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
                 _projectileData.Set(i, data);
             }
 
-            if(_hitInfos.TryGet(Runner.Tick - 1, out var hitInfo) && !DoneProjectileIndexes.Contains(hitInfo.ProjectileIndex)) {
+            if(_hitInfos.TryGet(Runner.Tick - 1, out var hitInfo)) {
                 bool found = Runner.TryFindObject(hitInfo.HitObjectId, out var obj);
                 string st = $"hit: {(found ? obj.name : "NO_OBJECT")} at: {hitInfo.HitPosition}, dir: {hitInfo.HitDirection}, tick: {hitInfo.Tick}\n";
+
+                OnProjectileHit(hitInfo);
 
                 if (_tankHitInfo != null)
                 {
@@ -149,8 +151,11 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
                 }
 
                 _tankHitInfo = null;
-                DoneProjectileIndexes.Add(hitInfo.ProjectileIndex);
-                _hitInfos.Remove(Runner.Tick - 1);
+                //_hitInfos.Remove(Runner.Tick - 1);
+            }
+            if(_hitInfos.TryGet(Runner.Tick - 2, out hitInfo))
+            {
+                _hitInfos.Remove(Runner.Tick - 2);
             }
         }
 
@@ -261,21 +266,22 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
 
                 NetworkId id = new NetworkId();
                 NetworkObject no = null;
+                Hitbox hi = null;
                 if (hit.Hitbox)
                 {
                     print($"hit Hitbox: {hit.Hitbox.name}");
-                    no = hit.Hitbox.transform.root.GetComponent<NetworkObject>();
-                }
-                if (hit.Collider)
+                    hi = hit.Hitbox;
+                    no = hi.transform.root.GetComponent<NetworkObject>();
+                    
+                } else
                 {
-                    print($"hit Collider: {hit.Collider.name}");
-                    no = hit.Collider.transform.root.GetComponent<NetworkObject>();
+                    throw new System.Exception("No Hitbox on hit object! This should not be the case!!!");
                 }
 
-                if (no)
-                {
-                    id = no.Id;
-                }
+                PlayerTankController tank = no.GetComponent<PlayerTankController>();
+                HitboxRoot root = hi.Root;
+
+                Utils.SetTankInnerColliderTargets(Runner, tank, root, no.InputAuthority);
 
                 ProjectileHitInfo info = new ProjectileHitInfo()
                 {
@@ -284,12 +290,13 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
                     HitDirection = direction,
                     ProjectileIndex = projectileData.Index,
                     //HitObject = hit.Collider.gameObject.GetComponent<NetworkObject>(),
-                    HitObjectId = id,
+                    HitObjectId = no.Id,
                     Processed = false,
                     Energy = Energy,
+                    HitboxId = hit.Hitbox.HitboxIndex,
                 };
                 _hitInfos.Set(tick, info);
-                OnProjectileHit(info);
+                //OnProjectileHit(info);
 
                 //if (hit.Collider != null && hit.Collider.attachedRigidbody != null)
                 //{
@@ -339,6 +346,8 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
             public int ProjectileIndex;
             public Vector3 HitPosition;
             public Vector3 HitDirection;
+
+            public int HitboxId;
             
             public float Energy;
             

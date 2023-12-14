@@ -226,6 +226,8 @@ public class PlayerTankController : NetworkBehaviour
     public Transform[] ObjectTransforms;
 
     public GhostEffectObject Ghost;
+
+    public DamageModel DamageModel;
     
     /// <summary>
     /// Even indexes - left tracks,
@@ -279,6 +281,8 @@ public class PlayerTankController : NetworkBehaviour
 
     DamageableRoot droot;
 
+    HitboxRoot hroot;
+
     [Networked]
     int rngSeed { get; set; }
     UnityEngine.Random.State rngState;
@@ -309,6 +313,7 @@ public class PlayerTankController : NetworkBehaviour
         rig = GetComponent<NetworkRigidbody>();
         nobj = GetComponent<NetworkObject>();
         droot = GetComponent<DamageableRoot>();
+        hroot = GetComponent<HitboxRoot>();
         if (EffectsContainer.Initialized)
         {
             ExplosionsHolder = EffectsContainer.ExplosionsHolder;
@@ -345,6 +350,9 @@ public class PlayerTankController : NetworkBehaviour
         rngSeed = Random.Range(int.MinValue, int.MaxValue);
         Random.InitState(rngSeed);
         rngState = Random.state;
+
+        Transform dmgmot = DamageModel.transform;
+        dmgmot.SetParent(StaticConsts.RootObject.transform);
     }
 
     #region CREW_EVENTS
@@ -945,6 +953,9 @@ public class PlayerTankController : NetworkBehaviour
 
         if (Debug)
             UpdateDebugText();
+
+        if (Runner.Tick > 64)
+            Utils.SetTankInnerColliderTargets(Runner, this, hroot, Object.InputAuthority);
 
         if (Dead)
         {

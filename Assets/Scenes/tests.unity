@@ -1411,7 +1411,7 @@ MonoBehaviour:
   MinDistance: 5
   MaxDistance: 12
   mx: 180
-  my: 0
+  my: 8
   MinYRotation: -2
   MaxYRotation: 89
   Sensitivity: 0.4

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using Fusion;
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -130,6 +132,50 @@ public static class Utils
         }
 #endif
         d(o);
+    }
+
+    public static Vector3 TransfromFromObjectCoords(Vector3 point, Transform a, Transform b)
+    {
+        Vector3 local = a.InverseTransformPoint(point);
+        return b.TransformPoint(local);
+    }
+
+    public static Vector3 TransfromFromObjectCoords(Vector3 point, Vector3 position, Quaternion rotation, Transform b)
+    {
+        Matrix4x4 tri = Matrix4x4.TRS(position, rotation, Vector3.one).inverse;
+        Vector3 local = tri.MultiplyPoint(point);
+        return b.TransformPoint(local);
+    }
+
+    public static void SyncTransforms(Transform[] source, Transform[] destination)
+    {
+        if (source == null || destination == null || source.Length != destination.Length)
+            return;
+        for(int i = 0; i < source.Length; i++)
+        {
+            if (source[i] == null || destination[i] == null)
+                continue;
+            destination[i].rotation = source[i].rotation;
+        }
+    }
+
+    public static void SetTankInnerColliderTargets(NetworkRunner Runner, PlayerTankController tank, HitboxRoot root, PlayerRef player)
+    {
+        if (!root.HitboxRootActive)
+            return;
+
+        List<(Quaternion Rotation, int Id)> Hitboxes = new List<(Quaternion Rotation, int Id)>(4);
+
+        Vector3 HitboxPosition;
+        Quaternion HitboxRotation;
+
+        for (int i = 0; i < root.Hitboxes.Length; i++)
+        {
+            Runner.LagCompensation.PositionRotation(root.Hitboxes[i], player, out HitboxPosition, out HitboxRotation);
+            Hitboxes.Add((HitboxRotation, i));
+        }
+
+        tank.DamageModel.SetTargets(Hitboxes.ToArray());
     }
 
 }

@@ -11,11 +11,19 @@ public class StaticConsts : MonoBehaviour
 
     public static StaticConsts Instance => instance;
 
+    public GameObject _RootObject;
+
+    public static GameObject RootObject => Instance._RootObject;
+
     public LayerMask _ShellHitLayers;
+
+    public LayerMask _ShellHitLayersTest;
 
     public int _MaxShellRaycastTicks = 256;
 
     public static LayerMask ShellHitLayers => Instance._ShellHitLayers;
+
+    public static LayerMask ShellHitLayersTest => Instance._ShellHitLayersTest;
 
     public static int MaxShellRaycastTicks => Instance._MaxShellRaycastTicks;
 

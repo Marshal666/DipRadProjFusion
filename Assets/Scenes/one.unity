@@ -3284,7 +3284,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4feb4286359b554dab5a4b982c73989, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _RootObject: {fileID: 1626325266}
   _ShellHitLayers:
+    serializedVersion: 2
+    m_Bits: 1024
+  _ShellHitLayersTest:
     serializedVersion: 2
     m_Bits: 219
   _MaxShellRaycastTicks: 256
