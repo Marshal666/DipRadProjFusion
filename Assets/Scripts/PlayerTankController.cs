@@ -197,8 +197,10 @@ public class PlayerTankController : NetworkBehaviour
         CurrentTraverseSpeed = 0;
         rig.WriteVelocity(Vector3.zero);
         var point = BasicSpawner.Instance.GetSpawnPoint(Object.InputAuthority);
-        rig.WritePosition(point.Position);
-        rig.WriteRotation(Quaternion.Euler(point.Rotation));
+        //rig.WritePosition(point.Position);
+        //rig.TeleportToPosition(point.Position);
+        //rig.WriteRotation(Quaternion.Euler(point.Rotation));
+        rig.TeleportToPositionRotation(point.Position, Quaternion.Euler(point.Rotation));
         UIManager.SetYouDiedTextEnabled(false);
     }
 

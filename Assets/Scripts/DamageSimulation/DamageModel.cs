@@ -15,7 +15,7 @@ public class DamageModel : MonoBehaviour
 
     public DamageModelPart[] Parts;
 
-    public void SetTargets((Quaternion Rotation, int HitboxId)[] LagCompensatedPositions)
+    public void SetTargets((Vector3 Position, Quaternion Rotation, int HitboxId)[] LagCompensatedPositions)
     {
         if (Parts == null)
             return;
@@ -28,6 +28,7 @@ public class DamageModel : MonoBehaviour
 
         for(int i = 0; i < LagCompensatedPositions.Length; i++)
         {
+            //Parts[i].Target.position = LagCompensatedPositions[i].Position;
             Parts[i].Target.rotation = LagCompensatedPositions[i].Rotation;
             //for(int j = 0; j < Parts.Length; j++)
             //{

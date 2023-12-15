@@ -110,6 +110,9 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
         {
             _visibleFireCount = _fireCount;
             rngSeed = Random.Range(int.MinValue, int.MaxValue);
+
+            Helper = new GameObject().transform;
+            Helper.SetParent(StaticConsts.RootObject.transform);
         }
 
         public override void FixedUpdateNetwork()
@@ -238,7 +241,14 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
 
         }
 
-        public Dictionary<PlayerRef, (Vector3 t, Vector3 d)> PlayerHits = new Dictionary<PlayerRef, (Vector3 t, Vector3 d)>();
+        public Dictionary<PlayerRef, (Vector3 t, Vector3 d, Vector3 a)> PlayerHits = new Dictionary<PlayerRef, (Vector3 t, Vector3 d, Vector3 a)>();
+
+        Vector3 HP = Vector3.zero;
+        Quaternion HR = Quaternion.identity;
+        Vector3 HS = Vector3.one;
+        Vector3 HO = Vector3.zero;
+
+        Transform Helper;
 
         // PRIVATE METHODS
 
@@ -284,6 +294,11 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
                     throw new System.Exception("No Hitbox on hit object! This should not be the case!!!");
                 }
 
+                HP = HitboxPosition;
+                HR = HitboxRotation;
+                HO = hi.Offset;
+                HS = hi.BoxExtents;
+
                 PlayerTankController tank = no.GetComponent<PlayerTankController>();
                 HitboxRoot root = hi.Root;
 
@@ -302,13 +317,24 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
                     HitboxId = hit.Hitbox.HitboxIndex,
                     HitboxPosition = HitboxPosition,
                     HitboxRotation = HitboxRotation,
+                    HitboxScale = hi.BoxExtents,
                 };
+
+                print($"HP: {HP}, HR: {HR.eulerAngles}\nHiP: {hi.transform.position}, HiR: {hi.transform.rotation.eulerAngles}");
 
                 Vector3 s = info.HitPosition;
                 Vector3 b = Utils.TransfromFromObjectCoords(s, hi.transform, tank.GetHitboxDamageModel(hi));
-                PlayerHits[no.InputAuthority] = (s, b);
 
-                info.HitPosition = b;
+                Helper.transform.position = HitboxPosition - HR * HO;
+                Helper.transform.rotation = HitboxRotation;
+                Helper.transform.localScale = hi.transform.lossyScale;
+
+                info.HitPosition = Utils.TransfromFromObjectCoords(s, Helper, tank.GetHitboxDamageModel(hi));
+                print($"Diff: {info.HitPosition - b}");
+
+                PlayerHits[no.InputAuthority] = (s, b, info.HitPosition);
+
+                //info.HitPosition = b;
 
                 _hitInfos.Set(tick, info);
                 //OnProjectileHit(info);
@@ -342,7 +368,12 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
                 Gizmos.DrawSphere(hit.Value.d, 0.1f);
                 Gizmos.color = Color.blue;
                 Gizmos.DrawSphere(hit.Value.t, 0.1f);
+                Gizmos.color = Color.red;
+                Gizmos.DrawSphere(hit.Value.a, 0.1f);
             }
+
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireMesh(Resources.GetBuiltinResource<Mesh>("Cube.fbx"), 0, HP, HR, HS * 2f);
         }
 
         // DATA STRUCTURES
@@ -375,6 +406,7 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
             public Vector3 HitDirection;
 
             public Vector3 HitboxPosition;
+            public Vector3 HitboxScale;
             public Quaternion HitboxRotation;
 
             public int HitboxId;
@@ -385,6 +417,11 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
             //public NetworkObject HitObject;
             public NetworkId HitObjectId;
             public bool Processed;
+            
+            public void TransformHitPosition(Hitbox hi, Transform other)
+            {
+                HitPosition = Utils.TransfromFromObjectCoords(HitPosition - HitboxRotation * hi.Offset, HitboxPosition, HitboxRotation, hi.transform.localScale, other);
+            }
 
             public bool IsValidTank(NetworkRunner Runner, ref NetworkObject obj, ref PlayerTankController ptc)
             {

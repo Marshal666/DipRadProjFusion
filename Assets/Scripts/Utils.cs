@@ -140,9 +140,9 @@ public static class Utils
         return b.TransformPoint(local);
     }
 
-    public static Vector3 TransfromFromObjectCoords(Vector3 point, Vector3 position, Quaternion rotation, Transform b)
+    public static Vector3 TransfromFromObjectCoords(Vector3 point, Vector3 position, Quaternion rotation, Vector3 scale, Transform b)
     {
-        Matrix4x4 tri = Matrix4x4.TRS(position, rotation, Vector3.one).inverse;
+        Matrix4x4 tri = Matrix4x4.TRS(position, rotation, scale).inverse;
         Vector3 local = tri.MultiplyPoint(point);
         return b.TransformPoint(local);
     }
@@ -164,7 +164,7 @@ public static class Utils
         if (!root.HitboxRootActive)
             return;
 
-        List<(Quaternion Rotation, int Id)> Hitboxes = new List<(Quaternion Rotation, int Id)>(4);
+        List<(Vector3 Position, Quaternion Rotation, int Id)> Hitboxes = new List<(Vector3 Position, Quaternion Rotation, int Id)>(4);
 
         Vector3 HitboxPosition;
         Quaternion HitboxRotation;
@@ -174,7 +174,7 @@ public static class Utils
             if (!root.IsHitboxActive(root.Hitboxes[i]))
                 continue;
             Runner.LagCompensation.PositionRotation(root.Hitboxes[i], player, out HitboxPosition, out HitboxRotation);
-            Hitboxes.Add((HitboxRotation, i));
+            Hitboxes.Add((HitboxPosition, HitboxRotation, i));
         }
 
         tank.DamageModel.SetTargets(Hitboxes.ToArray());

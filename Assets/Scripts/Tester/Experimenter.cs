@@ -52,7 +52,7 @@ public class Experimenter : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(GlobalPoint, 0.2f);
         //Vector3 tp = Utils.TransfromFromObjectCoords(GlobalPoint, Tank1Parts[0], Tank2Parts[0]);
-        Vector3 tp = Utils.TransfromFromObjectCoords(GlobalPoint, Tank1Parts[0].position, Tank1Parts[0].rotation, Tank2Parts[0]);
+        Vector3 tp = Utils.TransfromFromObjectCoords(GlobalPoint, Tank1Parts[0].position, Tank1Parts[0].rotation, Tank1Parts[0].localScale, Tank2Parts[0]);
         Gizmos.color = Color.blue;
         Gizmos.DrawSphere(tp, 0.2f);
     }
