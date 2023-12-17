@@ -99,8 +99,15 @@ public class PlayerCamera : MonoBehaviour
         if (!Target)
             return;
 
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
         if (Stoppable && Input.GetKey(StopKeyCode))
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             return;
+        }
 
         mx = Utils.NormalizeAngle360(mx + Input.GetAxis("Mouse X") * Sensitivity);
         my = Mathf.Clamp(my - Input.GetAxis("Mouse Y") * Sensitivity, MinYRotation, MaxYRotation);

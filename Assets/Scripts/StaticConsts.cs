@@ -51,6 +51,10 @@ public class StaticConsts : MonoBehaviour
 
     public static float ShellDeathDetonationProb => Instance._ShellDeathDetonationProb;
 
+    public Vector3 _DamageModelSpawnOffset = new Vector3(0, -16f, 0);
+
+    public static Vector3 DamageModelSpawnOffset => Instance._DamageModelSpawnOffset;
+
     private void Awake()
     {
         if(instance != null)

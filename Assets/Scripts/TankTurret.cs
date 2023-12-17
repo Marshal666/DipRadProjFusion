@@ -136,8 +136,7 @@ public class TankTurret : NetworkBehaviour
 
     public override void Spawned()
     {
-        //Cursor.visible = false;
-        //Cursor.lockState = CursorLockMode.Locked;
+        
     }
 
     public override void FixedUpdateNetwork()
@@ -227,6 +226,31 @@ public class TankTurret : NetworkBehaviour
         }
     }
 
+    public void ResetRotation()
+    {
+        TurretMx = 0f;
+        TurretMy = 0f;
+
+        if (InSniperMode)
+        {
+            ToggleSniperMode();
+        }
+
+        Rotate();
+    }
+
+    public void Rotate()
+    {
+
+        //works fine, but it's not super smooth
+        lmx = TurretMx;
+        lmy = TurretMy;
+
+        SetRotation(VerticalRotatePart, VerticalRotationAxis, lmx);
+        SetRotation(HorizontalRotatePart, HorizontalRotationAxis, lmy);
+
+    }
+
     public override void Render()
     {
 
@@ -234,19 +258,16 @@ public class TankTurret : NetworkBehaviour
         //lmx = Mathf.SmoothDampAngle(lmx, TurretMx, ref lmxv, RotationSmoothingTime);
         //lmy = Mathf.SmoothDampAngle(lmy, TurretMy, ref lmyv, RotationSmoothingTime);
 
-        //Works fine, but it's not super smooth
-        lmx = TurretMx;
-        lmy = TurretMy;
-
         //lmx = Mathf.MoveTowardsAngle(lmx, TurretMx, RotationSmoothingSpeed * Time.deltaTime);
         //lmy = Mathf.MoveTowardsAngle(lmy, TurretMy, RotationSmoothingSpeed * Time.deltaTime);
 
-        SetRotation(VerticalRotatePart, VerticalRotationAxis, lmx);
-        SetRotation(HorizontalRotatePart, HorizontalRotationAxis, lmy);
+        Rotate();
     }
 
     public void SetSniperCameraActive(bool val)
     {
+        if (!SniperModeCamera)
+            return;
         SniperModeCamera.gameObject.SetActive(val);
         SniperModeCamera.GetComponent<AudioListener>().enabled = val;
     }
@@ -271,7 +292,7 @@ public class TankTurret : NetworkBehaviour
         if (Tank.HasInputAuthority && HasSniperMode)
         {
             //print($"U x_ok: {Mathf.Abs(lmx - TurretMx) <= 5f}, y_ok: {Mathf.Abs(lmy - TurretMy) <= 5f} lmx: {lmx}, lmy: {lmy}, TurretMx: {TurretMx}, TurretMy: {TurretMy}");
-            if (Input.GetKeyDown(KeyCode.LeftShift) && SniperModeCamera)
+            if (Input.GetKeyDown(KeyCode.LeftShift) && SniperModeCamera && !Tank.IsDeadWorthy())
             {
                 ToggleSniperMode();
             }

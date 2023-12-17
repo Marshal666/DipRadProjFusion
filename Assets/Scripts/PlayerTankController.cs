@@ -126,6 +126,9 @@ public class PlayerTankController : NetworkBehaviour
     [Networked]
     public NetworkBool Respawning { get; set; } = false;
 
+    [Networked]
+    public TickTimer SuicideTimer { get; set; } = TickTimer.None;
+
     public bool ComponentRepaired(TankHealthBits bit)
     {
         return RepairTimes.Get((int)bit).Expired(Runner);
@@ -195,12 +198,18 @@ public class PlayerTankController : NetworkBehaviour
         FullyHealTank();
         CurrentRotationSpeed = 0;
         CurrentTraverseSpeed = 0;
+        MaxLeftWheelRotation = 0;
+        MaxRightWheelRotation = 0;
         rig.WriteVelocity(Vector3.zero);
-        var point = BasicSpawner.Instance.GetSpawnPoint(Object.InputAuthority);
+        var point = BasicSpawner.Instance.GetSpawnPointRespawn();
         //rig.WritePosition(point.Position);
         //rig.TeleportToPosition(point.Position);
         //rig.WriteRotation(Quaternion.Euler(point.Rotation));
         rig.TeleportToPositionRotation(point.Position, Quaternion.Euler(point.Rotation));
+        foreach(var turret in Turrets)
+        {
+            turret.ResetRotation();
+        }
         UIManager.SetYouDiedTextEnabled(false);
     }
 
@@ -275,6 +284,8 @@ public class PlayerTankController : NetworkBehaviour
 
     public float TrackRotatoionCoeff = 2f;
 
+    public float SuicideTime = 3f;
+
     public bool IsCurrentPlayer => Object.HasInputAuthority;
 
     public bool IsHostPlayer => Object.HasStateAuthority;
@@ -294,7 +305,7 @@ public class PlayerTankController : NetworkBehaviour
     Transform DebugTextTransform;
     UnityEngine.UI.Text DebugText;
 
-    public void UpdateDebugText()
+    public string GetDebugString()
     {
         string txt = $"{Object.InputAuthority}{(IsHostPlayer ? "H" : "")}\n";
         if (HasDriver) txt += "D";
@@ -304,9 +315,15 @@ public class PlayerTankController : NetworkBehaviour
 
         txt += "\n";
         if (HasEngine) txt += "E";
-        if(HasGunBarrel) txt += "B";
-        if(HasGunBreech) txt += "G";
+        if (HasGunBarrel) txt += "B";
+        if (HasGunBreech) txt += "G";
         if (HasTracks) txt += "T";
+        return txt ;
+    }
+
+    public void UpdateDebugText()
+    {
+        string txt = GetDebugString();
 
         DebugTextTransform.position = PlayerCamera.CurrentCamera.WorldToScreenPoint(transform.position);
         DebugText.text = txt;
@@ -357,6 +374,7 @@ public class PlayerTankController : NetworkBehaviour
 
         Transform dmgmot = DamageModel.transform;
         dmgmot.SetParent(StaticConsts.RootObject.transform);
+        dmgmot.Translate(StaticConsts.DamageModelSpawnOffset);
 
         SpawnedTick = Runner.Tick;
     }
@@ -991,6 +1009,27 @@ public class PlayerTankController : NetworkBehaviour
         if (GetInput(out NetworkInputData data))
         {
 
+            if(data.SuicideButtonPressed && !Dead)
+            {
+                if(!SuicideTimer.IsRunning)
+                {
+                    SuicideTimer = TickTimer.CreateFromSeconds(Runner, SuicideTime);
+                } else if(SuicideTimer.Expired(Runner))
+                {
+                    Die();
+                    SuicideTimer = TickTimer.None;
+                    return;
+                } else if(IsCurrentPlayer)
+                {
+                    //Set suicide graphic
+                    UIManager.SetSuicideProgress((SuicideTime - SuicideTimer.RemainingTime(Runner).Value) / SuicideTime);
+                }
+            } else
+            {
+                SuicideTimer = TickTimer.None;
+                UIManager.SetSuicideProgress(0f);
+            }
+
             if(!HasGunner && !GunnerRecovering)
             {
                 GunnerRecovering = true;
@@ -1028,8 +1067,11 @@ public class PlayerTankController : NetworkBehaviour
                 } else if(!h && IsCurrentPlayer)
                 {
                     TickTimer t = GetRepairTimer(comp);
-                    float v = (ComponentFixTime - t.RemainingTime(Runner).Value) / ComponentFixTime;
-                    UIManager.SetHealthItemHP(comp, v);
+                    if (!t.ExpiredOrNotRunning(Runner))
+                    {
+                        float v = (ComponentFixTime - t.RemainingTime(Runner).Value) / ComponentFixTime;
+                        UIManager.SetHealthItemHP(comp, v);
+                    }
                 }
             }
 

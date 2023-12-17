@@ -30,6 +30,8 @@ public class UIManager : MonoBehaviour
 
     public GameObject YouDiedText;
 
+    public Slider SuicideSlider;
+
     public GameObject DebugTankTextPrefab;
 
     public static UIManager Instance => instance;
@@ -115,6 +117,11 @@ public class UIManager : MonoBehaviour
     public static void SetReloadProgress(float progress)
     {
         Instance.ReloadSlider.value = progress;
+    }
+
+    public static void SetSuicideProgress(float progress)
+    {
+        Instance.SuicideSlider.value = progress;
     }
 
     public static void SetYouDiedTextEnabled(bool enabled)

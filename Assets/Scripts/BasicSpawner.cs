@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Fusion.Photon.Realtime;
+using System.Linq;
 
 public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 {
@@ -30,19 +32,24 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     }
 
-    public SpawnPoint[] SpawnPoints = new SpawnPoint[4]
-        {
-          new SpawnPoint(new Vector3(0,0,0), new Vector3(0,0,0)),
-          new SpawnPoint(new Vector3(1,0,0), new Vector3(0,0,0)),
-          new SpawnPoint(new Vector3(0,0,1), new Vector3(0,0,0)),
-          new SpawnPoint(new Vector3(1,0,1), new Vector3(0,0,0)),
-        };
+    public GameObject[] SpawnPointLocators;
+
+    SpawnPoint[] SpawnPoints;
 
     private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
 
     void Awake()
     {
         _Instance = this;
+        if(SpawnPointLocators == null) 
+        {
+            throw new Exception("No spawn point locators!");
+        }
+        SpawnPoints = new SpawnPoint[SpawnPointLocators.Length];
+        for(int i = 0; i < SpawnPointLocators.Length; i++)
+        {
+            SpawnPoints[i] = new SpawnPoint(SpawnPointLocators[i].transform.position, SpawnPointLocators[i].transform.eulerAngles);
+        }
     }
 
     void OnDrawGizmos()
@@ -93,7 +100,7 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         if (runner.IsServer)
         {
             // Create a unique position for the player
-            var point = GetSpawnPoint(player.RawEncoded);
+            var point = GetSpawnPointInit(player.RawEncoded);
             Vector3 spawnPosition = point.Position;
             NetworkObject networkPlayerObject = runner.Spawn(
                 _playerPrefab, spawnPosition,
@@ -142,6 +149,9 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         if (Input.GetKey(KeyCode.Space))
             data.SetButton(NetworkInputData.SECONDARY_FIRE_BUTTON);
 
+        if (Input.GetKey(KeyCode.J))
+            data.SetButton(NetworkInputData.SUICIDE_BUTTON);
+
         if (!Input.GetKey(KeyCode.C))
         {
             data.MX = PlayerCamera.Instance.mx;
@@ -167,9 +177,27 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
     public void OnSceneLoadDone(NetworkRunner runner) { }
     public void OnSceneLoadStart(NetworkRunner runner) { }
 
-    public SpawnPoint GetSpawnPoint(int playerId)
+    public SpawnPoint GetSpawnPointInit(int playerId)
     {
         return SpawnPoints[playerId % SpawnPoints.Length];
+    }
+
+    public SpawnPoint GetSpawnPointRespawn()
+    {
+        // TODO
+        float[] Dists = new float[SpawnPoints.Length];
+        for(int i = 0; i < Dists.Length; i++)
+        {
+            Dists[i] = float.MaxValue;
+            foreach(var player in _spawnedCharacters.Values)
+            {
+                float d = Vector3.Distance(SpawnPoints[i].Position, player.transform.position);
+                if (d < Dists[i])
+                    Dists[i] = d;
+            }
+        }
+        int inx = Array.IndexOf(Dists, Dists.Max());
+        return SpawnPoints[inx];
     }
 
 }

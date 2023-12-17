@@ -10,6 +10,7 @@ public struct NetworkInputData : INetworkInput
     public const byte RIGHT_BUTTON = 8;
     public const byte FIRE_BUTTON = 16;
     public const byte SECONDARY_FIRE_BUTTON = 32;
+    public const byte SUICIDE_BUTTON = 64;
 
     public byte ArrowsInput;
 
@@ -22,6 +23,7 @@ public struct NetworkInputData : INetworkInput
     public bool RightPressed => (ArrowsInput & RIGHT_BUTTON) == RIGHT_BUTTON;
     public bool FirePressed => (ArrowsInput & FIRE_BUTTON) == FIRE_BUTTON;
     public bool SecondaryFirePressed => (ArrowsInput & SECONDARY_FIRE_BUTTON) == SECONDARY_FIRE_BUTTON;
+    public bool SuicideButtonPressed => (ArrowsInput & SUICIDE_BUTTON) == SUICIDE_BUTTON;
 
     public void SetButton(byte button) => ArrowsInput |= button;
 
