@@ -34,6 +34,14 @@ public class UIManager : MonoBehaviour
 
     public GameObject DebugTankTextPrefab;
 
+    public Text PingStateText;
+
+    public InputField GameRoomNameInput;
+
+    public GameObject GameRoomPanelObject;
+
+    public Toggle ConstantForwardToggle;
+
     public static UIManager Instance => instance;
 
     private void Awake()
@@ -128,6 +136,30 @@ public class UIManager : MonoBehaviour
     {
         Instance.YouDiedText.SetActive(enabled);
     }
+
+    public static void SetPingStateText(string text)
+    {
+        Instance.PingStateText.text = text;
+    }
+
+    public static string GetGameRoomNameInput()
+    {
+        string ret = "room";
+
+        if(Instance && Instance.GameRoomNameInput)
+        {
+            ret = Instance.GameRoomNameInput.text;
+        }
+
+        return ret;
+    }
+
+    public static void SetMPGameWindowActive(bool active)
+    {
+        Instance.GameRoomPanelObject.SetActive(active);
+    }
+
+    public static bool ConstantForward => Instance.ConstantForwardToggle.isOn;
 
     public static Vector3 GetAimingCirclePosition() => instance.AimingWhiteCircle.position;
 

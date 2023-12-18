@@ -53,6 +53,20 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
 
         private TankHitInfo _tankHitInfo;
 
+        private void OnDestroy()
+        {
+            if(_projectiles != null)
+            {
+                foreach(var projectile in _projectiles)
+                {
+                    if(projectile)
+                    {
+                        Destroy(projectile);
+                    }
+                }
+            }
+        }
+
         // WeaponBase INTERFACE
 
         public override void Fire()
@@ -141,9 +155,9 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
                 _projectileData.Set(i, data);
             }
 
-            if(_hitInfos.TryGet(Runner.Tick - 1, out var hitInfo)) {
-                bool found = Runner.TryFindObject(hitInfo.HitObjectId, out var obj);
-                string st = $"hit: {(found ? obj.name : "NO_OBJECT")} at: {hitInfo.HitPosition}, dir: {hitInfo.HitDirection}, tick: {hitInfo.Tick}\n";
+            if(_hitInfos.TryGet(Runner.Tick - 1, out var hitInfo) && Runner.IsLastTick) {
+                //bool found = Runner.TryFindObject(hitInfo.HitObjectId, out var obj);
+                //string st = $"hit: {(found ? obj.name : "NO_OBJECT")} at: {hitInfo.HitPosition}, dir: {hitInfo.HitDirection}, tick: {hitInfo.Tick}\n";
 
                 OnProjectileHit(hitInfo);
 

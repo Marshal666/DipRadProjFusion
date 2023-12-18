@@ -15853,6 +15853,7 @@ GameObject:
   - component: {fileID: 3925285380710342715}
   - component: {fileID: 9078804299831349386}
   - component: {fileID: 7263028552099479187}
+  - component: {fileID: 4083658917904873832}
   m_Layer: 6
   m_Name: OsorioPrototype
   m_TagString: Untagged
@@ -16190,6 +16191,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Parts: []
+--- !u!114 &4083658917904873832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6302620085713561815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b1ed9102c910214bb1eebca08872853, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UpdateTime: 0.5
 --- !u!1 &6391700646872614244
 GameObject:
   m_ObjectHideFlags: 0

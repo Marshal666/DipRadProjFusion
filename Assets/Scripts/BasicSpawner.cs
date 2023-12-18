@@ -64,18 +64,19 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         }
     }
 
-    private void OnGUI()
+    #region UI_METHODS
+
+    public void StartHost()
     {
-        if (_runner != null) return;
-        if (GUI.Button(new Rect(0, 0, 200, 40), "Host"))
-        {
-            StartGame(GameMode.Host);
-        }
-        if (GUI.Button(new Rect(0, 40, 200, 40), "Join"))
-        {
-            StartGame(GameMode.Client);
-        }
+        StartGame(GameMode.Host);
     }
+
+    public void JoinGame()
+    {
+        StartGame(GameMode.Client);
+    }
+
+    #endregion
 
     async void StartGame(GameMode mode)
     {
@@ -87,11 +88,22 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         await _runner.StartGame(new StartGameArgs()
         {
             GameMode = mode,
-            SessionName = "TestRoomm",
+            SessionName = UIManager.GetGameRoomNameInput(),
             Scene = SceneManager.GetActiveScene().buildIndex,
             SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
         });
+        UIManager.SetMPGameWindowActive(false);
+        //print("d");
         //print("Game started");
+    }
+
+    public void QuitPlaying()
+    {
+        if(_runner)
+        {
+            _runner.Shutdown(true, ShutdownReason.Ok);
+        }
+        SceneManager.LoadScene("main");
     }
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
@@ -135,7 +147,7 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
     {
         var data = new NetworkInputData();
 
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W) || UIManager.ConstantForward)
             data.SetButton(NetworkInputData.FORWARD_BUTTON);
         if (Input.GetKey(KeyCode.S))
             data.SetButton(NetworkInputData.BACK_BUTTON);
@@ -182,16 +194,18 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         return SpawnPoints[playerId % SpawnPoints.Length];
     }
 
-    public SpawnPoint GetSpawnPointRespawn()
+    public SpawnPoint GetRespawnPoint(PlayerRef playerId)
     {
         // TODO
         float[] Dists = new float[SpawnPoints.Length];
         for(int i = 0; i < Dists.Length; i++)
         {
             Dists[i] = float.MaxValue;
-            foreach(var player in _spawnedCharacters.Values)
+            foreach(var player in _spawnedCharacters.Keys)
             {
-                float d = Vector3.Distance(SpawnPoints[i].Position, player.transform.position);
+                if(player == playerId)
+                    continue;
+                float d = Vector3.Distance(SpawnPoints[i].Position, _spawnedCharacters[player].transform.position);
                 if (d < Dists[i])
                     Dists[i] = d;
             }

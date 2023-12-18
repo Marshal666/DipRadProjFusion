@@ -201,7 +201,7 @@ public class PlayerTankController : NetworkBehaviour
         MaxLeftWheelRotation = 0;
         MaxRightWheelRotation = 0;
         rig.WriteVelocity(Vector3.zero);
-        var point = BasicSpawner.Instance.GetSpawnPointRespawn();
+        var point = BasicSpawner.Instance.GetRespawnPoint(Object.InputAuthority);
         //rig.WritePosition(point.Position);
         //rig.TeleportToPosition(point.Position);
         //rig.WriteRotation(Quaternion.Euler(point.Rotation));
@@ -975,6 +975,12 @@ public class PlayerTankController : NetworkBehaviour
         {
             SetGhostingEnabled(false);
         }
+    }
+
+    private void OnDestroy()
+    {
+        if(DamageModel)
+            Destroy(DamageModel.gameObject);
     }
 
     public override void FixedUpdateNetwork()
