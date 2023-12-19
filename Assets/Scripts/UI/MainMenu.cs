@@ -22,4 +22,9 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
+    public void OpenTestPolygon()
+    {
+        SceneManager.LoadScene("test_polygon");
+    }
+
 }
