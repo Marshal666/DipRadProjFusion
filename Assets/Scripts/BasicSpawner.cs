@@ -204,7 +204,10 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         if (Input.GetKey(KeyCode.W) || UIManager.ConstantForward)
             data.SetButton(NetworkInputData.FORWARD_BUTTON);
         if (Input.GetKey(KeyCode.S))
+        {
             data.SetButton(NetworkInputData.BACK_BUTTON);
+            UIManager.Instance.ConstantForwardToggle.isOn = false;
+        }
         if (Input.GetKey(KeyCode.A))
             data.SetButton(NetworkInputData.LEFT_BUTTON);
         if (Input.GetKey(KeyCode.D))

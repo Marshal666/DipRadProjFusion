@@ -78,6 +78,8 @@ public class TankTurret : NetworkBehaviour
 
     public bool IsMainTurret => Tank.MainTurret == this;
 
+    public float lmx = 0f, lmy = 0f;
+
     public Vector3 Axis2Vector3(Axis axis)
     {
         switch (axis)
@@ -139,6 +141,86 @@ public class TankTurret : NetworkBehaviour
         
     }
 
+    public void RotateTurretToAngles(float imx, float imy, float cmx, float cmy, float dt, out float omx, out float omy)
+    {
+        if (float.IsNaN(imx) || float.IsNaN(imy) || !Tank.HasGunner)
+        {
+            CurrentHorizontalRotationSpeed = 0f;
+            CurrentVerticalRotationSpeed = 0f;
+            omx = cmx;
+            omy = cmy;
+            return;
+        }
+
+        float currentHorizontal = Utils.NormalizeAngle360(cmy /*AxisValueFromQuaternion(HorizontalRotationAxis, HorizontalRotatePart.localRotation)*/);
+        float currentVertical = Utils.NormalizeAngle360(-cmx /*-AxisValueFromQuaternion(VerticalRotationAxis, VerticalRotatePart.transform.localRotation)*/ /* - VerticalRotationOffset*/);
+
+        //Vertical rotation part
+        float my = Utils.NormalizeAngle360(VerticalPlacementOffset - imy);
+        int constraintIndex = VerticalConstraintAngleIndex(currentHorizontal);
+        float vmin = VerticalConstraints[constraintIndex].VerticalMin;
+        float vmax = VerticalConstraints[constraintIndex].VerticalMax;
+        my = Utils.NormalizeAngle360(Utils.ClampAngleLPositive(my, vmin, vmax));
+
+        if (Mathf.Abs(Mathf.DeltaAngle(currentVertical, my)) > RotationkEps /*currentVertical != my*/)
+        {
+            if (CurrentVerticalRotationSpeed == 0f)
+            {
+                CurrentVerticalRotationSpeed = VerticalRotationSpeedInit;
+            }
+            CurrentVerticalRotationSpeed = Mathf.Clamp(CurrentVerticalRotationSpeed + VerticalRotationAcceleration * dt, 0, VerticalRotationSpeedMax);
+            currentVertical = Mathf.MoveTowardsAngle(currentVertical, my, CurrentVerticalRotationSpeed * dt);
+            //SetRotation(VerticalRotatePart, VerticalRotationAxis, -currentVertical);
+            omx = -currentVertical;
+            lmx = -currentVertical;
+        }
+        else
+        {
+            CurrentVerticalRotationSpeed = 0f;
+            lmxv = 0f;
+            omx = cmx;
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //Horizontal Rotation part...
+        float baseRotation = Base ? Base.transform.eulerAngles.y : Tank.transform.eulerAngles.y;
+        float mx = Utils.NormalizeAngle360(imx - baseRotation);
+        if (HasHorizontalConstraints)
+            mx = Utils.ClampAngleLPositive(mx, HorizontalConstraintMin, HorizontalConstraintMax);
+        if (Mathf.Abs(Mathf.DeltaAngle(currentHorizontal, mx)) > RotationkEps/*currentHorizontal != mx*/)
+        {
+            //print($"mx ({mx}) != current ({currentHorizontal})");
+            if (CurrentHorizontalRotationSpeed == 0f)
+            {
+                CurrentHorizontalRotationSpeed = HorizontalRotationSpeedInit;
+            }
+            CurrentHorizontalRotationSpeed = Mathf.Clamp(CurrentHorizontalRotationSpeed + HorizontalRotationAcceleration * dt, 0, HorizontalRotationSpeedMax);
+            float angleMovement = Utils.NormalizeAngle360(Mathf.MoveTowardsAngle(currentHorizontal, mx, CurrentHorizontalRotationSpeed * dt));
+            if (HasHorizontalConstraints)
+            {
+                float delta = Utils.NormalizeAngle360(angleMovement - currentHorizontal);
+                float nearEndStep = Utils.NormalizeAngle360(Mathf.LerpAngle(currentHorizontal, mx, 0.99f));
+                if (nearEndStep != Utils.ClampAngleLPositive(nearEndStep, HorizontalConstraintMin, HorizontalConstraintMax))
+                {
+                    angleMovement = Utils.NormalizeAngle360(angleMovement - 2 * delta);
+                }
+            }
+            if (!HasHorizontalConstraints || angleMovement == Utils.ClampAngleLPositive(angleMovement, HorizontalConstraintMin, HorizontalConstraintMax))
+            {
+                currentHorizontal = angleMovement;
+            }
+            //SetRotation(HorizontalRotatePart, HorizontalRotationAxis, currentHorizontal);
+            omy = currentHorizontal;
+            lmy = currentHorizontal;
+        }
+        else
+        {
+            omy = cmy;
+            CurrentHorizontalRotationSpeed = 0f;
+            lmyv = 0f;
+        }
+    }
+
     public override void FixedUpdateNetwork()
     {
         //SetRotation(VerticalRotatePart, VerticalRotationAxis, TurretMx);
@@ -146,78 +228,12 @@ public class TankTurret : NetworkBehaviour
         //print($"player: {Object.InputAuthority} tick: {Runner.Tick}, dt: {Runner.DeltaTime}");
         bool gi = GetInput(out NetworkInputData data);
         //print($"local player: {Runner.LocalPlayer}, ia: {Object.InputAuthority}, sa: {Object.StateAuthority}, tia: {Tank.HasInputAuthority}, gi: {gi}");
-        if (gi)
+        if (gi && Tank.IsHostPlayer)
         {
-            if (float.IsNaN(data.MX) || float.IsNaN(data.MY) || !Tank.HasGunner)
-            {
-                CurrentHorizontalRotationSpeed = 0f;
-                CurrentVerticalRotationSpeed = 0f;
-                return;
-            }
-
-            float currentHorizontal = Utils.NormalizeAngle360(TurretMy /*AxisValueFromQuaternion(HorizontalRotationAxis, HorizontalRotatePart.localRotation)*/);
-            float currentVertical = Utils.NormalizeAngle360(-TurretMx /*-AxisValueFromQuaternion(VerticalRotationAxis, VerticalRotatePart.transform.localRotation)*/ /* - VerticalRotationOffset*/);
-
-            //Vertical rotation part
-            float my = Utils.NormalizeAngle360(VerticalPlacementOffset - data.MY);
-            int constraintIndex = VerticalConstraintAngleIndex(currentHorizontal);
-            float vmin = VerticalConstraints[constraintIndex].VerticalMin;
-            float vmax = VerticalConstraints[constraintIndex].VerticalMax;
-            my = Utils.NormalizeAngle360(Utils.ClampAngleLPositive(my, vmin, vmax));
-            
-            if (Mathf.Abs(Mathf.DeltaAngle(currentVertical, my)) > RotationkEps /*currentVertical != my*/)
-            {
-                if(CurrentVerticalRotationSpeed == 0f)
-                {
-                    CurrentVerticalRotationSpeed = VerticalRotationSpeedInit;
-                }
-                CurrentVerticalRotationSpeed = Mathf.Clamp(CurrentVerticalRotationSpeed + VerticalRotationAcceleration * Runner.DeltaTime, 0, VerticalRotationSpeedMax);
-                currentVertical = Mathf.MoveTowardsAngle(currentVertical, my, CurrentVerticalRotationSpeed * Runner.DeltaTime);
-                //SetRotation(VerticalRotatePart, VerticalRotationAxis, -currentVertical);
-                TurretMx = -currentVertical;
-                lmx = -currentVertical;
-            } else
-            {
-                CurrentVerticalRotationSpeed = 0f;
-                lmxv = 0f;
-            }
-
-            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //Horizontal Rotation part...
-            float baseRotation = Base ? Base.transform.eulerAngles.y : Tank.transform.eulerAngles.y;
-            float mx = Utils.NormalizeAngle360(data.MX - baseRotation);
-            if (HasHorizontalConstraints)
-                mx = Utils.ClampAngleLPositive(mx, HorizontalConstraintMin, HorizontalConstraintMax);
-            if(Mathf.Abs(Mathf.DeltaAngle(currentHorizontal, mx)) > RotationkEps/*currentHorizontal != mx*/)
-            {
-                //print($"mx ({mx}) != current ({currentHorizontal})");
-                if(CurrentHorizontalRotationSpeed == 0f)
-                {
-                    CurrentHorizontalRotationSpeed = HorizontalRotationSpeedInit;
-                }
-                CurrentHorizontalRotationSpeed = Mathf.Clamp(CurrentHorizontalRotationSpeed + HorizontalRotationAcceleration * Runner.DeltaTime, 0, HorizontalRotationSpeedMax);
-                float angleMovement = Utils.NormalizeAngle360(Mathf.MoveTowardsAngle(currentHorizontal, mx, CurrentHorizontalRotationSpeed * Runner.DeltaTime));
-                if (HasHorizontalConstraints)
-                {
-                    float delta = Utils.NormalizeAngle360(angleMovement - currentHorizontal);
-                    float nearEndStep = Utils.NormalizeAngle360(Mathf.LerpAngle(currentHorizontal, mx, 0.99f));
-                    if (nearEndStep != Utils.ClampAngleLPositive(nearEndStep, HorizontalConstraintMin, HorizontalConstraintMax))
-                    {
-                        angleMovement = Utils.NormalizeAngle360(angleMovement - 2 * delta);
-                    }
-                }
-                if (!HasHorizontalConstraints || angleMovement == Utils.ClampAngleLPositive(angleMovement, HorizontalConstraintMin, HorizontalConstraintMax))
-                {
-                    currentHorizontal = angleMovement;
-                }
-                //SetRotation(HorizontalRotatePart, HorizontalRotationAxis, currentHorizontal);
-                TurretMy = currentHorizontal;
-                lmy = currentHorizontal;
-            } else
-            {
-                CurrentHorizontalRotationSpeed = 0f;
-                lmyv = 0f;
-            }
+            float omx, omy;
+            RotateTurretToAngles(data.MX, data.MY, TurretMx, TurretMy, Runner.DeltaTime, out omx, out omy);
+            TurretMx = omx;
+            TurretMy = omy;
             //print($"NFU x_ok: {Mathf.Abs(lmx - TurretMx) <= 5f}, y_ok: {Mathf.Abs(lmy - TurretMy) <= 5f} lmx: {lmx}, lmy: {lmy}, TurretMx: {TurretMx}, TurretMy: {TurretMy}");
         } else
         {
@@ -284,7 +300,7 @@ public class TankTurret : NetworkBehaviour
         //UIManager.SetAimingObjectsActive(!InSniperMode);
     }
 
-    public float lmx = 0f, lmy = 0f;
+    
     float lmxv = 0f, lmyv = 0f;
 
     private void Update()

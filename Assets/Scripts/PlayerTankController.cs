@@ -1068,6 +1068,8 @@ public class PlayerTankController : NetworkBehaviour
             //repairs
             foreach (var comp in FixableComponents)
             {
+                if (Dead)
+                    break;
                 bool h = GetTankHealth(comp);
                 bool r = ComponentRepaired(comp);
                 if (!h && r)

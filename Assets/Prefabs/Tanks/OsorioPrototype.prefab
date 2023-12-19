@@ -15998,7 +15998,7 @@ MonoBehaviour:
   m_Script: {fileID: 1710889294, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 3
+  _interpolationDataSource: 2
   InterpolationSpace: 0
   InterpolationTarget: {fileID: 5499405484208101571}
   InterpolateErrorCorrection: 1
@@ -20321,7 +20321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28d82819b46951d4fa7e1b60a6b461c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 3
+  _interpolationDataSource: 2
   HorizontalRotatePart: {fileID: 2612386816906899402}
   VerticalRotatePart: {fileID: 3373835275307253276}
   AboveTurrets: []

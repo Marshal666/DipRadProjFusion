@@ -36,6 +36,7 @@ public class PlayerCamera : MonoBehaviour
     public float ZoomSpeed = 20f;
 
     public float SmoothTimeRotation = 0.25f;
+    //public float SmoothTimePosition = 0.07f;
 
     public static Camera CurrentCamera;
 
