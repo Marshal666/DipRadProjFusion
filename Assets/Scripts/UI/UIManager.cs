@@ -42,6 +42,8 @@ public class UIManager : MonoBehaviour
 
     public Toggle ConstantForwardToggle;
 
+    public Text NetworkStateText;
+
     public static UIManager Instance => instance;
 
     private void Awake()
@@ -157,6 +159,11 @@ public class UIManager : MonoBehaviour
     public static void SetMPGameWindowActive(bool active)
     {
         Instance.GameRoomPanelObject.SetActive(active);
+    }
+
+    public static void SetNetworkStateText(string text)
+    {
+        Instance.NetworkStateText.text = text;
     }
 
     public static bool ConstantForward => Instance.ConstantForwardToggle.isOn;

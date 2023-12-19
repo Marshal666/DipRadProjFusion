@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Fusion.Photon.Realtime;
 using System.Linq;
 
 public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
@@ -32,8 +31,6 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     }
 
-    public GameObject[] SpawnPointLocators;
-
     SpawnPoint[] SpawnPoints;
 
     private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
@@ -41,6 +38,7 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
     void Awake()
     {
         _Instance = this;
+        var SpawnPointLocators = RootGameManager.Instance.SpawnPointLocators;
         if(SpawnPointLocators == null) 
         {
             throw new Exception("No spawn point locators!");
@@ -85,14 +83,70 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         _runner.ProvideInput = true;
 
         // Start or join (depends on gamemode) a session with a specific name
-        await _runner.StartGame(new StartGameArgs()
+        var d = _runner.StartGame(new StartGameArgs()
         {
             GameMode = mode,
             SessionName = UIManager.GetGameRoomNameInput(),
             Scene = SceneManager.GetActiveScene().buildIndex,
             SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
         });
-        UIManager.SetMPGameWindowActive(false);
+        await d;
+        if (d.Result.Ok)
+        {
+            UIManager.SetMPGameWindowActive(false);
+            UIManager.SetNetworkStateText($"Network: CONN");
+        } else
+        {
+            Destroy(_runner);
+            transform.SetParent(null);
+            string msg = "Network: ";
+            switch (d.Result.ShutdownReason)
+            {
+                case ShutdownReason.Ok:
+                    break;
+                case ShutdownReason.Error:
+                    msg += "INT_ERR";
+                    break;
+                case ShutdownReason.IncompatibleConfiguration:
+                    msg += "INC_CONFIG";
+                    break;
+                case ShutdownReason.ServerInRoom:
+                    msg += "DUPL_HOST";
+                    break;
+                case ShutdownReason.DisconnectedByPluginLogic:
+                    msg += "P_ERR";
+                    break;
+                case ShutdownReason.GameClosed:
+                    msg += "CLOSED";
+                    break;
+                case ShutdownReason.GameNotFound:
+                    msg += "NOT_FOUND";
+                    break;
+                case ShutdownReason.MaxCcuReached:
+                    msg += "NO_SPACE";
+                    break;
+                case ShutdownReason.GameIdAlreadyExists:
+                    break;
+                case ShutdownReason.GameIsFull:
+                    msg += "GAME_FULL";
+                    break;
+                case ShutdownReason.InvalidRegion:
+                case ShutdownReason.InvalidAuthentication:
+                case ShutdownReason.CustomAuthenticationFailed:
+                case ShutdownReason.AuthenticationTicketExpired:
+                case ShutdownReason.PhotonCloudTimeout:
+                case ShutdownReason.AlreadyRunning:
+                case ShutdownReason.InvalidArguments:
+                case ShutdownReason.HostMigration:
+                case ShutdownReason.ConnectionTimeout:
+                case ShutdownReason.ConnectionRefused:
+                default:
+                    msg += "ERR";
+                    break;
+            }
+            UIManager.SetNetworkStateText(msg);
+            Instantiate(RootGameManager.Instance.BasicSpawnerPrefab);
+        }
         //print("d");
         //print("Game started");
     }
@@ -103,7 +157,7 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         {
             _runner.Shutdown(true, ShutdownReason.Ok);
         }
-        SceneManager.LoadScene("main");
+        
     }
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)

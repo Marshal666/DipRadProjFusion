@@ -1033,7 +1033,10 @@ public class PlayerTankController : NetworkBehaviour
             } else
             {
                 SuicideTimer = TickTimer.None;
-                UIManager.SetSuicideProgress(0f);
+                if (IsCurrentPlayer)
+                {
+                    UIManager.SetSuicideProgress(0f);
+                }
             }
 
             if(!HasGunner && !GunnerRecovering)

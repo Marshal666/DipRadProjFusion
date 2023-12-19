@@ -97,7 +97,11 @@ public class PlayerCamera : MonoBehaviour
     private void Update()
     {
         if (!Target)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             return;
+        }
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
