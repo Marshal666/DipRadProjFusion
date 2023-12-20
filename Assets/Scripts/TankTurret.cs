@@ -255,12 +255,20 @@ public class TankTurret : NetworkBehaviour
         Rotate();
     }
 
-    public void Rotate()
+    public void Rotate(bool interpolate = false, float delta = 0.01f)
     {
 
-        //works fine, but it's not super smooth
-        lmx = TurretMx;
-        lmy = TurretMy;
+        if (interpolate)
+        {
+            lmx = Mathf.MoveTowardsAngle(lmx, TurretMx, 180f * delta);
+            lmy = Mathf.MoveTowardsAngle(lmy, TurretMy, 180f * delta);
+        }
+        else
+        {
+            //works fine, but it's not super smooth on clients..
+            lmx = TurretMx;
+            lmy = TurretMy;
+        }
 
         SetRotation(VerticalRotatePart, VerticalRotationAxis, lmx);
         SetRotation(HorizontalRotatePart, HorizontalRotationAxis, lmy);
@@ -277,7 +285,13 @@ public class TankTurret : NetworkBehaviour
         //lmx = Mathf.MoveTowardsAngle(lmx, TurretMx, RotationSmoothingSpeed * Time.deltaTime);
         //lmy = Mathf.MoveTowardsAngle(lmy, TurretMy, RotationSmoothingSpeed * Time.deltaTime);
 
-        Rotate();
+        if (Tank.IsHostPlayer)
+        {
+            Rotate();
+        } else
+        {
+            Rotate(true, Runner.DeltaTime);
+        }
     }
 
     public void SetSniperCameraActive(bool val)
@@ -312,6 +326,15 @@ public class TankTurret : NetworkBehaviour
             {
                 ToggleSniperMode();
             }
+        }
+
+        if (Tank && Tank.Object && Tank.IsHostPlayer)
+        {
+            Rotate();
+        }
+        else
+        {
+            Rotate(true, Time.deltaTime);
         }
     }
 

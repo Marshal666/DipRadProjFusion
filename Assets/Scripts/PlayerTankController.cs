@@ -387,7 +387,7 @@ public class PlayerTankController : NetworkBehaviour
         {
             if (!IsCurrentPlayer)
             {
-                UIManager.AddDoneDmgTextMsgItem("Driver");
+                UIManager.AddDoneDmgTextMsgItem("Driver", d);
             } 
             else
             {
@@ -407,7 +407,7 @@ public class PlayerTankController : NetworkBehaviour
         {
             if (!IsCurrentPlayer)
             {
-                UIManager.AddDoneDmgTextMsgItem("Gunner");
+                UIManager.AddDoneDmgTextMsgItem("Gunner", d);
             }
             else
             {
@@ -427,7 +427,7 @@ public class PlayerTankController : NetworkBehaviour
         {
             if (!IsCurrentPlayer)
             {
-                UIManager.AddDoneDmgTextMsgItem("Loader");
+                UIManager.AddDoneDmgTextMsgItem("Loader", d);
             }
             else
             {
@@ -447,7 +447,7 @@ public class PlayerTankController : NetworkBehaviour
         {
             if (!IsCurrentPlayer)
             {
-                UIManager.AddDoneDmgTextMsgItem("Commander");
+                UIManager.AddDoneDmgTextMsgItem("Commander", d);
             }
             else
             {
@@ -467,7 +467,7 @@ public class PlayerTankController : NetworkBehaviour
         {
             if (!IsCurrentPlayer)
             {
-                UIManager.AddDoneDmgTextMsgItem("Engine");
+                UIManager.AddDoneDmgTextMsgItem("Engine", d);
             }
             else
             {
@@ -487,7 +487,7 @@ public class PlayerTankController : NetworkBehaviour
         {
             if (!IsCurrentPlayer)
             {
-                UIManager.AddDoneDmgTextMsgItem("Gun Breech");
+                UIManager.AddDoneDmgTextMsgItem("Gun Breech", d);
             }
             else
             {
@@ -507,7 +507,7 @@ public class PlayerTankController : NetworkBehaviour
         {
             if (!IsCurrentPlayer)
             {
-                UIManager.AddDoneDmgTextMsgItem("Gun Barrel");
+                UIManager.AddDoneDmgTextMsgItem("Gun Barrel", d);
             }
             else
             {
@@ -527,7 +527,7 @@ public class PlayerTankController : NetworkBehaviour
         {
             if (!IsCurrentPlayer)
             {
-                UIManager.AddDoneDmgTextMsgItem("Left Track");
+                UIManager.AddDoneDmgTextMsgItem("Left Track", d);
             }
             else
             {
@@ -547,7 +547,7 @@ public class PlayerTankController : NetworkBehaviour
         {
             if (!IsCurrentPlayer)
             {
-                UIManager.AddDoneDmgTextMsgItem("Right Track");
+                UIManager.AddDoneDmgTextMsgItem("Right Track", d);
             }
             else
             {
@@ -571,7 +571,7 @@ public class PlayerTankController : NetworkBehaviour
             {
                 if (!IsCurrentPlayer)
                 {
-                    UIManager.AddDoneDmgTextMsgItem("Ammo");
+                    UIManager.AddDoneDmgTextMsgItem("Ammo", d);
                 }
                 else
                 {

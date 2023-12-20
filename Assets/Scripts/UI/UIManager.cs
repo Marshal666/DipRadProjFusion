@@ -106,11 +106,13 @@ public class UIManager : MonoBehaviour
         Instance.healthUI.SetItemHP(bit, val);
     }
 
-    public static void AddDoneDmgTextMsgItem(string text)
+    public static void AddDoneDmgTextMsgItem(string text, IDamageable damageable)
     {
         if (Instance.DoneDmgMsgItemsHolder.activeSelf)
         {
             var o = Instantiate(Instance.TextMsgItem, Instance.DoneDmgMsgItemsHolder.transform);
+            var ad = o.GetComponent<SelfDestructTime>();
+            ad.Damageable = damageable;
             o.GetComponent<Text>().text = text;
         }
     }
