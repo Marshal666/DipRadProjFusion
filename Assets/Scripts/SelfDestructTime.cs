@@ -37,20 +37,20 @@ public class SelfDestructTime : MonoBehaviour
 
     private void Start()
     {
-        if (Damageable != null && Damageable.HP > 0)
-        {
-            EndThis();
-        }
+        //if (Damageable != null && Damageable.HP > 0)
+        //{
+        //    EndThis();
+        //}
     }
 
     private void Update()
     {
-        hpct += Time.deltaTime;
-        if (hpct >= HPCheckStartTime && Damageable != null && Damageable.HP > 0f)
-        {
-            //print($"HP > 0 for {Damageable}, HP = {Damageable.HP}");
-            EndThis();
-        }
+        //hpct += Time.deltaTime;
+        //if (hpct >= HPCheckStartTime && Damageable != null && Damageable.HP > 0f)
+        //{
+        //    //print($"HP > 0 for {Damageable}, HP = {Damageable.HP}");
+        //    EndThis();
+        //}
     }
 
 }
