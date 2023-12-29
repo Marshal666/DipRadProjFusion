@@ -16123,7 +16123,7 @@ MonoBehaviour:
   SleepVelocity: 0.02
   TrackRotatoionCoeff: -0.002
   SuicideTime: 3
-  Debug: 0
+  Debug: 1
   _MaxLeftWheelRotation: 0
   _MaxRightWheelRotation: 0
 --- !u!114 &2877822014897022766
