@@ -332,7 +332,7 @@ public class TankTurret : NetworkBehaviour
         {
             Rotate();
         }
-        else
+        else if(Tank && Tank.Object)
         {
             Rotate(true, Time.deltaTime);
         }
