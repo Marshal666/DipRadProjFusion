@@ -164,6 +164,7 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
                 if (_tankHitInfo != null)
                 {
                     ConsoleLog.Log($"Dmg hash: {_tankHitInfo.DamageableRoot.GetHash()}, sum: {_tankHitInfo.DamageableRoot.HP_Sum()}\n");
+                    _tankHitInfo.Tank.AddDamageMessage(null, "-- DS Begin", "-- DS Begin");
                     _tankHitInfo.DamageableRoot.ApplyDamage();
                 }
 

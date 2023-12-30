@@ -381,18 +381,22 @@ public class PlayerTankController : NetworkBehaviour
 
     #region CREW_EVENTS
 
+    public void AddDamageMessage(IDamageable? d, string doneDmgText, string receivedDmgText)
+    {
+        if(!IsCurrentPlayer)
+        {
+            UIManager.AddDoneDmgTextMsgItem(doneDmgText, d);
+        } else
+        {
+            UIManager.AddReceivedDmgTextMsgItem(receivedDmgText);
+        }
+    }
+
     public void OnDriverDamaged(IDamageable d)
     {
         if (d.HP <= 0f)
         {
-            if (!IsCurrentPlayer)
-            {
-                UIManager.AddDoneDmgTextMsgItem("Driver", d);
-            } 
-            else
-            {
-                UIManager.AddReceivedDmgTextMsgItem("Driver is dead");
-            }
+            AddDamageMessage(d, "Driver", "Driver is dead");
             if (IsHostPlayer)
             {
                 SetTankHealth(TankHealthBits.Driver, false);
@@ -405,14 +409,7 @@ public class PlayerTankController : NetworkBehaviour
     {
         if (d.HP <= 0f)
         {
-            if (!IsCurrentPlayer)
-            {
-                UIManager.AddDoneDmgTextMsgItem("Gunner", d);
-            }
-            else
-            {
-                UIManager.AddReceivedDmgTextMsgItem("Gunner is dead");
-            }
+            AddDamageMessage(d, "Gunner", "Gunner is dead");
             if (IsHostPlayer)
             {
                 SetTankHealth(TankHealthBits.Gunner, false);
@@ -425,14 +422,7 @@ public class PlayerTankController : NetworkBehaviour
     {
         if (d.HP <= 0f)
         {
-            if (!IsCurrentPlayer)
-            {
-                UIManager.AddDoneDmgTextMsgItem("Loader", d);
-            }
-            else
-            {
-                UIManager.AddReceivedDmgTextMsgItem("Loader is dead");
-            }
+            AddDamageMessage(d, "Loader", "Loader is dead");
             if (IsHostPlayer)
             {
                 SetTankHealth(TankHealthBits.Loader, false);
@@ -445,14 +435,7 @@ public class PlayerTankController : NetworkBehaviour
     {
         if (d.HP <= 0f)
         {
-            if (!IsCurrentPlayer)
-            {
-                UIManager.AddDoneDmgTextMsgItem("Commander", d);
-            }
-            else
-            {
-                UIManager.AddReceivedDmgTextMsgItem("Commander is dead");
-            }
+            AddDamageMessage(d, "Commander", "Commander is dead");
             if (IsHostPlayer)
             {
                 SetTankHealth(TankHealthBits.Commander, false);
@@ -465,14 +448,7 @@ public class PlayerTankController : NetworkBehaviour
     {
         if (d.HP <= 0f)
         {
-            if (!IsCurrentPlayer)
-            {
-                UIManager.AddDoneDmgTextMsgItem("Engine", d);
-            }
-            else
-            {
-                UIManager.AddReceivedDmgTextMsgItem("Engine got destroyed");
-            }
+            AddDamageMessage(d, "Engine", "Engine got destroyed");
             if (IsHostPlayer)
             {
                 SetTankHealth(TankHealthBits.Engine, false);
@@ -485,14 +461,7 @@ public class PlayerTankController : NetworkBehaviour
     {
         if (d.HP <= 0f)
         {
-            if (!IsCurrentPlayer)
-            {
-                UIManager.AddDoneDmgTextMsgItem("Gun Breech", d);
-            }
-            else
-            {
-                UIManager.AddReceivedDmgTextMsgItem("Gun breech is broken");
-            }
+            AddDamageMessage(d, "Gun Breech", "Gun breech is broken");
             if (IsHostPlayer)
             {
                 SetTankHealth(TankHealthBits.GunBreech, false);
@@ -505,14 +474,7 @@ public class PlayerTankController : NetworkBehaviour
     {
         if (d.HP <= 0f)
         {
-            if (!IsCurrentPlayer)
-            {
-                UIManager.AddDoneDmgTextMsgItem("Gun Barrel", d);
-            }
-            else
-            {
-                UIManager.AddReceivedDmgTextMsgItem("Gun Barrel is broken");
-            }
+            AddDamageMessage(d, "Gun Barrel", "Gun Barrel is broken");
             if (IsHostPlayer)
             {
                 SetTankHealth(TankHealthBits.GunBarrel, false);
@@ -525,14 +487,7 @@ public class PlayerTankController : NetworkBehaviour
     {
         if (d.HP <= 0f)
         {
-            if (!IsCurrentPlayer)
-            {
-                UIManager.AddDoneDmgTextMsgItem("Left Track", d);
-            }
-            else
-            {
-                UIManager.AddReceivedDmgTextMsgItem("Left Track is destroyed");
-            }
+            AddDamageMessage(d, "Left Track", "Left Track is destroyed");
             if (IsHostPlayer)
             {
                 SetTankHealth(TankHealthBits.TrackL, false);
@@ -545,14 +500,7 @@ public class PlayerTankController : NetworkBehaviour
     {
         if (d.HP <= 0f)
         {
-            if (!IsCurrentPlayer)
-            {
-                UIManager.AddDoneDmgTextMsgItem("Right Track", d);
-            }
-            else
-            {
-                UIManager.AddReceivedDmgTextMsgItem("Right Track is destroyed");
-            }
+            AddDamageMessage(d, "Right Track", "Right Track is destroyed");
             if (IsHostPlayer)
             {
                 SetTankHealth(TankHealthBits.TrackR, false);
@@ -569,14 +517,7 @@ public class PlayerTankController : NetworkBehaviour
             float val = Random.value;
             if(val >= StaticConsts.ShellDeathDetonationProb)
             {
-                if (!IsCurrentPlayer)
-                {
-                    UIManager.AddDoneDmgTextMsgItem("Ammo", d);
-                }
-                else
-                {
-                    UIManager.AddReceivedDmgTextMsgItem("Ammo racked");
-                }
+                AddDamageMessage(d, "Ammo", "Ammo racked");
                 if (IsHostPlayer)
                 {
                     Die();
