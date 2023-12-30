@@ -346,6 +346,7 @@ namespace Projectiles.ProjectileDataBuffer_Kinematic
 
                 info.HitPosition = Utils.TransfromFromObjectCoords(s, Helper, tank.GetHitboxDamageModel(hi));
                 print($"Diff: {info.HitPosition - b}");
+                print($"Hitbox Dist: {Vector3.Distance(HitboxPosition, hi.Position)}");
 
                 PlayerHits[no.InputAuthority] = (s, b, info.HitPosition);
 
